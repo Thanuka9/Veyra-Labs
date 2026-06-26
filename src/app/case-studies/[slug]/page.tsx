@@ -25,6 +25,7 @@ import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import { Reveal } from "@/components/Reveal";
 import { CaseStudyGallery } from "@/components/CaseStudyGallery";
+import { CaseStudyProof, type ProofHighlight } from "@/components/CaseStudyProof";
 import { uniqueGalleryImages } from "@/lib/nav-links";
 
 // Case Study details
@@ -51,6 +52,8 @@ interface CaseStudyDetail {
   }[];
   deliverables?: string[];
   liveUrl?: string;
+  proofHighlights?: ProofHighlight[];
+  proofNote?: string;
 }
 
 const caseStudyData: Record<string, CaseStudyDetail> = {
@@ -96,7 +99,14 @@ const caseStudyData: Record<string, CaseStudyDetail> = {
       "Proctoring telemetry listeners & window focus detectors",
       "LearnIQ offline assessment generation prompt schemas",
       "Active Docker orchestration files for Kubernetes deployment"
-    ]
+    ],
+    proofHighlights: [
+      { label: "Deployment", value: "Live production", note: "Collective RCM enterprise tenant" },
+      { label: "Audit overhead", value: "40% lower", note: "Vs. legacy manual validation workflow" },
+      { label: "Screenshots", value: "4 surfaces", note: "Admin, login, LearnIQ, ProctorIQ" },
+      { label: "Capacity", value: "10K+ users", note: "Multi-tenant cluster load tested" },
+    ],
+    proofNote: "Screenshots and metrics captured from the production TrainIQ deployment.",
   },
   codex: {
     slug: "codex",
@@ -137,7 +147,14 @@ const caseStudyData: Record<string, CaseStudyDetail> = {
       "Dynamic D3.js force-directed layout script",
       "Context-minimizing prompt compactor logic",
       "GCP Cloud Run deployment configuration manifests"
-    ]
+    ],
+    proofHighlights: [
+      { label: "Live demo", value: "Cloud Run URL", note: "Public scanner deployment" },
+      { label: "Onboarding time", value: "80% faster", note: "Vs. manual repo mapping baseline" },
+      { label: "Scan speed", value: "15s / 10K LOC", note: "Measured on representative repos" },
+      { label: "Screenshots", value: "2 views", note: "Dashboard + dependency graph" },
+    ],
+    proofNote: "Visit the live demo to run a repository scan against your own public GitHub URL.",
   },
   "kapruka-flow": {
     slug: "kapruka-flow",
@@ -178,7 +195,13 @@ const caseStudyData: Record<string, CaseStudyDetail> = {
       "Kapruka MCP connector module for product sync",
       "Optimized agentic cart compiler pipeline",
       "Vercel Edge-optimized deployment scripts"
-    ]
+    ],
+    proofHighlights: [
+      { label: "Live demo", value: "Vercel deploy", note: "Kapruka Agent Challenge 2026 build" },
+      { label: "Time to cart", value: "85% faster", note: "Intent vs. manual filter workflow" },
+      { label: "Mapping accuracy", value: "92%", note: "Search-to-product match rate in tests" },
+      { label: "Screenshots", value: "2 flows", note: "Landing search + composed cart" },
+    ],
   },
   "techforge-ai": {
     slug: "techforge-ai",
@@ -219,7 +242,13 @@ const caseStudyData: Record<string, CaseStudyDetail> = {
       "LangGraph conversational state controllers",
       "Mock interview evaluation report generators",
       "Dockerized deployment configurations for GCP Cloud Run"
-    ]
+    ],
+    proofHighlights: [
+      { label: "Live demo", value: "Cloud Run", note: "Public CareerForge deployment" },
+      { label: "ATS alignment", value: "94%", note: "Parser score vs. recruiter rubric" },
+      { label: "Interview readiness", value: "3× improvement", note: "Mock interview cohort average" },
+      { label: "Screenshots", value: "2 modules", note: "Dashboard + mock interview UI" },
+    ],
   },
   "revops-ai": {
     slug: "revops-ai",
@@ -259,7 +288,14 @@ const caseStudyData: Record<string, CaseStudyDetail> = {
       "Payer payment forecasting Scikit-Learn training notebooks",
       "Asynchronous claim audit endpoints",
       "Local HIPAA access logging modules"
-    ]
+    ],
+    proofHighlights: [
+      { label: "Build type", value: "B2B prototype", note: "Sanitized datasets only" },
+      { label: "Forecast R²", value: "0.94", note: "On anonymized billing training set" },
+      { label: "Inference", value: "<80ms", note: "FastAPI prediction endpoint" },
+      { label: "Screenshots", value: "1 dashboard", note: "Revenue cycle overview UI" },
+    ],
+    proofNote: "All data shown uses dummy variables. No live HIPAA data appears in this repository or demo.",
   },
   "reviewradar-ai": {
     slug: "reviewradar-ai",
@@ -300,7 +336,13 @@ const caseStudyData: Record<string, CaseStudyDetail> = {
       "K-Means topic and rating cluster visualizer templates",
       "PostgreSQL structured schema for multi-channel review logs",
       "Asynchronous daily data cron triggers"
-    ]
+    ],
+    proofHighlights: [
+      { label: "Throughput", value: "7M+ / day", note: "Ingestion pipeline benchmark" },
+      { label: "Classification", value: "85% gain", note: "Vs. manual review sampling" },
+      { label: "Automation", value: "100%", note: "Report extraction without manual exports" },
+      { label: "Screenshots", value: "3 panels", note: "Sentiment, categories, star analytics" },
+    ],
   },
   "job-hunter-ai": {
     slug: "job-hunter-ai",
@@ -334,7 +376,14 @@ const caseStudyData: Record<string, CaseStudyDetail> = {
       "Autonomous application automation scripts",
       "Resume content mapping and formatting module",
       "Evaluation and testing framework logs"
-    ]
+    ],
+    proofHighlights: [
+      { label: "Build type", value: "Agent prototype", note: "Internal demo — no public UI" },
+      { label: "Applications", value: "200+", note: "Submitted in controlled test cohort" },
+      { label: "Match threshold", value: "85%+", note: "Vector alignment before filing" },
+      { label: "Filing speed", value: "15× faster", note: "Vs. manual application workflow" },
+    ],
+    proofNote: "Architecture and agent flows verified in staging. UI captures available on request for qualified prospects.",
   },
   "monday-auditor": {
     slug: "monday-auditor",
@@ -372,7 +421,13 @@ const caseStudyData: Record<string, CaseStudyDetail> = {
       "Dynamic data audit rules config engine",
       "CSV & Excel parsing and cleanup scripts",
       "Streamlit local hosting setup dockerfiles"
-    ]
+    ],
+    proofHighlights: [
+      { label: "Boards audited", value: "50+ in 15s", note: "Deep pagination GraphQL runs" },
+      { label: "Time saved", value: "12 hrs / week", note: "Manual admin checks replaced" },
+      { label: "Coverage", value: "100%", note: "Field coverage reports per board" },
+      { label: "Screenshots", value: "1 dashboard", note: "Streamlit audit interface" },
+    ],
   },
   "nimasha-portfolio": {
     slug: "nimasha-portfolio",
@@ -410,7 +465,13 @@ const caseStudyData: Record<string, CaseStudyDetail> = {
       "Publication filter and search component modules",
       "NextJS server-side static generation templates",
       "SEO schema tags for academic profiles"
-    ]
+    ],
+    proofHighlights: [
+      { label: "Deployment", value: "Live client site", note: "Academic portfolio in production" },
+      { label: "Lighthouse SEO", value: "100", note: "Production audit score" },
+      { label: "LCP", value: "2.4s", note: "Largest Contentful Paint index" },
+      { label: "Screenshots", value: "1 hero", note: "Publications hub with canvas hero" },
+    ],
   },
   "azeem-portfolio": {
     slug: "azeem-portfolio",
@@ -449,8 +510,14 @@ const caseStudyData: Record<string, CaseStudyDetail> = {
       "Contact form state control & spam protection script",
       "Firebase database structure templates",
       "GitHub Action deployment workflows for Firebase"
-    ]
-  }
+    ],
+    proofHighlights: [
+      { label: "Deployment", value: "Live client site", note: "Firebase-hosted production portfolio" },
+      { label: "Lead uplift", value: "3×", note: "High-ticket inquiry rate post-launch" },
+      { label: "Performance", value: "99 / 100", note: "Google Lighthouse score" },
+      { label: "Screenshots", value: "1 hero", note: "Showreel + lead-capture flow" },
+    ],
+  },
 };
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
@@ -578,6 +645,17 @@ export default async function CaseStudyPage({ params }: { params: Promise<{ slug
               ))}
             </div>
           </Reveal>
+
+          {study.proofHighlights && study.proofHighlights.length > 0 && (
+            <Reveal>
+              <CaseStudyProof
+                proofLevel={study.proofLevel}
+                highlights={study.proofHighlights}
+                liveUrl={study.liveUrl}
+                proofNote={study.proofNote}
+              />
+            </Reveal>
+          )}
 
           {/* Gallery */}
           {galleryImages.length > 0 && (
