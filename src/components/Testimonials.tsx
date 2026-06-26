@@ -45,7 +45,7 @@ export function Testimonials() {
   const { prev: prevIdx, curr: currIdx, next: nextIdx } = getVisible();
 
   return (
-    <section className="section relative overflow-hidden">
+    <section id="testimonials" className="section relative overflow-hidden">
       {/* Ambient glow */}
       <div className="pointer-events-none absolute left-1/2 top-1/2 h-[500px] w-[700px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(closest-side,rgba(124,92,255,0.08),transparent)] blur-3xl" />
 

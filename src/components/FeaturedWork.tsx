@@ -10,7 +10,7 @@ export function FeaturedWork() {
   const [hero, ...rest] = spotlightProjects;
 
   return (
-    <section className="section relative overflow-hidden">
+    <section id="featured" className="section relative overflow-hidden">
       <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-violet/40 to-transparent" />
       <div className="container-page">
         <SectionHeading

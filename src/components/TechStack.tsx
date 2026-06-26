@@ -7,7 +7,7 @@ import { Reveal } from "./Reveal";
 
 export function TechStack() {
   return (
-    <section className="section relative overflow-hidden">
+    <section id="tech" className="section relative overflow-hidden">
       <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-cyan/30 to-transparent" />
       <div className="pointer-events-none absolute left-0 top-1/2 h-64 w-64 -translate-y-1/2 rounded-full bg-[radial-gradient(closest-side,rgba(34,211,238,0.08),transparent)] blur-3xl" />
 

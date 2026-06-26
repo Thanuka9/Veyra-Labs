@@ -4,15 +4,9 @@ import { BrandLogo } from "./BrandLogo";
 import { CookieSettingsButton } from "./CookieSettingsButton";
 import { Reveal } from "./Reveal";
 import { CONTACT_EMAIL, CONTACT_LINKEDIN, CONTACT_LOCATION, footerServiceLinks } from "@/lib/content";
+import { FOOTER_COMPANY_LINKS } from "@/lib/nav-links";
 
-const company = [
-  { label: "Case Studies", href: "/#work" },
-  { label: "Services", href: "/#services" },
-  { label: "Pricing & Estimates", href: "/#pricing" },
-  { label: "Our Process", href: "/#process" },
-  { label: "About Veyra Labs", href: "/#about" },
-  { label: "Contact", href: "/#contact" },
-];
+const company = FOOTER_COMPANY_LINKS;
 
 const legal = [
   { label: "Privacy Policy", href: "/privacy" },
@@ -87,9 +81,9 @@ export function Footer() {
             </div>
             <div>
               <h4 className="text-xs font-bold uppercase tracking-wider text-foreground">Company</h4>
-              <ul className="mt-4 space-y-2.5">
+              <ul className="mt-4 grid grid-cols-1 gap-x-4 gap-y-2.5 sm:grid-cols-2">
                 {company.map((l) => (
-                  <li key={l.label}>
+                  <li key={l.href}>
                     <a href={l.href} className="text-sm text-muted transition-colors hover:text-cyan">
                       {l.label}
                     </a>

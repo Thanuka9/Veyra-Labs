@@ -34,7 +34,7 @@ const deliverables = coreServices.map((s) => s.shortTitle);
 
 export function WhyVeyra() {
   return (
-    <section className="section relative overflow-hidden">
+    <section id="why" className="section relative overflow-hidden">
       <div className="pointer-events-none absolute right-0 top-1/2 -z-10 h-[500px] w-[500px] -translate-y-1/2 rounded-full bg-[radial-gradient(closest-side,rgba(124,92,255,0.12),transparent)] blur-3xl" />
       <div className="pointer-events-none absolute inset-x-0 bottom-0 h-px bg-gradient-to-r from-transparent via-violet/20 to-transparent" />
 

@@ -1182,15 +1182,25 @@ input, textarea, select { cursor: auto; }
     mask-image: radial-gradient(ellipse 70% 60% at 50% 35%, #000 40%, transparent 100%);
   }
 
+  #top {
+    scroll-margin-top: 0;
+  }
+
+  #contact {
+    scroll-margin-top: 5.5rem;
+  }
+
   .section {
     padding-top: 7rem;
     padding-bottom: 7rem;
+    scroll-margin-top: 5.5rem;
   }
 
   @media (max-width: 768px) {
     .section {
       padding-top: 4.5rem;
       padding-bottom: 4.5rem;
+      scroll-margin-top: 4.5rem;
     }
   }
 
