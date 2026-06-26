@@ -73,15 +73,12 @@ export function Navbar() {
         <div className="grid h-[4.5rem] grid-cols-[auto_minmax(0,1fr)_auto] items-center gap-2 lg:h-[5rem] lg:gap-4">
           <a
             href={onHome ? "#top" : "/"}
-            className={cn(
-              "group flex shrink-0 items-center rounded-xl px-1 py-1 transition-all",
-              scrolled && "bg-surface/40 ring-1 ring-border/60"
-            )}
+            className="group flex shrink-0 items-center transition-opacity hover:opacity-90"
             aria-label="Veyra Labs home"
           >
             <BrandLogo
               variant="lockup"
-              className="h-8 transition-transform duration-300 group-hover:scale-[1.02] sm:h-9 lg:h-10"
+              className="h-9 w-auto transition-transform duration-300 group-hover:scale-[1.01] sm:h-10 lg:h-11"
               priority
             />
           </a>

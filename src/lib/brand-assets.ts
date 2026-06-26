@@ -1,4 +1,4 @@
-const BRAND_V = "2";
+const BRAND_V = "3";
 
 export const BRAND_PATHS = {
   wordmarkLight: `/brand/wordmark-light.png?v=${BRAND_V}`,
