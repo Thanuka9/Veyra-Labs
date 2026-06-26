@@ -14,7 +14,7 @@ const slides = [
 const stats = [
   { v: "15+", l: "Projects delivered" },
   { v: "$1,500", l: "E-commerce from" },
-  { v: "90%+", l: "Predictive accuracy" },
+  { v: "R² > 0.90", l: "On billing datasets" },
 ];
 
 /** Words that cycle in the headline — each describes a service vertical */
@@ -209,7 +209,7 @@ export function Hero() {
                     <Star key={s} size={12} className="fill-amber-400 text-amber-400" />
                   ))}
                 </div>
-                <p className="text-[11px] text-muted">Trusted by 10+ enterprise clients</p>
+                <p className="text-[11px] text-muted">10+ client/project engagements</p>
               </div>
             </div>
 

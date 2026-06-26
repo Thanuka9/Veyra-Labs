@@ -45,9 +45,35 @@ export function ProjectCard({ project }: { project: Project }) {
             Live
           </span>
         )}
-        <span className="absolute left-3 top-3 rounded-full border border-border bg-background/70 px-2.5 py-1 text-[11px] font-medium text-foreground backdrop-blur">
-          {project.category}
-        </span>
+        <div className="absolute left-3 top-3 flex flex-wrap gap-1.5 z-10">
+          <span className="rounded-full border border-border bg-background/80 px-2.5 py-1 text-[11px] font-medium text-foreground backdrop-blur">
+            {project.category}
+          </span>
+          {project.labels?.map((label) => {
+            const isClient = label.includes("Client");
+            const isChallenge = label.includes("Challenge");
+            const isSaaS = label.includes("SaaS") || label.includes("Product") || label.includes("Brand");
+            const isLive = label.includes("Live") || label.includes("Production");
+
+            let colorClasses = "border-cyan/30 bg-cyan/10 text-cyan";
+            if (isClient || isLive) {
+              colorClasses = "border-emerald-500/30 bg-emerald-500/15 text-emerald-400";
+            } else if (isSaaS) {
+              colorClasses = "border-violet/30 bg-violet/15 text-violet";
+            } else if (isChallenge) {
+              colorClasses = "border-amber-500/30 bg-amber-500/15 text-amber-400";
+            }
+
+            return (
+              <span
+                key={label}
+                className={`rounded-full border px-2 py-0.5 text-[9px] font-bold uppercase tracking-wider backdrop-blur-sm ${colorClasses}`}
+              >
+                {label}
+              </span>
+            );
+          })}
+        </div>
       </div>
 
       {/* Body */}

@@ -652,7 +652,7 @@ export const pricingTiers: PricingTier[] = [
 export const stats: { value: string; label: string }[] = [
   { value: "20+", label: "Products delivered" },
   { value: "6", label: "Industry domains" },
-  { value: "90%+", label: "Peak ML accuracy" },
+  { value: "R² > 0.90", label: "On billing datasets" },
   { value: "100%", label: "Production-focused" },
 ];
 
@@ -667,61 +667,61 @@ export const testimonials: Testimonial[] = [
     quote:
       "Veyra Labs took our vague concept and turned it into a fully operational SaaS platform in under 12 weeks. The architecture was clean, the handoff was thorough, and it's been running without issues since day one.",
     author: "Marcus Chen",
-    role: "Co-Founder",
+    role: "Co-Founder, FinTech Platform",
   },
   {
     quote:
       "The AI forecasting engine they built for us hit R² above 0.91 on our live dataset. I've worked with three other firms before — none came close to this level of predictive accuracy.",
     author: "Dr. Priya Anand",
-    role: "Head of Analytics",
+    role: "Head of Analytics, HealthTech",
   },
   {
     quote:
       "We needed a premium brand site that could compete with our enterprise competitors. What Veyra delivered looked world-class and generated qualified leads within the first week of going live.",
     author: "James Whitfield",
-    role: "CEO",
+    role: "CEO, E-Commerce Solutions",
   },
   {
     quote:
       "Their RAG pipeline implementation was impressive — they had our 50,000-document knowledge base fully searchable and integrated into our internal tool within a month. The team is deeply technical and zero-fluff.",
     author: "Sofia Petrov",
-    role: "Engineering Lead",
+    role: "Engineering Lead, Enterprise AI",
   },
   {
     quote:
       "The e-commerce storefront they built converted at 3.8% on launch week — well above our previous 1.2%. Mobile-first performance was exactly what we needed to compete on Google Shopping.",
     author: "Kavya Nair",
-    role: "Founder",
+    role: "Founder, D2C Retail",
   },
   {
     quote:
       "We trusted Veyra Labs with our enterprise training platform and they delivered a multi-tenant LMS that handles 10,000+ users seamlessly. The admin tooling and reporting alone saved us hours every week.",
     author: "Richard Osei",
-    role: "VP of Learning",
+    role: "VP of Learning, EdTech",
   },
   {
     quote:
       "A rare talent who understands both the deep mathematics of AI and the practicalities of full-stack engineering. They deliver systems that actually solve business bottlenecks — not just demos.",
     author: "Dr. Lena Müller",
-    role: "Research Director",
+    role: "Research Director, BioTech Group",
   },
   {
     quote:
       "From discovery call to production deployment, the process was transparent and structured. We always knew what was coming next, and they never missed a sprint deadline.",
     author: "Alex Torres",
-    role: "CTO",
+    role: "CTO, PropTech SaaS",
   },
   {
     quote:
       "The data pipeline they engineered processes 7M+ records daily with zero downtime. What used to take us four hours of manual work now runs automatically every morning.",
     author: "Yuki Tanaka",
-    role: "Data Engineering Manager",
+    role: "Data Engineering Manager, Logistics",
   },
   {
     quote:
       "Veyra Labs built our customer-facing AI chatbot from scratch — it handles 85% of tier-1 support queries with no human handoff. Saved us two full-time support roles in the first quarter.",
     author: "Fatima Al-Rashid",
-    role: "Director of Operations",
+    role: "Director of Operations, GovTech",
   },
 ];
 

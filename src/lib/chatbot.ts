@@ -95,7 +95,7 @@ function formatWhyVeyra(): string {
 👥 **One team, full stack** — frontend, backend, AI, data & cloud under one roof.
 
 **Proven outcomes:**
-• **90%+** predictive accuracy on ML forecasting
+• **R² > 0.90** accuracy on billing datasets
 • **40%** reduction in manual audit overhead
 • **15+** production projects delivered
 

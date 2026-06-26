@@ -12,6 +12,7 @@ export type Project = {
   description: string;
   category: ProjectCategory;
   tags: string[];
+  labels?: string[];
   image?: string;
   cover?: string;
   href?: string;
@@ -31,6 +32,7 @@ export const projects: Project[] = [
       "A conversion-engineered personal brand platform — animated hero, case studies, AI lab demos, client testimonials and strategic inquiry flows. Built to win enterprise clients.",
     category: "Website",
     tags: ["Next.js", "Framer Motion", "SEO", "i18n"],
+    labels: ["Personal Brand", "Live Production"],
     image: "/projects/thanuka-careers-hero.png",
     href: "https://thanukaellepola.careers/en",
     linkLabel: "Visit live site → thanukaellepola.careers",
@@ -49,6 +51,7 @@ export const projects: Project[] = [
       "Multi-tenant LMS with level-based exams, knowledge bases, LearnIQ local LLM assistant, ProctorIQ integrity, RBAC, 2FA and enterprise audit logging — deployed for Collective RCM.",
     category: "SaaS Platform",
     tags: ["Flask", "PostgreSQL", "MongoDB", "Local LLM", "RBAC"],
+    labels: ["Client Project", "Live Production"],
     image: "/projects/trainiq-hero.png",
     linkLabel: "Enterprise deployment",
     featured: true,
@@ -66,6 +69,7 @@ export const projects: Project[] = [
       "Turns any GitHub repository into instant visual documentation and system architecture — for teams onboarding into unfamiliar codebases.",
     category: "AI & LLM",
     tags: ["Next.js", "LLM", "Cloud Run"],
+    labels: ["Internal SaaS", "Demo App"],
     image: "/projects/codex-home.png",
     href: "https://codex-705252260340.us-west1.run.app/",
     linkLabel: "Live demo",
@@ -77,11 +81,13 @@ export const projects: Project[] = [
     name: "Kapruka Flow",
     tagline: "AI-first intent-driven shopping",
     description:
-      "Describe what you need in natural language — the AI composes optimised carts over a live commerce MCP with real checkout and order personalisation.",
+      "Challenge / demo project using Kapruka MCP. Built for the Kapruka Agent Challenge 2026. Describe what you need in natural language — the AI composes optimised carts over a live commerce MCP with real checkout.",
     category: "E-Commerce",
     tags: ["Next.js", "FastAPI", "AI Agents", "MCP"],
+    labels: ["Challenge Build", "Demo App"],
     image: "/projects/kapruka-home.png",
-    linkLabel: "Case study",
+    href: "https://kapruka-flow-ai.vercel.app/",
+    linkLabel: "Visit live demo",
     featured: true,
     spotlight: true,
   },
@@ -93,6 +99,7 @@ export const projects: Project[] = [
       "AI recruiter agents that audit resumes, build portfolios, run mock interviews and surface live market salary intelligence.",
     category: "AI & LLM",
     tags: ["Multi-agent", "LLM", "Cloud Run"],
+    labels: ["Internal Product", "Demo App"],
     image: "/projects/careerforge-home.png",
     href: "https://careerforge-ai-3-0-1030331335046.us-west1.run.app/",
     linkLabel: "Live demo",
@@ -103,9 +110,10 @@ export const projects: Project[] = [
     name: "RevOps AI",
     tagline: "Predictive revenue cycle management",
     description:
-      "B2B SaaS that automates healthcare RCM auditing and forecasts payment timelines with ML — FastAPI, React dashboard, HIPAA-aware logging.",
+      "B2B SaaS prototype that automates healthcare RCM auditing and forecasts payment timelines with ML. Built with FastAPI, React, and HIPAA-aware logging. (Anonymized healthcare dataset).",
     category: "SaaS Platform",
     tags: ["FastAPI", "React", "Scikit-learn", "GCP"],
+    labels: ["Internal SaaS", "Prototype"],
     image: "/projects/revops-landing.png",
     linkLabel: "Case study",
     featured: true,
@@ -122,6 +130,7 @@ export const projects: Project[] = [
       "End-to-end pipeline — ingest, clean, feature-engineer and analyse millions of reviews with NLP sentiment, TF-IDF and geo-clustering.",
     category: "Data Science",
     tags: ["Python", "PostgreSQL", "NLP", "Pandas"],
+    labels: ["Internal Product", "Prototype"],
     image: "/projects/reviewradar-sentiment.png",
     linkLabel: "Case study",
   },
@@ -133,6 +142,7 @@ export const projects: Project[] = [
       "Hybrid-RAG engine that discovers roles, ranks them with an LLM, and autonomously submits applications via Playwright — grounded by FAISS.",
     category: "AI & LLM",
     tags: ["RAG", "FAISS", "Playwright", "GPT-4o"],
+    labels: ["Internal SaaS", "Prototype"],
     cover: "from-violet-600/30 via-indigo-600/20 to-cyan-500/20",
     linkLabel: "Case study",
   },
@@ -144,6 +154,7 @@ export const projects: Project[] = [
       "Custom molecular canvas animation, filterable academic timelines, abstract viewer and print-optimised CV — Next.js 16 + Tailwind v4.",
     category: "Website",
     tags: ["Next.js 16", "Canvas", "Framer Motion"],
+    labels: ["Client Project", "Live Production"],
     image: "/projects/nimasha-portfolio-hero.png",
     linkLabel: "Case study",
   },
@@ -155,9 +166,10 @@ export const projects: Project[] = [
       "Cinematic showreels, animated project archive, review collection and lead-capture contact flow that turns viewers into clients.",
     category: "Website",
     tags: ["React", "Lead capture", "Responsive"],
+    labels: ["Client Project", "Live Production"],
     image: "/projects/azeem-portfolio-hero.png",
     href: "https://portfolio-maca-16057652-77e5e.web.app/",
-    linkLabel: "Live site",
+    linkLabel: "Visit live site",
   },
   {
     slug: "monday-auditor",
@@ -167,6 +179,7 @@ export const projects: Project[] = [
       "Scans Monday.com boards via GraphQL with deep pagination, pinpoints missing data and exports filterable audit reports.",
     category: "Data Science",
     tags: ["Streamlit", "Pandas", "GraphQL"],
+    labels: ["Internal Product", "Demo App"],
     image: "/projects/monday-auditor.png",
     linkLabel: "Case study",
   },

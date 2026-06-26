@@ -51,14 +51,14 @@ export function Testimonials() {
 
       <div className="container-page relative">
         <SectionHeading
-          eyebrow="Verified impact"
+          eyebrow="Reported outcomes"
           accent="emerald"
           title={
             <>
               Trusted to solve <span className="text-gradient">real bottlenecks</span>
             </>
           }
-          subtitle="Direct testimony from founders, technical leaders, and enterprise partners across 10 different engagements."
+          subtitle="Direct feedback from founders and technical leaders across 10+ project engagements. Names and details anonymized to protect corporate systems."
         />
 
         {/* Desktop 3-up carousel */}
@@ -199,10 +199,9 @@ export function Testimonials() {
         <Reveal className="mt-12">
           <div className="flex flex-wrap items-center justify-center gap-x-8 gap-y-3 rounded-2xl border border-border bg-surface-2/50 px-6 py-4 text-center">
             {[
-              { v: "10+", l: "Client engagements" },
+              { v: "10+", l: "Client/project engagements" },
               { v: "8+", l: "Countries served" },
-              { v: "5★", l: "Average rating" },
-              { v: "100%", l: "Production delivery rate" },
+              { v: "100%", l: "Live/staging deployment rate" },
             ].map((s) => (
               <div key={s.l}>
                 <span className="text-lg font-bold text-gradient-soft">{s.v}</span>

@@ -12,7 +12,7 @@ export default function CookiesPage() {
   return (
     <LegalPageLayout
       title="Cookie Policy"
-      description="Learn about the cookies and similar technologies we use on veyralabs.com and how to control them."
+      description="Learn about the cookies and similar technologies we use on our Veyra Labs website and how to control them."
       sections={cookieSections}
     />
   );

@@ -111,10 +111,12 @@ export const privacySections: LegalSection[] = [
   },
   {
     id: "contact",
-    title: "Contact",
+    title: "Contact & Legal Entity",
     paragraphs: [
       `For privacy questions or requests, email ${CONTACT_EMAIL}.`,
-      `Postal / business location: ${CONTACT_LOCATION}.`,
+      `Legal Entity: Veyra Labs (Pvt) Ltd`,
+      `Business Registration No: PV-00295846`,
+      `Official Address: Colombo, Sri Lanka · Remote-first worldwide`,
     ],
   },
 ];
@@ -156,8 +158,11 @@ export const cookieSections: LegalSection[] = [
   },
   {
     id: "contact",
-    title: "Contact",
-    paragraphs: [`Questions about cookies? Email ${CONTACT_EMAIL}.`],
+    title: "Contact & Entity Details",
+    paragraphs: [
+      `Questions about cookies? Email ${CONTACT_EMAIL}.`,
+      `Entity: Veyra Labs (Pvt) Ltd (Registration No: PV-00295846)`,
+    ],
   },
 ];
 
@@ -183,6 +188,19 @@ export const termsSections: LegalSection[] = [
     paragraphs: [
       "Project estimates generated through our wizard or chatbot are indicative ranges based on the scope you select. Final pricing depends on discovery, technical requirements, integrations, compliance needs, and timeline. All estimates are subject to written confirmation before work begins.",
       "We reserve the right to update pricing, service descriptions, and availability at any time without notice on this website.",
+    ],
+  },
+  {
+    id: "paid-projects",
+    title: "How Paid Projects Work",
+    paragraphs: [
+      "While this website provides indicative ballpark estimates, all paid engineering engagements are governed by a separate, signed Master Services Agreement (MSA) and Statement of Work (SOW). Standard engagement parameters include:",
+    ],
+    bullets: [
+      "Milestone Billing — Standard engagements are structured as 40% upfront deposit, 40% upon major midpoint delivery/milestone validation, and 20% upon final production handoff and deployment.",
+      "IP Ownership — 100% intellectual property ownership of all custom-developed codebase and digital assets is transferred to the client upon receipt of final milestone payment.",
+      "Cancellation & Offboarding — Either party may terminate an active engagement with 14 days written notice. Billing is prorated to deliverables completed up to the termination date.",
+      "Standard Support & SLAs — Every project handoff includes 30 days of post-launch maintenance covering critical bug fixes and deployment support. Optional service level agreements (SLAs) are available for managed hosting, 24/7 uptime monitoring, and monthly feature revisions.",
     ],
   },
   {
@@ -242,7 +260,12 @@ export const termsSections: LegalSection[] = [
   },
   {
     id: "contact",
-    title: "Contact",
-    paragraphs: [`Questions about these Terms? Email ${CONTACT_EMAIL}.`],
+    title: "Contact & Legal Details",
+    paragraphs: [
+      `Questions about these Terms? Email ${CONTACT_EMAIL}.`,
+      `Governing Entity: Veyra Labs (Pvt) Ltd`,
+      `Registration Number: PV-00295846`,
+      `Address: Colombo, Sri Lanka`,
+    ],
   },
 ];
