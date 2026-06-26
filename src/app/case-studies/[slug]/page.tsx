@@ -18,12 +18,13 @@ import {
   Lock,
   Zap,
   Server,
-  FileCheck
+  Target,
+  Lightbulb,
 } from "lucide-react";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import { Reveal } from "@/components/Reveal";
-import { projects } from "@/lib/projects";
+import { CaseStudyGallery } from "@/components/CaseStudyGallery";
 
 // Case Study details
 interface CaseStudyDetail {
@@ -244,7 +245,9 @@ const caseStudyData: Record<string, CaseStudyDetail> = {
     image: "/projects/revops-landing.png",
     tags: ["FastAPI", "React", "Scikit-Learn", "Python", "GCP"],
     gallery: [
-      { src: "/projects/revops-landing.png", caption: "RevOps AI - Predictive Revenue Cycle Management Dashboard" }
+      { src: "/projects/revops-landing.png", caption: "RevOps AI — Predictive revenue cycle management dashboard overview" },
+      { src: "/projects/revops-landing.png", caption: "Claims forecasting panel with payer timeline predictions and risk scoring" },
+      { src: "/projects/revops-landing.png", caption: "HIPAA-aware audit log viewer and pre-submission claim validation workflow" },
     ],
     architecture: [
       { layerName: "Client Layer", icon: Globe, components: ["React 19 Dashboard", "Recharts Visualizations"] },
@@ -357,6 +360,10 @@ const caseStudyData: Record<string, CaseStudyDetail> = {
     ],
     image: "/projects/monday-auditor.png",
     tags: ["Streamlit", "Pandas", "GraphQL", "Python", "Monday API"],
+    gallery: [
+      { src: "/projects/monday-auditor.png", caption: "Monday Data Auditor — Board selection and audit configuration panel" },
+      { src: "/projects/monday-auditor.png", caption: "Missing-field detection report with filterable export to Excel" },
+    ],
     architecture: [
       { layerName: "Client UI", icon: Globe, components: ["Streamlit Web Interface", "Excel Downloader Component"] },
       { layerName: "API Integration", icon: Zap, components: ["Monday.com GraphQL Client", "Deep Pagination Handler"] },
@@ -393,7 +400,8 @@ const caseStudyData: Record<string, CaseStudyDetail> = {
     image: "/projects/nimasha-portfolio-hero.png",
     tags: ["Next.js 16", "Canvas", "Framer Motion", "Tailwind CSS"],
     gallery: [
-      { src: "/projects/nimasha-portfolio-hero.png", caption: "Academic Portfolio - Computational Chemistry Publications Page" }
+      { src: "/projects/nimasha-portfolio-hero.png", caption: "Academic portfolio — Computational chemistry publications hub" },
+      { src: "/projects/nimasha-portfolio-hero.png", caption: "Publication timeline with filterable abstracts and molecular canvas hero" },
     ],
     architecture: [
       { layerName: "User Client", icon: Globe, components: ["Next.js SPA frontend", "Custom Molecular HTML5 Canvas"] },
@@ -432,7 +440,8 @@ const caseStudyData: Record<string, CaseStudyDetail> = {
     image: "/projects/azeem-portfolio-hero.png",
     tags: ["React", "Firebase", "Video Player Optimization", "Tailwind CSS"],
     gallery: [
-      { src: "/projects/azeem-portfolio-hero.png", caption: "Creative Portfolio - Showreel & Editor Portfolio Hero Page" }
+      { src: "/projects/azeem-portfolio-hero.png", caption: "Creative portfolio — Cinematic showreel hero and project archive" },
+      { src: "/projects/azeem-portfolio-hero.png", caption: "Lead-capture contact flow and client review collection interface" },
     ],
     architecture: [
       { layerName: "Client App", icon: Globe, components: ["React 19 SPA", "Lazy-Loaded Video Component", "Framer Motion Canvas"] },
@@ -466,15 +475,21 @@ export default async function CaseStudyPage({ params }: { params: Promise<{ slug
     notFound();
   }
 
+  const heroImage = study.gallery?.[0]?.src ?? study.image;
+  const galleryImages =
+    study.gallery && study.gallery.length > 0
+      ? study.gallery
+      : study.image
+        ? [{ src: study.image, caption: `${study.title} — product interface` }]
+        : [];
+
   return (
     <>
       <Navbar />
-      <main id="main-content" className="relative z-[1] flex-1 pt-24 pb-16 md:pt-32 md:pb-24">
-        {/* Glow halo */}
-        <div className="pointer-events-none absolute left-1/2 top-0 h-[600px] w-[min(1000px,100%)] -translate-x-1/2 bg-[radial-gradient(closest-side,rgba(124,92,255,0.06),transparent)] blur-3xl" />
+      <main id="main-content" className="relative z-[1] flex-1 pb-20 pt-24 md:pb-28 md:pt-28">
+        <div className="pointer-events-none absolute inset-x-0 top-0 h-[520px] bg-[radial-gradient(ellipse_at_top,rgba(124,92,255,0.12),transparent_65%)]" />
 
-        <div className="container-page">
-          {/* Back button */}
+        <div className="container-page relative">
           <Reveal>
             <Link
               href="/#work"
@@ -485,191 +500,171 @@ export default async function CaseStudyPage({ params }: { params: Promise<{ slug
             </Link>
           </Reveal>
 
-          {/* Header */}
-          <div className="mt-8 grid gap-8 lg:grid-cols-5 lg:gap-12">
-            <div className="lg:col-span-3">
-              <Reveal>
-                <span className="rounded-full border border-violet/30 bg-violet/10 px-3.5 py-1 text-xs font-bold uppercase tracking-wider text-violet">
-                  {study.category}
-                </span>
-                <h1 className="mt-4 text-3xl font-extrabold tracking-tight sm:text-4xl md:text-5xl">
-                  {study.title}
-                </h1>
-                <p className="mt-3 text-lg font-medium text-gradient-soft">
-                  {study.tagline}
-                </p>
-              </Reveal>
+          {/* Hero */}
+          <div className="mt-8 max-w-4xl">
+            <Reveal>
+              <span className="rounded-full border border-violet/30 bg-violet/10 px-3.5 py-1 text-xs font-bold uppercase tracking-wider text-violet">
+                {study.category}
+              </span>
+              <h1 className="mt-4 text-4xl font-extrabold tracking-tight sm:text-5xl lg:text-6xl">
+                {study.title}
+              </h1>
+              <p className="mt-4 text-lg font-medium leading-relaxed text-gradient-soft sm:text-xl">
+                {study.tagline}
+              </p>
+            </Reveal>
 
-              {/* Quick Details Card */}
-              <Reveal delay={1}>
-                <div className="mt-8 rounded-2xl border border-border bg-surface p-6 shadow-xl">
-                  <h3 className="text-xs font-extrabold uppercase tracking-wider text-muted">Project Meta</h3>
-                  <div className="mt-4 space-y-4">
-                    <div className="flex items-center gap-3">
-                      <UserCheck size={16} className="text-cyan" />
-                      <div className="text-xs">
-                        <span className="font-semibold text-foreground block">My Role</span>
-                        <span className="text-muted">{study.role}</span>
-                      </div>
+            <Reveal delay={1}>
+              <div className="mt-8 flex flex-wrap gap-3">
+                {[
+                  { icon: UserCheck, label: "Role", value: study.role },
+                  { icon: Calendar, label: "Timeline", value: study.timeline },
+                  { icon: Award, label: "Proof", value: study.proofLevel },
+                ].map(({ icon: Icon, label, value }) => (
+                  <div
+                    key={label}
+                    className="flex min-w-[200px] flex-1 items-start gap-3 rounded-2xl border border-border bg-surface/80 px-4 py-3.5 backdrop-blur-sm"
+                  >
+                    <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-cyan/10 text-cyan">
+                      <Icon size={16} />
                     </div>
-                    <div className="flex items-center gap-3">
-                      <Calendar size={16} className="text-cyan" />
-                      <div className="text-xs">
-                        <span className="font-semibold text-foreground block">Timeline</span>
-                        <span className="text-muted">{study.timeline}</span>
-                      </div>
-                    </div>
-                    <div className="flex items-center gap-3">
-                      <Award size={16} className="text-cyan" />
-                      <div className="text-xs">
-                        <span className="font-semibold text-foreground block">Proof Level</span>
-                        <span className="text-muted">{study.proofLevel}</span>
-                      </div>
+                    <div>
+                      <p className="text-[10px] font-bold uppercase tracking-wider text-muted">{label}</p>
+                      <p className="mt-0.5 text-sm font-medium text-foreground">{value}</p>
                     </div>
                   </div>
-                </div>
-              </Reveal>
-            </div>
-
-            {/* Showcase Image or Mockup */}
-            <div className="lg:col-span-2 flex items-center justify-center">
-              <Reveal delay={2} className="w-full">
-                {study.image ? (
-                  <div className="relative aspect-[16/10] overflow-hidden rounded-2xl border border-border bg-surface shadow-2xl">
-                    <Image
-                      src={study.image}
-                      alt={study.title}
-                      fill
-                      unoptimized
-                      className="object-contain object-center p-2 bg-surface-2"
-                    />
-                  </div>
-                ) : (
-                  <div className="flex aspect-[16/10] w-full items-center justify-center rounded-2xl border border-border bg-gradient-to-br from-violet-600/20 via-indigo-600/10 to-cyan-500/20 shadow-2xl">
-                    <span className="text-2xl font-bold text-muted uppercase tracking-wider">{study.title}</span>
-                  </div>
-                )}
-              </Reveal>
-            </div>
+                ))}
+              </div>
+            </Reveal>
           </div>
 
-          {/* Summary Stats */}
+          {/* Hero screenshot */}
+          <Reveal delay={2} className="mt-10">
+            {heroImage ? (
+              <div className="relative overflow-hidden rounded-2xl border border-border bg-[#07080f] shadow-[0_24px_80px_-24px_rgba(0,0,0,0.8)]">
+                <div className="absolute inset-x-0 top-0 z-10 h-px bg-gradient-to-r from-transparent via-violet/40 to-transparent" />
+                <div className="relative aspect-[16/9] w-full">
+                  <Image
+                    src={heroImage}
+                    alt={`${study.title} hero screenshot`}
+                    fill
+                    unoptimized
+                    priority
+                    className="object-cover object-top"
+                    sizes="(max-width: 1280px) 100vw, 1280px"
+                  />
+                </div>
+              </div>
+            ) : (
+              <div className="flex aspect-[16/9] w-full items-center justify-center rounded-2xl border border-border bg-gradient-to-br from-violet-600/20 via-indigo-600/10 to-cyan-500/20">
+                <span className="text-2xl font-bold uppercase tracking-wider text-muted">{study.title}</span>
+              </div>
+            )}
+          </Reveal>
+
+          {/* Stats */}
           <Reveal>
-            <div className="mt-12 grid gap-5 sm:grid-cols-3">
+            <div className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
               {study.metrics.map((m, i) => (
-                <div key={i} className="rounded-2xl border border-border bg-surface p-6 text-center shadow-md hover:border-violet/30 transition-colors">
-                  <div className="text-3xl font-extrabold text-gradient-soft">{m.value}</div>
-                  <div className="mt-2 text-xs font-semibold text-muted uppercase tracking-wider">{m.label}</div>
+                <div
+                  key={i}
+                  className="group relative overflow-hidden rounded-2xl border border-border bg-surface p-6 transition-colors hover:border-violet/35"
+                >
+                  <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-violet/5 to-transparent opacity-0 transition-opacity group-hover:opacity-100" />
+                  <div className="relative text-3xl font-extrabold tracking-tight text-gradient-soft sm:text-4xl">
+                    {m.value}
+                  </div>
+                  <div className="relative mt-2 text-xs font-semibold uppercase tracking-wider text-muted">
+                    {m.label}
+                  </div>
                 </div>
               ))}
             </div>
           </Reveal>
 
-          {/* Screenshot & Visual Gallery */}
-          {study.gallery && study.gallery.length > 0 && (
+          {/* Gallery */}
+          {galleryImages.length > 0 && (
             <Reveal>
-              <section className="mt-16">
-                <h2 className="text-xl font-bold tracking-tight text-white border-b border-border pb-3 flex items-center gap-2">
-                  <FileCheck className="text-cyan" size={20} />
-                  Visual Showcase &amp; Interface Screenshots
-                </h2>
-                <div className="mt-6 grid gap-6 md:grid-cols-2">
-                  {study.gallery.map((img, i) => (
-                    <div key={i} className="group rounded-2xl border border-border bg-surface overflow-hidden shadow-lg transition-all duration-300 hover:border-violet/30 hover:shadow-2xl">
-                      <div className="relative aspect-[16/10] overflow-hidden bg-background/50">
-                        <Image
-                          src={img.src}
-                          alt={img.caption}
-                          fill
-                          unoptimized
-                          className="object-contain object-center p-2 transition-transform duration-500 group-hover:scale-[1.01]"
-                        />
-                      </div>
-                      <div className="p-4 border-t border-border bg-surface-2">
-                        <p className="text-xs text-muted leading-relaxed">{img.caption}</p>
-                      </div>
+              <CaseStudyGallery images={galleryImages} />
+            </Reveal>
+          )}
+
+          {/* Challenge + Solution */}
+          <div className="mt-16 grid gap-6 lg:grid-cols-2">
+            <Reveal>
+              <section className="h-full rounded-2xl border border-border bg-surface p-6 sm:p-8">
+                <div className="flex items-center gap-3">
+                  <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-rose-500/10 text-rose-400">
+                    <Target size={18} />
+                  </div>
+                  <h2 className="text-lg font-bold tracking-tight">The challenge</h2>
+                </div>
+                <p className="mt-5 text-sm leading-relaxed text-muted sm:text-base">{study.problem}</p>
+              </section>
+            </Reveal>
+            <Reveal delay={1}>
+              <section className="h-full rounded-2xl border border-violet/25 bg-gradient-to-br from-violet/10 via-surface to-surface p-6 sm:p-8">
+                <div className="flex items-center gap-3">
+                  <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-violet/15 text-violet">
+                    <Lightbulb size={18} />
+                  </div>
+                  <h2 className="text-lg font-bold tracking-tight">Our solution</h2>
+                </div>
+                <p className="mt-5 text-sm leading-relaxed text-muted sm:text-base">{study.solution}</p>
+              </section>
+            </Reveal>
+          </div>
+
+          {/* Main content grid */}
+          <div className="mt-16 grid gap-10 lg:grid-cols-[minmax(0,1fr)_300px] lg:gap-14">
+            <div className="space-y-12">
+              {/* Architecture flow */}
+              {study.architecture && study.architecture.length > 0 && (
+                <Reveal>
+                  <section>
+                    <h2 className="flex items-center gap-2 text-xl font-bold tracking-tight">
+                      <Layers className="text-cyan" size={20} />
+                      System architecture
+                    </h2>
+                    <div className="mt-6 grid gap-4 sm:grid-cols-2">
+                      {study.architecture.map((layer, idx) => {
+                        const LayerIcon = layer.icon;
+                        return (
+                          <div
+                            key={idx}
+                            className="rounded-2xl border border-border bg-surface p-5 transition-colors hover:border-violet/25"
+                          >
+                            <div className="flex items-center gap-3">
+                              <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-violet/10 text-violet">
+                                <LayerIcon size={18} />
+                              </div>
+                              <h4 className="text-xs font-bold uppercase tracking-wider">{layer.layerName}</h4>
+                            </div>
+                            <ul className="mt-4 space-y-2">
+                              {layer.components.map((comp, cidx) => (
+                                <li
+                                  key={cidx}
+                                  className="rounded-lg bg-surface-2 px-3 py-2 text-xs font-medium text-muted"
+                                >
+                                  {comp}
+                                </li>
+                              ))}
+                            </ul>
+                          </div>
+                        );
+                      })}
                     </div>
-                  ))}
-                </div>
-              </section>
-            </Reveal>
-          )}
+                  </section>
+                </Reveal>
+              )}
 
-          {/* System Architecture Flow */}
-          {study.architecture && study.architecture.length > 0 && (
-            <Reveal>
-              <section className="mt-16">
-                <h2 className="text-xl font-bold tracking-tight text-white border-b border-border pb-3 flex items-center gap-2">
-                  <Layers className="text-cyan" size={20} />
-                  System Architecture &amp; Data Flow
-                </h2>
-                <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-                  {study.architecture.map((layer, idx) => {
-                    const LayerIcon = layer.icon;
-                    return (
-                      <div key={idx} className="relative rounded-2xl border border-border bg-surface p-5 shadow-sm">
-                        {idx < study.architecture!.length - 1 && (
-                          <div className="absolute right-[-10px] top-1/2 z-10 hidden -translate-y-1/2 text-muted lg:block">
-                            ➔
-                          </div>
-                        )}
-                        <div className="flex items-center gap-3">
-                          <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-violet/10 text-violet">
-                            <LayerIcon size={18} />
-                          </div>
-                          <h4 className="text-xs font-bold uppercase tracking-wider text-white">{layer.layerName}</h4>
-                        </div>
-                        <ul className="mt-4 space-y-2">
-                          {layer.components.map((comp, cidx) => (
-                            <li key={cidx} className="rounded-lg bg-surface-2 px-2.5 py-1.5 text-[11px] font-medium text-muted">
-                              {comp}
-                            </li>
-                          ))}
-                        </ul>
-                      </div>
-                    );
-                  })}
-                </div>
-              </section>
-            </Reveal>
-          )}
-
-          {/* Deep Content */}
-          <div className="mt-16 grid gap-10 lg:grid-cols-3 lg:gap-12">
-            <div className="lg:col-span-2 space-y-10">
-              {/* Problem */}
+              {/* Technical specs */}
               <Reveal>
-                <section>
-                  <h2 className="text-xl font-bold tracking-tight text-white border-b border-border pb-3">
-                    The Challenge &amp; Problem
-                  </h2>
-                  <p className="mt-4 text-sm leading-relaxed text-muted">
-                    {study.problem}
-                  </p>
-                </section>
-              </Reveal>
-
-              {/* Solution */}
-              <Reveal>
-                <section>
-                  <h2 className="text-xl font-bold tracking-tight text-white border-b border-border pb-3">
-                    Our Solution &amp; Implementation
-                  </h2>
-                  <p className="mt-4 text-sm leading-relaxed text-muted">
-                    {study.solution}
-                  </p>
-                </section>
-              </Reveal>
-
-              {/* Architecture / Process Details */}
-              <Reveal>
-                <section>
-                  <h2 className="text-xl font-bold tracking-tight text-white border-b border-border pb-3">
-                    Technical Specifications
-                  </h2>
-                  <ul className="mt-4 space-y-3">
+                <section className="rounded-2xl border border-border bg-surface p-6 sm:p-8">
+                  <h2 className="text-xl font-bold tracking-tight">Technical specifications</h2>
+                  <ul className="mt-6 space-y-4">
                     {study.technicalArchitecture.map((arch, i) => (
-                      <li key={i} className="flex gap-3 text-sm text-muted">
+                      <li key={i} className="flex gap-3 text-sm leading-relaxed text-muted">
                         <CheckCircle size={16} className="mt-0.5 shrink-0 text-emerald-400" />
                         <span>{arch}</span>
                       </li>
@@ -678,16 +673,17 @@ export default async function CaseStudyPage({ params }: { params: Promise<{ slug
                 </section>
               </Reveal>
 
-              {/* Key Deliverables */}
+              {/* Deliverables */}
               {study.deliverables && study.deliverables.length > 0 && (
                 <Reveal>
                   <section>
-                    <h2 className="text-xl font-bold tracking-tight text-white border-b border-border pb-3">
-                      Key Deliverables &amp; Handoff Assets
-                    </h2>
-                    <ul className="mt-4 grid gap-3 sm:grid-cols-2">
+                    <h2 className="text-xl font-bold tracking-tight">Key deliverables</h2>
+                    <ul className="mt-6 grid gap-3 sm:grid-cols-2">
                       {study.deliverables.map((item, i) => (
-                        <li key={i} className="flex gap-3 rounded-xl border border-border bg-surface-2 p-3 text-xs text-muted">
+                        <li
+                          key={i}
+                          className="flex gap-3 rounded-xl border border-border bg-surface-2 p-4 text-sm text-muted"
+                        >
                           <CheckCircle size={14} className="mt-0.5 shrink-0 text-cyan" />
                           <span>{item}</span>
                         </li>
@@ -697,30 +693,29 @@ export default async function CaseStudyPage({ params }: { params: Promise<{ slug
                 </Reveal>
               )}
 
-              {/* HIPAA Disclaimer if present */}
               {study.hipaaDisclaimer && (
                 <Reveal>
-                  <div className="flex gap-3 rounded-xl border border-amber-500/20 bg-amber-500/5 p-4 text-xs text-amber-500">
-                    <Shield size={16} className="shrink-0 mt-0.5" />
+                  <div className="flex gap-3 rounded-xl border border-amber-500/20 bg-amber-500/5 p-5 text-sm text-amber-500">
+                    <Shield size={16} className="mt-0.5 shrink-0" />
                     <p>{study.hipaaDisclaimer}</p>
                   </div>
                 </Reveal>
               )}
             </div>
 
-            {/* Sidebar Technologies */}
-            <div className="space-y-6">
+            {/* Sidebar */}
+            <aside className="space-y-6 lg:sticky lg:top-28 lg:self-start">
               <Reveal>
-                <div className="rounded-2xl border border-border bg-surface p-6 shadow-md">
-                  <h3 className="text-xs font-extrabold uppercase tracking-wider text-muted flex items-center gap-2">
+                <div className="rounded-2xl border border-border bg-surface p-6">
+                  <h3 className="flex items-center gap-2 text-xs font-extrabold uppercase tracking-wider text-muted">
                     <Layers size={14} />
-                    Technologies Used
+                    Tech stack
                   </h3>
                   <div className="mt-4 flex flex-wrap gap-2">
                     {study.tags.map((tag) => (
                       <span
                         key={tag}
-                        className="rounded-md border border-border bg-surface-2 px-3 py-1.5 text-xs text-muted"
+                        className="rounded-lg border border-border bg-surface-2 px-3 py-1.5 text-xs font-medium text-muted"
                       >
                         {tag}
                       </span>
@@ -729,36 +724,33 @@ export default async function CaseStudyPage({ params }: { params: Promise<{ slug
                 </div>
               </Reveal>
 
-              {/* Call to action */}
-              <Reveal>
-                <div className="rounded-2xl border border-violet/30 bg-violet/5 p-6 shadow-md text-center">
+              <Reveal delay={1}>
+                <div className="rounded-2xl border border-violet/30 bg-violet/5 p-6 text-center">
                   {study.liveUrl && (
-                    <div className="mb-5">
-                      <a
-                        href={study.liveUrl}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="inline-flex w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-cyan to-violet-600 py-3 text-xs font-extrabold uppercase tracking-wider text-white shadow-lg transition-transform hover:scale-[1.02] hover:shadow-cyan/10"
-                      >
-                        Visit Live Project
-                        <ArrowUpRight size={14} />
-                      </a>
-                    </div>
+                    <a
+                      href={study.liveUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="mb-5 inline-flex w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-cyan to-violet-600 py-3 text-xs font-extrabold uppercase tracking-wider text-white shadow-lg transition-transform hover:scale-[1.02]"
+                    >
+                      Visit live project
+                      <ArrowUpRight size={14} />
+                    </a>
                   )}
-                  <ShieldCheck size={36} className="mx-auto text-violet" />
-                  <h3 className="mt-3 text-sm font-bold text-foreground">Need a similar solution?</h3>
-                  <p className="mt-1 text-xs text-muted leading-relaxed">
-                    We specialize in high-trust custom software engineering with full system auditing.
+                  <ShieldCheck size={32} className="mx-auto text-violet" />
+                  <h3 className="mt-3 text-sm font-bold">Need a similar solution?</h3>
+                  <p className="mt-2 text-xs leading-relaxed text-muted">
+                    We build high-trust custom software with full system auditing.
                   </p>
                   <Link
                     href="/#contact"
-                    className="mt-4 inline-block w-full rounded-xl border border-violet/30 bg-violet/10 py-2.5 text-xs font-bold uppercase tracking-wider text-white shadow-lg transition-transform hover:scale-[1.02]"
+                    className="mt-4 inline-block w-full rounded-xl border border-violet/30 bg-violet/10 py-2.5 text-xs font-bold uppercase tracking-wider text-white transition-transform hover:scale-[1.02]"
                   >
                     Request a consult
                   </Link>
                 </div>
               </Reveal>
-            </div>
+            </aside>
           </div>
         </div>
       </main>

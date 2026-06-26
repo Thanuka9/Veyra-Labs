@@ -7,6 +7,7 @@ import { CONTACT_EMAIL, CONTACT_LINKEDIN, CONTACT_LOCATION, footerServiceLinks }
 
 const company = [
   { label: "Case Studies", href: "/#work" },
+  { label: "Services", href: "/#services" },
   { label: "Pricing & Estimates", href: "/#pricing" },
   { label: "Our Process", href: "/#process" },
   { label: "About Veyra Labs", href: "/#about" },

@@ -23,10 +23,10 @@ export default function Home() {
         <TechMarquee />
         <OutcomesBanner />
         <FeaturedWork />
+        <Work />
         <TechStack />
         <Services />
         <Pricing />
-        <Work />
         <Process />
         <WhyVeyra />
         <BrandStory />

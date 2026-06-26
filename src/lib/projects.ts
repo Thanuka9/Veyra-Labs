@@ -21,6 +21,7 @@ export type Project = {
   /** Large bento tile on the homepage */
   spotlight?: boolean;
   metrics?: { label: string; value: string }[];
+  gallery?: { src: string; caption: string }[];
 };
 
 export const projects: Project[] = [
