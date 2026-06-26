@@ -280,7 +280,7 @@ export function Hero() {
 
             {/* Floating live badge */}
             <div
-              className="absolute -bottom-4 -left-4 flex items-center gap-2 rounded-xl border border-emerald-500/30 bg-background/95 px-3 py-2 text-xs font-semibold text-emerald-400 shadow-[0_8px_32px_-8px_rgba(0,0,0,0.6)] backdrop-blur-sm"
+              className="absolute -bottom-4 left-3 sm:-left-4 flex items-center gap-2 rounded-xl border border-emerald-500/30 bg-background/95 px-3 py-2 text-xs font-semibold text-emerald-400 shadow-[0_8px_32px_-8px_rgba(0,0,0,0.6)] backdrop-blur-sm"
               style={{
                 opacity: entered ? 1 : 0,
                 transform: entered ? "scale(1)" : "scale(0.85)",
@@ -296,7 +296,7 @@ export function Hero() {
 
             {/* Floating tech badge */}
             <div
-              className="absolute -right-4 -top-4 flex items-center gap-2 rounded-xl border border-violet/30 bg-background/95 px-3 py-2 text-xs font-semibold text-violet shadow-[0_8px_32px_-8px_rgba(0,0,0,0.6)] backdrop-blur-sm"
+              className="absolute -top-4 right-3 sm:-right-4 flex items-center gap-2 rounded-xl border border-violet/30 bg-background/95 px-3 py-2 text-xs font-semibold text-violet shadow-[0_8px_32px_-8px_rgba(0,0,0,0.6)] backdrop-blur-sm"
               style={{
                 opacity: entered ? 1 : 0,
                 transform: entered ? "scale(1)" : "scale(0.85)",

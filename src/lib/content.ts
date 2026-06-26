@@ -393,6 +393,7 @@ export const techCategories: TechCategory[] = [
       { name: "React 19", desc: "Component architecture" },
       { name: "TypeScript", desc: "Type-safe codebase" },
       { name: "Tailwind CSS v4", desc: "Design system" },
+      { name: "HTML5 & CSS3", desc: "Core web standards & structures" },
       { name: "Framer Motion", desc: "Cinematic animation" },
     ],
   },
@@ -402,10 +403,11 @@ export const techCategories: TechCategory[] = [
     tools: [
       { name: "Python", desc: "ML, APIs & data pipelines" },
       { name: "FastAPI", desc: "Async Python APIs" },
-      { name: "Flask", desc: "Enterprise web apps" },
+      { name: "PHP", desc: "Server-side web scripting" },
+      { name: "Laravel", desc: "Robust MVC framework" },
       { name: "Node.js", desc: "JS runtime & tooling" },
       { name: "GraphQL", desc: "Flexible data queries" },
-      { name: "REST + OpenAPI", desc: "Documented endpoints" },
+      { name: "REST APIs & Webhooks", desc: "Documented real-time interfaces" },
     ],
   },
   {
@@ -413,9 +415,10 @@ export const techCategories: TechCategory[] = [
     icon: Database,
     tools: [
       { name: "PostgreSQL", desc: "Relational warehouse" },
-      { name: "MongoDB", desc: "Document store" },
+      { name: "MySQL", desc: "Relational DB storage" },
+      { name: "MongoDB", desc: "NoSQL document store" },
+      { name: "Vector Databases", desc: "Semantic search (FAISS, Pinecone)" },
       { name: "Scikit-learn", desc: "Predictive models" },
-      { name: "FAISS", desc: "Vector search" },
       { name: "Pandas / NumPy", desc: "Data engineering" },
     ],
   },
@@ -435,6 +438,8 @@ export const techCategories: TechCategory[] = [
     icon: Cloud,
     tools: [
       { name: "Google Cloud", desc: "Cloud Run, GCP" },
+      { name: "AWS", desc: "Amazon Web Services" },
+      { name: "Microsoft Azure", desc: "Enterprise cloud solutions" },
       { name: "Docker", desc: "Containerisation" },
       { name: "Firebase", desc: "Static hosting" },
       { name: "Vercel", desc: "Edge deployment" },

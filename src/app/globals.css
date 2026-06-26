@@ -840,6 +840,7 @@ input, textarea, select { cursor: auto; }
     opacity: 0;
     transform: translateY(14px) scale(0.98);
     border-color: rgba(124, 92, 255, 0.1);
+    will-change: transform, opacity;
   }
 
   .outcome-card--enter {
@@ -903,15 +904,15 @@ input, textarea, select { cursor: auto; }
   @keyframes outcome-complete {
     0% {
       transform: scale(1);
-      filter: drop-shadow(0 0 8px rgba(124, 92, 255, 0.4));
+      text-shadow: 0 0 4px rgba(124, 92, 255, 0.3);
     }
     45% {
-      transform: scale(1.08);
-      filter: drop-shadow(0 0 24px rgba(34, 211, 238, 0.75));
+      transform: scale(1.05);
+      text-shadow: 0 0 16px rgba(34, 211, 238, 0.6);
     }
     100% {
       transform: scale(1);
-      filter: drop-shadow(0 0 14px rgba(124, 92, 255, 0.45));
+      text-shadow: 0 0 8px rgba(124, 92, 255, 0.4);
     }
   }
 
@@ -950,7 +951,7 @@ input, textarea, select { cursor: auto; }
 
   .outcome-count-bar {
     box-shadow: 0 0 14px rgba(34, 211, 238, 0.5), 0 0 28px rgba(124, 92, 255, 0.35);
-    transition: width 0.12s linear;
+    /* No width transition because width is updated at 60fps via requestAnimationFrame in CountUp */
   }
 
   .outcome-count-shimmer {

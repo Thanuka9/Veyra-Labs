@@ -38,11 +38,14 @@ export const TECH_TOOL_ICONS: Record<string, LucideIcon> = {
   Flask: Server,
   "Node.js": Box,
   GraphQL: GitBranch,
-  "REST + OpenAPI": Globe,
+  "REST APIs & Webhooks": Globe,
+  PHP: Server,
+  Laravel: Flame,
   PostgreSQL: Database,
+  MySQL: Database,
   MongoDB: Database,
+  "Vector Databases": Search,
   "Scikit-learn": BarChart3,
-  FAISS: Search,
   "Pandas / NumPy": Table2,
   LangChain: Link2,
   "RAG pipelines": BookOpen,
@@ -50,6 +53,8 @@ export const TECH_TOOL_ICONS: Record<string, LucideIcon> = {
   "OpenAI GPT-4o": Brain,
   Playwright: MousePointer2,
   "Google Cloud": Cloud,
+  AWS: Cloud,
+  "Microsoft Azure": Cloud,
   Docker: Box,
   Firebase: Flame,
   Vercel: Triangle,
@@ -59,6 +64,7 @@ export const TECH_TOOL_ICONS: Record<string, LucideIcon> = {
   "Monday.com API": BarChart3,
   Streamlit: BarChart3,
   "Power BI export": PieChart,
+  "HTML5 & CSS3": Globe,
 };
 
 export function getTechToolIcon(name: string): LucideIcon {
