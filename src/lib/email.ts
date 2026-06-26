@@ -77,7 +77,7 @@ export function buildVeyraInquiryEmail(params: {
 }
 
 function buildEstimateHtml(estimate: ProjectEstimate): string {
-  const brandLogo = "https://veyralabs.com/brand/wordmark-light.png";
+  const brandLogo = "https://veyralabs.com/brand/wordmark-main.png";
   const accentColor = "#7C5CFF";
   const cyanColor = "#22D3EE";
   const bgDark = "#0A0C16";

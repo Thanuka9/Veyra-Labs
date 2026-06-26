@@ -26,7 +26,7 @@ export function LegalPageLayout({ title, description, sections }: LegalPageLayou
           </Link>
 
           <div className="mb-10">
-            <BrandLogo variant="lockup" className="h-9" />
+            <BrandLogo variant="wordmark" className="h-9" />
             <h1 className="mt-6 text-3xl font-bold tracking-tight sm:text-4xl">{title}</h1>
             <p className="mt-3 text-sm leading-relaxed text-muted">{description}</p>
             <p className="mt-4 text-xs text-muted">Last updated: {LEGAL_LAST_UPDATED}</p>

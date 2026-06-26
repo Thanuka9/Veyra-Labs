@@ -189,7 +189,7 @@ export function EstimateWizard({ onComplete, onCancel, embedded }: EstimateWizar
       <div className={cn("border-b border-violet/20 bg-surface-2/50", embedded ? "px-3 py-2.5" : "px-4 py-3")}>
         <div className="flex items-center justify-between gap-2">
           <div className="flex min-w-0 items-center gap-2">
-            {!embedded && <BrandLogo variant="icon" className="h-8 w-8 shrink-0 rounded-lg" />}
+            {!embedded && <BrandLogo variant="icon" className="h-8 w-auto shrink-0" />}
             <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-violet/20">
               <LucideIcon icon={Calculator} size={14} className="text-violet" />
             </div>
@@ -481,7 +481,7 @@ export function EstimateResultCard({
     <div className="space-y-3">
       <div className="flex items-center justify-between gap-2 border-b border-border/60 pb-2">
         <div className="flex items-center gap-2">
-          <BrandLogo variant="icon" className="h-6 w-6" />
+          <BrandLogo variant="icon" className="h-6 w-auto" />
           <span className="text-[11px] font-bold text-foreground">Veyra Labs</span>
         </div>
         <span className="font-mono text-[10px] text-muted">{estimate.id}</span>

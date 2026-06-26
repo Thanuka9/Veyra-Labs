@@ -2,24 +2,24 @@ import Image from "next/image";
 import { cn } from "@/lib/cn";
 
 /** Bump when logo source files change to bust CDN/browser cache. */
-const BRAND_V = "3";
+const BRAND_V = "4";
 
 type BrandLogoProps = {
-  /** lockup = icon + wordmark for dark backgrounds (navbar, footer). wordmark = dark text on white (PDFs). icon = app mark only. */
-  variant?: "lockup" | "wordmark" | "icon";
+  /** wordmark = official Veyra Labs main logo (V + wordmark). lockup = dark-theme lockup. icon = main wordmark scaled. */
+  variant?: "wordmark" | "lockup" | "icon";
   className?: string;
   priority?: boolean;
 };
 
 const assets = {
-  /** White “Veyra Labs” + gradient V — use on dark UI (navbar, footer, legal). */
+  /** Official main logo — veyra_labs_main_logo_wordmark */
+  wordmark: { src: `/brand/wordmark-main.png?v=${BRAND_V}`, w: 280, h: 60, alt: "Veyra Labs" },
+  icon: { src: `/brand/wordmark-main.png?v=${BRAND_V}`, w: 280, h: 60, alt: "Veyra Labs" },
+  /** White text lockup for dark backgrounds without a light badge */
   lockup: { src: `/brand/lockup-dark.png?v=${BRAND_V}`, w: 320, h: 72, alt: "Veyra Labs" },
-  /** Dark text wordmark — use on white/light backgrounds only. */
-  wordmark: { src: `/brand/wordmark-light.png?v=${BRAND_V}`, w: 240, h: 52, alt: "Veyra Labs" },
-  icon: { src: `/brand/app-icon.png?v=${BRAND_V}`, w: 48, h: 48, alt: "Veyra Labs icon" },
 } as const;
 
-export function BrandLogo({ variant = "lockup", className, priority }: BrandLogoProps) {
+export function BrandLogo({ variant = "wordmark", className, priority }: BrandLogoProps) {
   const asset = assets[variant];
   return (
     <Image

@@ -1,6 +1,7 @@
-const BRAND_V = "3";
+const BRAND_V = "4";
 
 export const BRAND_PATHS = {
+  wordmarkMain: `/brand/wordmark-main.png?v=${BRAND_V}`,
   wordmarkLight: `/brand/wordmark-light.png?v=${BRAND_V}`,
   lockupDark: `/brand/lockup-dark.png?v=${BRAND_V}`,
   appIcon: `/brand/app-icon.png?v=${BRAND_V}`,
@@ -28,7 +29,7 @@ export async function fetchImageAsDataUrl(path: string): Promise<string> {
 }
 
 export async function getWordmarkDataUrl(): Promise<string> {
-  return fetchImageAsDataUrl(BRAND_PATHS.wordmarkLight);
+  return fetchImageAsDataUrl(BRAND_PATHS.wordmarkMain);
 }
 
 export async function getAppIconDataUrl(): Promise<string> {

@@ -289,7 +289,7 @@ export function VeyraChat() {
           {/* ── Header ── */}
           <header className="veyra-chat-header">
             <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-violet/30 bg-violet/10">
-              <BrandLogo variant="icon" className="h-8 w-8" />
+              <BrandLogo variant="icon" className="h-8 w-auto" />
             </div>
             <div className="min-w-0 flex-1">
               <p className="flex items-center gap-1.5 text-sm font-bold text-foreground">

@@ -76,11 +76,13 @@ export function Navbar() {
             className="group flex shrink-0 items-center transition-opacity hover:opacity-90"
             aria-label="Veyra Labs home"
           >
-            <BrandLogo
-              variant="lockup"
-              className="h-9 w-auto transition-transform duration-300 group-hover:scale-[1.01] sm:h-10 lg:h-11"
-              priority
-            />
+            <span className="inline-flex rounded-lg bg-white px-2.5 py-1 shadow-sm ring-1 ring-white/10">
+              <BrandLogo
+                variant="wordmark"
+                className="h-7 w-auto sm:h-8 lg:h-9"
+                priority
+              />
+            </span>
           </a>
 
           <nav className="hidden min-w-0 justify-center lg:flex" aria-label="Primary">

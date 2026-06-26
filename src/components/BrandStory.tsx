@@ -37,7 +37,7 @@ export function BrandStory() {
           <div className="grid items-center gap-12 lg:grid-cols-[minmax(0,1fr)_minmax(0,380px)]">
             <div className="max-w-xl">
               <Reveal>
-                <BrandLogo variant="lockup" className="h-11" />
+                <BrandLogo variant="wordmark" className="h-11" />
               </Reveal>
               <Reveal delay={1}>
                 <h2 className="mt-8 text-balance text-3xl font-bold tracking-tight sm:text-4xl">
