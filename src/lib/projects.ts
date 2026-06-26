@@ -53,7 +53,8 @@ export const projects: Project[] = [
     tags: ["Flask", "PostgreSQL", "MongoDB", "Local LLM", "RBAC"],
     labels: ["Client Project", "Live Production"],
     image: "/projects/trainiq-hero.png",
-    linkLabel: "Enterprise deployment",
+    href: "/case-studies/trainiq",
+    linkLabel: "Read case study →",
     featured: true,
     spotlight: true,
     metrics: [
@@ -115,7 +116,8 @@ export const projects: Project[] = [
     tags: ["FastAPI", "React", "Scikit-learn", "GCP"],
     labels: ["Internal SaaS", "Prototype"],
     image: "/projects/revops-landing.png",
-    linkLabel: "Case study",
+    href: "/case-studies/revops-ai",
+    linkLabel: "Read case study →",
     featured: true,
     metrics: [
       { label: "Forecast accuracy", value: "94%" },
@@ -132,7 +134,8 @@ export const projects: Project[] = [
     tags: ["Python", "PostgreSQL", "NLP", "Pandas"],
     labels: ["Internal Product", "Prototype"],
     image: "/projects/reviewradar-sentiment.png",
-    linkLabel: "Case study",
+    href: "/case-studies/reviewradar-ai",
+    linkLabel: "Read case study →",
   },
   {
     slug: "job-hunter-ai",
@@ -144,7 +147,8 @@ export const projects: Project[] = [
     tags: ["RAG", "FAISS", "Playwright", "GPT-4o"],
     labels: ["Internal SaaS", "Prototype"],
     cover: "from-violet-600/30 via-indigo-600/20 to-cyan-500/20",
-    linkLabel: "Case study",
+    href: "/case-studies/job-hunter-ai",
+    linkLabel: "Read case study →",
   },
   {
     slug: "nimasha-portfolio",
@@ -181,7 +185,8 @@ export const projects: Project[] = [
     tags: ["Streamlit", "Pandas", "GraphQL"],
     labels: ["Internal Product", "Demo App"],
     image: "/projects/monday-auditor.png",
-    linkLabel: "Case study",
+    href: "/case-studies/monday-auditor",
+    linkLabel: "Read case study →",
   },
 ];
 

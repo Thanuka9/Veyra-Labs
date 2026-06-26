@@ -1,13 +1,17 @@
 import Image from "next/image";
+import Link from "next/link";
 import { ArrowUpRight, Lock } from "lucide-react";
 import type { Project } from "@/lib/projects";
 import { TiltCard } from "./TiltCard";
 
 export function ProjectCard({ project }: { project: Project }) {
   const isLink = Boolean(project.href);
-  const Wrapper = isLink ? "a" : "div";
+  const isExternal = isLink && project.href?.startsWith("http");
+  const Wrapper = isLink ? (isExternal ? "a" : Link) : "div" as any;
   const wrapperProps = isLink
-    ? { href: project.href, target: "_blank", rel: "noopener noreferrer" }
+    ? isExternal
+      ? { href: project.href, target: "_blank", rel: "noopener noreferrer" }
+      : { href: project.href }
     : {};
 
   return (
