@@ -325,7 +325,7 @@ export const addonServices = services.filter((s) => s.category === "addon");
 
 export const footerServiceLinks = coreServices.map((s) => ({
   label: s.shortTitle,
-  href: `/#services-${s.id}`,
+  href: `/services#services-${s.id}`,
 }));
 
 export const contactProjectTypes = [

@@ -4,7 +4,7 @@ import { BrandLogo } from "./BrandLogo";
 import { CookieSettingsButton } from "./CookieSettingsButton";
 import { Reveal } from "./Reveal";
 import { CONTACT_EMAIL, CONTACT_LINKEDIN, CONTACT_LOCATION, footerServiceLinks } from "@/lib/content";
-import { FOOTER_COMPANY_LINKS } from "@/lib/nav-links";
+import { FOOTER_COMPANY_LINKS, contactHref } from "@/lib/nav-links";
 
 const company = FOOTER_COMPANY_LINKS;
 
@@ -25,13 +25,13 @@ export function Footer() {
               Let&apos;s build your next product together.
             </p>
           </div>
-          <a
-            href="/#contact"
+          <Link
+            href={contactHref(false)}
             className="group inline-flex shrink-0 items-center gap-2 rounded-xl bg-gradient-to-r from-violet to-cyan px-6 py-3.5 text-sm font-semibold text-white shadow-[0_0_32px_-8px_rgba(124,92,255,0.55)] transition-transform hover:scale-[1.03]"
           >
             Book a free discovery call
             <ArrowRight size={16} className="transition-transform group-hover:translate-x-0.5" />
-          </a>
+          </Link>
         </Reveal>
       </div>
 
@@ -72,9 +72,9 @@ export function Footer() {
               <ul className="mt-4 space-y-2.5">
                 {footerServiceLinks.map((l) => (
                   <li key={l.label}>
-                    <a href={l.href} className="text-sm text-muted transition-colors hover:text-cyan">
+                    <Link href={l.href} className="text-sm text-muted transition-colors hover:text-cyan">
                       {l.label}
-                    </a>
+                    </Link>
                   </li>
                 ))}
               </ul>
@@ -84,9 +84,9 @@ export function Footer() {
               <ul className="mt-4 grid grid-cols-1 gap-x-4 gap-y-2.5 sm:grid-cols-2">
                 {company.map((l) => (
                   <li key={l.href}>
-                    <a href={l.href} className="text-sm text-muted transition-colors hover:text-cyan">
+                    <Link href={l.href} className="text-sm text-muted transition-colors hover:text-cyan">
                       {l.label}
-                    </a>
+                    </Link>
                   </li>
                 ))}
               </ul>
@@ -120,6 +120,9 @@ export function Footer() {
                   </li>
                 ))}
               </ul>
+              <Link href="/pricing" className="mt-4 inline-block text-xs font-semibold text-cyan hover:underline">
+                Full pricing details →
+              </Link>
             </div>
           </Reveal>
         </div>

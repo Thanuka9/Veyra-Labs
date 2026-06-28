@@ -24,7 +24,7 @@ export function Pricing() {
   return (
     <section
       id="pricing"
-      className="section relative overflow-hidden border-y border-border bg-gradient-to-b from-surface/60 via-surface/40 to-background"
+      className="section section-tone-a relative overflow-hidden border-y border-border"
     >
       {/* Grid texture */}
       <div className="pointer-events-none absolute inset-0 grid-bg opacity-20" />
@@ -94,7 +94,7 @@ export function Pricing() {
                     </ul>
 
                     <a
-                      href="#contact"
+                      href="/#contact"
                       className={`group/cta mt-6 relative inline-flex items-center justify-center gap-2 overflow-hidden rounded-xl px-4 py-3 text-sm font-semibold transition-all hover:scale-[1.02] ${
                         tier.highlight
                           ? "bg-gradient-to-r from-violet to-cyan text-white shadow-[0_0_24px_-8px_rgba(124,92,255,0.5)] hover:shadow-[0_0_40px_-8px_rgba(124,92,255,0.7)]"
@@ -133,7 +133,7 @@ export function Pricing() {
               </div>
               <div className="flex items-center gap-4 shrink-0 justify-between sm:justify-end">
                 <a
-                  href="#services"
+                  href="/services"
                   className="text-xs font-semibold text-cyan transition-colors hover:text-foreground hover:underline"
                 >
                   View all services →
@@ -167,7 +167,7 @@ export function Pricing() {
                 return (
                   <a
                     key={s.id}
-                    href={`#services-${s.id}`}
+                    href={`/services#services-${s.id}`}
                     className="w-[285px] shrink-0 snap-start snap-always group rounded-xl border border-border bg-surface p-5 transition-all duration-300 hover:border-violet/40 hover:shadow-[0_0_24px_-8px_rgba(124,92,255,0.3)] shine-border"
                   >
                     <div className="icon-pulse inline-flex h-9 w-9 items-center justify-center rounded-lg border border-border bg-surface-2 text-violet transition-all duration-300 group-hover:border-violet/40 group-hover:bg-violet/10">

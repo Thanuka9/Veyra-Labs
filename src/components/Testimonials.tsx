@@ -8,7 +8,7 @@ import { SectionHeading } from "./SectionHeading";
 import { Reveal } from "./Reveal";
 import { cn } from "@/lib/cn";
 
-export function Testimonials() {
+export function Testimonials({ showStats = true }: { showStats?: boolean }) {
   const [active, setActive] = useState(0);
   const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
@@ -51,55 +51,58 @@ export function Testimonials() {
   const { prev: prevIdx, curr: currIdx, next: nextIdx } = getVisible();
 
   const renderCard = (t: (typeof testimonials)[number], isCurrent: boolean) => (
-  <>
-    <div className="mb-3 flex gap-0.5">
-      {[1, 2, 3, 4, 5].map((s) => (
-        <Star key={s} size={13} className="fill-amber-400 text-amber-400" />
-      ))}
-    </div>
+    <>
+      <div className="mb-3 flex gap-0.5">
+        {[1, 2, 3, 4, 5].map((s) => (
+          <Star key={s} size={13} className="fill-amber-400 text-amber-400" />
+        ))}
+      </div>
 
-    <Quote
-      size={18}
-      className={cn("mb-3 transition-colors duration-300", isCurrent ? "text-violet/80" : "text-violet/40")}
-    />
+      <Quote
+        size={18}
+        className={cn("mb-3 transition-colors duration-300", isCurrent ? "text-violet" : "text-violet/50")}
+      />
 
-    <blockquote className="flex-1 text-sm leading-relaxed text-foreground/90">&ldquo;{t.quote}&rdquo;</blockquote>
+      <blockquote className="flex-1 text-sm leading-relaxed text-[#1a1d28]/90 sm:text-base">
+        &ldquo;{t.quote}&rdquo;
+      </blockquote>
 
-    <figcaption className="mt-5 border-t border-border/60 pt-4">
-      <div className="flex items-start gap-3">
-        <div
-          className={cn(
-            "flex h-9 w-9 shrink-0 items-center justify-center rounded-full text-xs font-bold text-white",
-            isCurrent ? "bg-gradient-to-br from-violet to-cyan" : "bg-surface-2 text-muted"
-          )}
-          aria-hidden
-        >
-          {t.role.charAt(0)}
-        </div>
-        <div className="min-w-0">
-          <div className="text-sm font-semibold">{t.role}</div>
-          <div className="text-xs text-muted">{t.context}</div>
-          <div className="mt-1 text-[10px] font-medium uppercase tracking-wider text-muted/70">
-            Verified client · identity withheld
+      <figcaption className="mt-5 border-t border-[#dde1ea] pt-4">
+        <div className="flex items-start gap-3">
+          <div
+            className={cn(
+              "flex h-9 w-9 shrink-0 items-center justify-center rounded-full text-xs font-bold text-white",
+              isCurrent ? "bg-gradient-to-br from-violet to-cyan" : "bg-[#c8ceda] text-[#5c6478]"
+            )}
+            aria-hidden
+          >
+            {t.role.charAt(0)}
+          </div>
+          <div className="min-w-0">
+            <div className="text-sm font-semibold text-[#12131a]">{t.role}</div>
+            <div className="text-xs text-[#5c6478]">{t.context}</div>
+            <div className="mt-1 text-[10px] font-medium uppercase tracking-wider text-[#8b93a7]">
+              Verified client · identity withheld
+            </div>
           </div>
         </div>
-      </div>
-      {t.projectSlug && (
-        <Link
-          href={`/case-studies/${t.projectSlug}`}
-          className="mt-3 inline-flex items-center gap-1 text-xs font-semibold text-cyan hover:underline"
-        >
-          View related case study
-          <ArrowUpRight size={12} />
-        </Link>
-      )}
-    </figcaption>
-  </>
+        {t.projectSlug && (
+          <Link
+            href={`/case-studies/${t.projectSlug}`}
+            className="mt-3 inline-flex items-center gap-1 text-xs font-semibold text-violet hover:underline"
+          >
+            View related case study
+            <ArrowUpRight size={12} />
+          </Link>
+        )}
+      </figcaption>
+    </>
   );
 
   return (
-    <section id="testimonials" className="section relative overflow-hidden">
-      <div className="pointer-events-none absolute left-1/2 top-1/2 h-[500px] w-[700px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(closest-side,rgba(124,92,255,0.08),transparent)] blur-3xl" />
+    <section id="testimonials" className="section section-tone-light relative overflow-hidden">
+      <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-violet/25 to-transparent" />
+      <div className="pointer-events-none absolute left-1/2 top-0 h-[320px] w-[640px] -translate-x-1/2 rounded-full bg-[radial-gradient(closest-side,rgba(124,92,255,0.08),transparent)] blur-3xl" />
 
       <div className="container-page relative">
         <SectionHeading
@@ -110,7 +113,8 @@ export function Testimonials() {
               Trusted to solve <span className="text-gradient">real bottlenecks</span>
             </>
           }
-          subtitle="Quotes from verified engagements. We use role and industry only — no client names or logos without written permission."
+          subtitle="Quotes from verified engagements — role and industry only, no names without permission."
+          theme="light"
         />
 
         <div className="mt-14 hidden lg:block">
@@ -118,7 +122,7 @@ export function Testimonials() {
             <button
               onClick={handlePrev}
               aria-label="Previous testimonial"
-              className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-border bg-surface text-muted transition-all hover:border-violet/40 hover:text-foreground hover:shadow-[0_0_20px_-6px_rgba(124,92,255,0.4)]"
+              className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-[#dde1ea] bg-white text-[#5c6478] shadow-sm transition-all hover:border-violet/30 hover:text-[#12131a] hover:shadow-md"
             >
               <ChevronLeft size={20} />
             </button>
@@ -134,8 +138,8 @@ export function Testimonials() {
                     className={cn(
                       "group flex flex-col rounded-2xl border p-6 transition-all duration-500",
                       isCurrent
-                        ? "flex-[1.3] scale-[1.02] border-violet/35 bg-surface shadow-[0_0_48px_-16px_rgba(124,92,255,0.45)]"
-                        : "flex-1 cursor-pointer border-border bg-surface/60 opacity-55 hover:opacity-75"
+                        ? "flex-[1.3] scale-[1.02] border-violet/25 bg-white shadow-[0_20px_60px_-24px_rgba(67,56,202,0.25)]"
+                        : "flex-1 cursor-pointer border-[#e4e8f0] bg-white/70 opacity-60 hover:opacity-85"
                     )}
                   >
                     {renderCard(t, isCurrent)}
@@ -147,7 +151,7 @@ export function Testimonials() {
             <button
               onClick={handleNext}
               aria-label="Next testimonial"
-              className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-border bg-surface text-muted transition-all hover:border-violet/40 hover:text-foreground hover:shadow-[0_0_20px_-6px_rgba(124,92,255,0.4)]"
+              className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-[#dde1ea] bg-white text-[#5c6478] shadow-sm transition-all hover:border-violet/30 hover:text-[#12131a] hover:shadow-md"
             >
               <ChevronRight size={20} />
             </button>
@@ -162,8 +166,8 @@ export function Testimonials() {
                 className={cn(
                   "rounded-full transition-all duration-300",
                   i === active
-                    ? "h-2 w-6 bg-gradient-to-r from-violet to-cyan shadow-[0_0_8px_rgba(124,92,255,0.6)]"
-                    : "h-2 w-2 bg-border hover:bg-muted/60"
+                    ? "h-2 w-6 bg-gradient-to-r from-violet to-cyan shadow-[0_0_8px_rgba(124,92,255,0.4)]"
+                    : "h-2 w-2 bg-[#c8ceda] hover:bg-[#8b93a7]"
                 )}
               />
             ))}
@@ -171,14 +175,14 @@ export function Testimonials() {
         </div>
 
         <div className="mt-10 lg:hidden">
-          <div className="relative overflow-hidden rounded-2xl border border-violet/25 bg-surface p-6 shadow-[0_0_40px_-16px_rgba(124,92,255,0.35)]">
+          <div className="relative overflow-hidden rounded-2xl border border-violet/20 bg-white p-6 shadow-[0_16px_48px_-20px_rgba(67,56,202,0.3)]">
             {renderCard(testimonials[active], true)}
           </div>
 
           <div className="mt-4 flex items-center justify-between">
             <button
               onClick={handlePrev}
-              className="flex h-9 w-9 items-center justify-center rounded-full border border-border bg-surface text-muted hover:border-violet/40"
+              className="flex h-9 w-9 items-center justify-center rounded-full border border-[#dde1ea] bg-white text-[#5c6478] hover:border-violet/30"
             >
               <ChevronLeft size={18} />
             </button>
@@ -189,34 +193,36 @@ export function Testimonials() {
                   onClick={() => handleDot(i)}
                   className={cn(
                     "rounded-full transition-all duration-300",
-                    i === active ? "h-1.5 w-4 bg-gradient-to-r from-violet to-cyan" : "h-1.5 w-1.5 bg-border"
+                    i === active ? "h-1.5 w-4 bg-gradient-to-r from-violet to-cyan" : "h-1.5 w-1.5 bg-[#c8ceda]"
                   )}
                 />
               ))}
             </div>
             <button
               onClick={handleNext}
-              className="flex h-9 w-9 items-center justify-center rounded-full border border-border bg-surface text-muted hover:border-violet/40"
+              className="flex h-9 w-9 items-center justify-center rounded-full border border-[#dde1ea] bg-white text-[#5c6478] hover:border-violet/30"
             >
               <ChevronRight size={18} />
             </button>
           </div>
         </div>
 
-        <Reveal className="mt-12">
-          <div className="flex flex-wrap items-center justify-center gap-x-8 gap-y-3 rounded-2xl border border-border bg-surface-2/50 px-6 py-4 text-center">
-            {[
-              { v: "7", l: "Verified quotes on this page" },
-              { v: "8+", l: "Countries served" },
-              { v: "100%", l: "Deployments with documented handoff" },
-            ].map((s) => (
-              <div key={s.l}>
-                <span className="text-lg font-bold text-gradient-soft">{s.v}</span>
-                <span className="ml-2 text-xs text-muted">{s.l}</span>
-              </div>
-            ))}
-          </div>
-        </Reveal>
+        {showStats && (
+          <Reveal className="mt-12">
+            <div className="flex flex-wrap items-center justify-center gap-x-8 gap-y-3 rounded-2xl border border-[#e4e8f0] bg-white px-6 py-4 text-center shadow-sm">
+              {[
+                { v: "7", l: "Verified quotes on this page" },
+                { v: "8+", l: "Countries served" },
+                { v: "100%", l: "Deployments with documented handoff" },
+              ].map((s) => (
+                <div key={s.l}>
+                  <span className="text-lg font-bold text-gradient-soft">{s.v}</span>
+                  <span className="ml-2 text-xs text-[#5c6478]">{s.l}</span>
+                </div>
+              ))}
+            </div>
+          </Reveal>
+        )}
       </div>
     </section>
   );

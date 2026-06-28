@@ -6,7 +6,7 @@ import { TiltCard } from "./TiltCard";
 
 export function Services() {
   return (
-    <section id="services" className="section relative overflow-hidden">
+    <section id="services" className="section section-tone-a relative overflow-hidden">
       {/* Section ambient */}
       <div className="pointer-events-none absolute left-1/2 top-0 -z-10 h-96 w-96 -translate-x-1/2 rounded-full bg-[radial-gradient(closest-side,rgba(124,92,255,0.12),transparent)] blur-3xl" />
       <div className="pointer-events-none absolute right-0 bottom-0 -z-10 h-64 w-64 rounded-full bg-[radial-gradient(closest-side,rgba(34,211,238,0.08),transparent)] blur-3xl" />
@@ -76,7 +76,7 @@ export function Services() {
                   </div>
 
                   <a
-                    href="#contact"
+                    href="/#contact"
                     className="group/cta mt-auto flex items-center gap-1.5 pt-5 text-sm font-semibold text-cyan transition-all hover:gap-2.5 hover:text-foreground"
                   >
                     Request a quote

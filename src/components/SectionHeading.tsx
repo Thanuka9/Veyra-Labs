@@ -8,6 +8,7 @@ export function SectionHeading({
   align = "left",
   wide = false,
   accent = "violet",
+  theme = "dark",
 }: {
   eyebrow: string;
   title: React.ReactNode;
@@ -16,11 +17,15 @@ export function SectionHeading({
   wide?: boolean;
   /** Controls the eyebrow dot + pill colour. Defaults to "violet". */
   accent?: "violet" | "cyan" | "emerald" | "indigo";
+  /** Light sections use dark text overrides */
+  theme?: "dark" | "light";
 }) {
   const alignment =
     align === "center"
       ? "items-center text-center mx-auto"
       : "items-start text-left mr-auto";
+
+  const isLight = theme === "light";
 
   const accentStyles = {
     violet: {
@@ -61,13 +66,23 @@ export function SectionHeading({
         </span>
       </Reveal>
       <Reveal delay={1}>
-        <h2 className="text-balance text-3xl font-bold tracking-tight sm:text-4xl lg:text-5xl">
+        <h2
+          className={cn(
+            "text-balance text-3xl font-bold tracking-tight sm:text-4xl lg:text-5xl",
+            isLight && "text-[#12131a]"
+          )}
+        >
           {title}
         </h2>
       </Reveal>
       {subtitle && (
         <Reveal delay={2}>
-          <p className="text-pretty text-base leading-relaxed text-muted sm:text-lg">
+          <p
+            className={cn(
+              "text-pretty text-base leading-relaxed sm:text-lg",
+              isLight ? "text-[#5c6478]" : "text-muted"
+            )}
+          >
             {subtitle}
           </p>
         </Reveal>

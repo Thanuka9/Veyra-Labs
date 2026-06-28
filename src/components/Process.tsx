@@ -85,7 +85,7 @@ export function Process() {
   const live = useScrollTrigger(sectionRef, { rootMargin: "0px 0px -5% 0px", threshold: 0.02 });
 
   return (
-    <section id="process" className="section relative overflow-hidden">
+    <section id="process" className="section section-tone-a relative overflow-hidden">
       <div className="pointer-events-none absolute inset-x-0 top-1/2 -z-10 h-px bg-gradient-to-r from-transparent via-violet/30 to-transparent" />
       <div className="container-page" ref={sectionRef}>
         <SectionHeading
@@ -121,7 +121,7 @@ export function Process() {
           style={{ animationDelay: live ? `${120 + process.length * 200 + 80}ms` : undefined }}
         >
           <a
-            href="#contact"
+            href="/#contact"
             className="group inline-flex items-center gap-2 rounded-xl bg-gradient-to-r from-violet to-cyan px-7 py-4 text-sm font-semibold text-white shadow-[0_0_32px_-8px_rgba(124,92,255,0.6)] transition-transform hover:scale-[1.03]"
           >
             Start with a free discovery call

@@ -120,7 +120,7 @@ function ZeroPlaceholder({ suffix }: { suffix: string }) {
   );
 }
 
-export function OutcomesBanner() {
+export function OutcomesBanner({ condensed = false }: { condensed?: boolean }) {
   const gridRef = useRef<HTMLDivElement>(null);
   const started = useScrollTrigger(gridRef, { rootMargin: "0px 0px -5% 0px", threshold: 0.02 });
   const [run, setRun] = useState(0);
@@ -140,8 +140,8 @@ export function OutcomesBanner() {
     <section
       id="outcomes"
       className={cn(
-        "relative overflow-hidden border-y border-border py-16 sm:py-20 transition-colors duration-1000",
-        started ? "outcomes-section--live bg-gradient-to-b from-surface/90 to-background" : "bg-gradient-to-b from-surface/80 to-background"
+        "section-tone-b relative overflow-hidden border-y border-border py-12 sm:py-16 transition-colors duration-1000",
+        started && "outcomes-section--live"
       )}
     >
       <div className="pointer-events-none absolute inset-0 grid-bg opacity-30" />
@@ -169,11 +169,13 @@ export function OutcomesBanner() {
               Numbers that matter to your business
             </h2>
             <p className="mt-2 max-w-lg text-sm text-muted sm:text-base">
-              Real metrics from production systems we&apos;ve designed, built and deployed.
+              {condensed
+                ? "Production metrics from systems we've shipped."
+                : "Real metrics from production systems we've designed, built and deployed."}
             </p>
           </div>
           <a
-            href="#pricing"
+            href="/pricing"
             className="group hidden shrink-0 items-center gap-2 rounded-xl border border-border bg-surface px-5 py-3 text-sm font-semibold transition-colors hover:border-violet/40 sm:inline-flex"
           >
             See project estimates
@@ -183,7 +185,7 @@ export function OutcomesBanner() {
 
         <div className="mt-6 sm:hidden">
           <a
-            href="#pricing"
+            href="/pricing"
             className="group inline-flex w-full items-center justify-center gap-2 rounded-xl border border-border bg-surface px-5 py-3 text-sm font-semibold"
           >
             See project estimates
@@ -233,10 +235,12 @@ export function OutcomesBanner() {
                   >
                     {o.label}
                   </p>
-                  <p className="mt-1.5 text-xs leading-relaxed text-muted">{o.detail}</p>
-                  <p className="mt-4 border-t border-border pt-3 text-[11px] font-medium text-cyan/80">
-                    {o.project}
-                  </p>
+                  <p className="mt-1.5 text-xs leading-relaxed text-muted">{condensed ? o.project : o.detail}</p>
+                  {!condensed && (
+                    <p className="mt-4 border-t border-border pt-3 text-[11px] font-medium text-cyan/80">
+                      {o.project}
+                    </p>
+                  )}
                 </div>
               </TiltCard>
             );

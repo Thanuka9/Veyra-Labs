@@ -1,21 +1,19 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { AnimatePresence, motion } from "framer-motion";
 import { ArrowRight, Menu, X } from "lucide-react";
 import { BrandLogo } from "./BrandLogo";
 import { cn } from "@/lib/cn";
-import { NAV_SECTION_LINKS, sectionHref } from "@/lib/nav-links";
-
-const SCROLL_SPY_OFFSET = 100;
+import { SITE_NAV_LINKS, contactHref } from "@/lib/nav-links";
 
 export function Navbar() {
   const pathname = usePathname();
   const onHome = pathname === "/";
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
-  const [activeSection, setActiveSection] = useState("");
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 12);
@@ -25,40 +23,14 @@ export function Navbar() {
   }, []);
 
   useEffect(() => {
-    if (!onHome) {
-      setActiveSection("");
-      return;
-    }
-
-    const updateActive = () => {
-      let current = "";
-      for (const { href } of NAV_SECTION_LINKS) {
-        const id = href.slice(1);
-        const el = document.getElementById(id);
-        if (el && el.getBoundingClientRect().top <= SCROLL_SPY_OFFSET) {
-          current = href;
-        }
-      }
-      setActiveSection(current);
-    };
-
-    updateActive();
-    window.addEventListener("scroll", updateActive, { passive: true });
-    window.addEventListener("resize", updateActive);
-    return () => {
-      window.removeEventListener("scroll", updateActive);
-      window.removeEventListener("resize", updateActive);
-    };
-  }, [onHome]);
-
-  useEffect(() => {
     document.body.style.overflow = open ? "hidden" : "";
     return () => {
       document.body.style.overflow = "";
     };
   }, [open]);
 
-  const navLinks = NAV_SECTION_LINKS.filter((l) => l.href !== "#contact");
+  const isActive = (href: string) =>
+    href === "/" ? pathname === "/" : pathname === href || pathname.startsWith(`${href}/`);
 
   return (
     <header
@@ -70,68 +42,64 @@ export function Navbar() {
       )}
     >
       <div className="container-page">
-        <div className="grid h-[4.5rem] grid-cols-[auto_minmax(0,1fr)_auto] items-center gap-2 lg:h-[5rem] lg:gap-4">
-          <a
+        <div className="flex h-[4.5rem] items-center justify-between gap-4 lg:h-[5rem]">
+          <Link
             href={onHome ? "#top" : "/"}
             className="group flex shrink-0 items-center transition-opacity hover:opacity-90"
             aria-label="Veyra Labs home"
           >
-            <span className="inline-flex rounded-lg bg-white px-2.5 py-1 shadow-sm ring-1 ring-white/10">
-              <BrandLogo
-                variant="wordmark"
-                className="h-7 w-auto sm:h-8 lg:h-9"
-                priority
-              />
+            <span className="inline-flex items-center rounded-lg bg-white px-3 py-1.5 shadow-sm ring-1 ring-black/5">
+              <BrandLogo variant="wordmark" className="h-7 w-auto sm:h-8" priority />
             </span>
-          </a>
+          </Link>
 
-          <nav className="hidden min-w-0 justify-center lg:flex" aria-label="Primary">
-            <ul className="flex max-w-full items-center gap-0.5 overflow-x-auto rounded-2xl border border-border/70 bg-surface/60 p-1 shadow-[inset_0_1px_0_rgba(255,255,255,0.04)] backdrop-blur-md hide-scrollbar">
-              {navLinks.map((l) => {
-                const isActive = activeSection === l.href;
+          <nav className="hidden min-w-0 flex-1 justify-center lg:flex" aria-label="Primary">
+            <ul className="flex items-center gap-1 xl:gap-1.5">
+              {SITE_NAV_LINKS.map((l) => {
+                const active = isActive(l.href);
                 return (
-                  <li key={l.href} className="shrink-0">
-                    <a
-                      href={sectionHref(l.href, onHome)}
+                  <li key={l.href}>
+                    <Link
+                      href={l.href}
                       className={cn(
-                        "relative block whitespace-nowrap rounded-xl px-2 py-1.5 text-[11px] font-medium transition-colors xl:px-2.5 xl:py-2 xl:text-[12px]",
-                        isActive ? "text-foreground" : "text-muted hover:text-foreground"
+                        "relative block whitespace-nowrap rounded-lg px-2.5 py-2 text-[13px] font-medium transition-colors xl:px-3 xl:text-sm",
+                        active ? "text-foreground" : "text-muted hover:text-foreground"
                       )}
                     >
-                      {isActive && (
+                      {active && (
                         <motion.span
                           layoutId="nav-active-pill"
-                          className="absolute inset-0 rounded-xl bg-violet/15 ring-1 ring-violet/25"
+                          className="absolute inset-0 rounded-lg bg-violet/12 ring-1 ring-violet/20"
                           transition={{ type: "spring", stiffness: 380, damping: 30 }}
                         />
                       )}
                       <span className="relative">{l.label}</span>
-                    </a>
+                    </Link>
                   </li>
                 );
               })}
             </ul>
           </nav>
 
-          <div className="flex items-center justify-end gap-2 xl:gap-3">
-            <a
-              href={sectionHref("#contact", onHome)}
-              className="group hidden items-center gap-2 rounded-full border border-emerald-500/30 bg-emerald-500/8 px-3 py-1.5 text-[11px] font-semibold text-emerald-400 transition-all hover:border-emerald-500/50 hover:bg-emerald-500/15 2xl:flex"
+          <div className="flex shrink-0 items-center justify-end gap-2 xl:gap-3">
+            <Link
+              href={contactHref(onHome)}
+              className="group hidden items-center gap-2 rounded-full border border-emerald-500/30 bg-emerald-500/8 px-3 py-1.5 text-[11px] font-semibold text-emerald-400 transition-all hover:border-emerald-500/50 hover:bg-emerald-500/15 xl:flex"
             >
               <span className="relative flex h-2 w-2 shrink-0">
                 <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-70" />
                 <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-400" />
               </span>
               Available for new projects
-            </a>
-            <a
-              href={sectionHref("#contact", onHome)}
-              className="group relative hidden items-center gap-2 overflow-hidden rounded-xl bg-gradient-to-r from-violet to-cyan px-3.5 py-2 text-sm font-semibold text-white shadow-[0_0_28px_-8px_rgba(124,92,255,0.65)] transition-all hover:scale-[1.02] hover:shadow-[0_0_40px_-6px_rgba(124,92,255,0.9)] sm:inline-flex xl:px-5 xl:py-2.5"
+            </Link>
+            <Link
+              href={contactHref(onHome)}
+              className="group relative hidden items-center gap-2 overflow-hidden rounded-xl bg-gradient-to-r from-violet to-cyan px-4 py-2 text-sm font-semibold text-white shadow-[0_0_28px_-8px_rgba(124,92,255,0.65)] transition-all hover:scale-[1.02] hover:shadow-[0_0_40px_-6px_rgba(124,92,255,0.9)] sm:inline-flex xl:px-5 xl:py-2.5"
             >
               <span className="absolute inset-0 -translate-x-full skew-x-[-20deg] bg-white/10 transition-transform duration-700 group-hover:translate-x-[120%]" />
               Book a call
               <ArrowRight size={15} className="transition-transform group-hover:translate-x-0.5" />
-            </a>
+            </Link>
 
             <button
               type="button"
@@ -179,33 +147,49 @@ export function Navbar() {
           >
             <div className="container-page py-4">
               <nav className="flex flex-col gap-1">
-                {NAV_SECTION_LINKS.map((l, i) => (
-                  <motion.a
+                {SITE_NAV_LINKS.map((l, i) => (
+                  <motion.div
                     key={l.href}
-                    href={sectionHref(l.href, onHome)}
-                    onClick={() => setOpen(false)}
                     initial={{ opacity: 0, x: -16 }}
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ delay: i * 0.04 + 0.08, duration: 0.3 }}
-                    className={cn(
-                      "rounded-xl px-4 py-3 text-base font-medium transition-colors",
-                      activeSection === l.href
-                        ? "bg-violet/15 text-foreground"
-                        : "text-muted hover:bg-surface hover:text-foreground"
-                    )}
                   >
-                    {l.label}
-                  </motion.a>
+                    <Link
+                      href={l.href}
+                      onClick={() => setOpen(false)}
+                      className={cn(
+                        "block rounded-xl px-4 py-3 text-base font-medium transition-colors",
+                        isActive(l.href)
+                          ? "bg-violet/15 text-foreground"
+                          : "text-muted hover:bg-surface hover:text-foreground"
+                      )}
+                    >
+                      {l.label}
+                    </Link>
+                  </motion.div>
                 ))}
+                <motion.div
+                  initial={{ opacity: 0, x: -16 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: SITE_NAV_LINKS.length * 0.04 + 0.08, duration: 0.3 }}
+                >
+                  <Link
+                    href={contactHref(onHome)}
+                    onClick={() => setOpen(false)}
+                    className="mt-1 block rounded-xl px-4 py-3 text-base font-medium text-muted transition-colors hover:bg-surface hover:text-foreground"
+                  >
+                    Contact
+                  </Link>
+                </motion.div>
               </nav>
               <motion.div
                 initial={{ opacity: 0, y: 12 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: NAV_SECTION_LINKS.length * 0.04 + 0.12, duration: 0.3 }}
+                transition={{ delay: SITE_NAV_LINKS.length * 0.04 + 0.12, duration: 0.3 }}
                 className="mt-4 space-y-3 border-t border-border pt-4"
               >
-                <a
-                  href={sectionHref("#contact", onHome)}
+                <Link
+                  href={contactHref(onHome)}
                   onClick={() => setOpen(false)}
                   className="flex items-center justify-center gap-2 rounded-xl border border-emerald-500/30 bg-emerald-500/8 px-4 py-3 text-sm font-semibold text-emerald-400"
                 >
@@ -214,7 +198,7 @@ export function Navbar() {
                     <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-400" />
                   </span>
                   Available for new projects
-                </a>
+                </Link>
               </motion.div>
             </div>
           </motion.div>

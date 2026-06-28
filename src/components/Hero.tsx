@@ -114,7 +114,38 @@ export function Hero() {
   const transBase = "opacity 0.65s cubic-bezier(0.16,1,0.3,1), transform 0.65s cubic-bezier(0.16,1,0.3,1)";
 
   return (
-    <section ref={sectionRef} id="top" className="relative overflow-hidden pt-[5.5rem] pb-12 md:pt-28 md:pb-20">
+    <section
+      ref={sectionRef}
+      id="top"
+      className="section-tone-base relative overflow-hidden pt-[5.5rem] pb-12 md:pt-28 md:pb-20"
+    >
+      {/* Background video + pastel mesh fallback (place hero-bg.mp4 at /public/hero/hero-bg.mp4) */}
+      <div className="pointer-events-none absolute inset-0 -z-20 overflow-hidden">
+        <div className="hero-bg-mesh absolute inset-0" aria-hidden />
+        <div className="hero-bg-blob hero-bg-blob-1" aria-hidden />
+        <div className="hero-bg-blob hero-bg-blob-2" aria-hidden />
+        <div className="hero-bg-blob hero-bg-blob-3" aria-hidden />
+        <video
+          className="hero-bg-video absolute inset-0 h-full w-full object-cover opacity-0 transition-opacity duration-700"
+          autoPlay
+          muted
+          loop
+          playsInline
+          preload="metadata"
+          poster=""
+          aria-hidden
+          onCanPlay={(e) => {
+            e.currentTarget.style.opacity = "0.45";
+          }}
+          onError={(e) => {
+            e.currentTarget.style.display = "none";
+          }}
+        >
+          <source src="/hero/hero-bg.mp4" type="video/mp4" />
+        </video>
+        <div className="absolute inset-0 bg-gradient-to-b from-background/40 via-background/55 to-background" />
+      </div>
+
       {/* Local hero accent */}
       <div className="pointer-events-none absolute inset-0 -z-10">
         <div className="absolute left-1/2 top-0 h-[560px] w-[min(1000px,100%)] -translate-x-1/2 rounded-full bg-[radial-gradient(closest-side,rgba(124,92,255,0.15),transparent)] blur-3xl" />
@@ -175,7 +206,7 @@ export function Hero() {
                 <ArrowRight size={16} className="transition-transform group-hover:translate-x-1" />
               </a>
               <a
-                href="#work"
+                href="/work"
                 className="group inline-flex items-center justify-center gap-2 rounded-xl border border-border bg-surface/80 px-7 py-4 text-sm font-semibold backdrop-blur transition-all hover:border-violet/40 hover:bg-surface hover:shadow-[0_0_24px_-8px_rgba(124,92,255,0.3)]"
               >
                 <Zap size={15} className="text-cyan transition-transform group-hover:scale-110" />

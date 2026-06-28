@@ -25,7 +25,7 @@ export function Work() {
   );
 
   return (
-    <section id="work" className="section relative">
+    <section id="work" className="section section-tone-a relative">
       <div className="pointer-events-none absolute inset-x-0 top-0 -z-10 h-px bg-gradient-to-r from-transparent via-border to-transparent" />
       <div className="container-page">
         <SectionHeading

@@ -70,7 +70,7 @@ export function Contact() {
   }
 
   return (
-    <section id="contact" className="section relative">
+    <section id="contact" className="section section-tone-b relative">
       <div className="container-page">
         <div className="relative overflow-hidden rounded-3xl border border-violet/20 bg-gradient-to-br from-surface via-surface to-surface-2 p-8 sm:p-12 lg:p-14">
           <div className="pointer-events-none absolute inset-0 grid-bg opacity-30" />

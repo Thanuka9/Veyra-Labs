@@ -23,7 +23,7 @@ const highlights = [
 
 export function BrandStory() {
   return (
-    <section id="about" className="section relative overflow-hidden">
+    <section id="about" className="section section-tone-a relative overflow-hidden">
       {/* Ambient top & bottom gradients */}
       <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-violet/20 to-transparent" />
       <div className="pointer-events-none absolute inset-x-0 bottom-0 h-px bg-gradient-to-r from-transparent via-cyan/20 to-transparent" />
@@ -88,7 +88,7 @@ export function BrandStory() {
 
               <Reveal delay={5}>
                 <a
-                  href="#contact"
+                  href="/#contact"
                   className="group mt-8 inline-flex items-center gap-2 text-sm font-semibold text-cyan transition-all hover:gap-3 hover:text-foreground"
                 >
                   Start working with us

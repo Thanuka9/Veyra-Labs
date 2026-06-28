@@ -97,10 +97,10 @@ export function TechMarquee() {
   const row2 = TECH_ITEMS.slice(half - 2);
 
   return (
-    <div className="tech-marquee-section relative overflow-hidden border-y border-border py-8">
+    <div className="tech-marquee-section section-tone-a relative overflow-hidden border-y border-border py-8">
       {/* Edge fades */}
-      <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-12 bg-gradient-to-r from-background to-transparent md:w-28" />
-      <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-12 bg-gradient-to-l from-background to-transparent md:w-28" />
+      <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-12 bg-gradient-to-r from-[var(--surface)] to-transparent md:w-28" />
+      <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-12 bg-gradient-to-l from-[var(--surface)] to-transparent md:w-28" />
 
       <div ref={rowRef} className="flex flex-col gap-4">
         <MarqueeRow items={row1} speed={42} />
