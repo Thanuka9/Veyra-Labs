@@ -42,7 +42,7 @@ export function CaseStudyGallery({ images }: Props) {
 
         {/* Main viewer */}
         <div className="relative mt-6 overflow-hidden rounded-2xl border border-border bg-surface shadow-2xl">
-          <div className="relative aspect-[16/9] w-full bg-[#07080f]">
+          <div className="relative aspect-[16/9] w-full bg-[#0a0c14]">
             <AnimatePresence mode="wait">
               <motion.div
                 key={current.src}
@@ -58,7 +58,8 @@ export function CaseStudyGallery({ images }: Props) {
                   fill
                   unoptimized
                   priority={active === 0}
-                  className="object-cover object-top"
+                  className="object-contain p-2 sm:p-3"
+                  style={{ objectPosition: "center top" }}
                   sizes="(max-width: 1024px) 100vw, 1200px"
                 />
               </motion.div>
@@ -123,7 +124,7 @@ export function CaseStudyGallery({ images }: Props) {
                   alt=""
                   fill
                   unoptimized
-                  className="object-cover object-top"
+                  className="object-contain bg-[#0a0c14] p-0.5"
                   sizes="144px"
                 />
               </button>

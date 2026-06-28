@@ -1,8 +1,8 @@
-import Image from "next/image";
 import Link from "next/link";
 import { ArrowUpRight, Lock } from "lucide-react";
 import type { Project } from "@/lib/projects";
 import { TiltCard } from "./TiltCard";
+import { ProjectScreenshot } from "./ProjectScreenshot";
 
 export function ProjectCard({ project }: { project: Project }) {
   const isLink = Boolean(project.href);
@@ -21,19 +21,17 @@ export function ProjectCard({ project }: { project: Project }) {
         className="group card-hover relative flex h-full flex-col overflow-hidden rounded-2xl border border-border bg-surface"
       >
       {/* Media */}
-      <div className="relative aspect-[16/10] overflow-hidden border-b border-border">
+      <div className="relative overflow-hidden border-b border-border">
         {project.image ? (
-          <Image
+          <ProjectScreenshot
             src={project.image}
             alt={`${project.name} — ${project.tagline}`}
-            fill
+            position={project.imagePosition ?? "center top"}
             sizes="(max-width: 768px) 100vw, 33vw"
-            unoptimized
-            className="object-cover object-top transition-transform duration-700 ease-out group-hover:scale-[1.06]"
           />
         ) : (
           <div
-            className={`flex h-full w-full items-center justify-center bg-gradient-to-br ${
+            className={`flex aspect-[16/10] w-full items-center justify-center bg-gradient-to-br ${
               project.cover ?? "from-violet-600/30 to-cyan-500/20"
             }`}
           >
@@ -42,7 +40,7 @@ export function ProjectCard({ project }: { project: Project }) {
             </span>
           </div>
         )}
-        <div className="absolute inset-0 bg-gradient-to-t from-surface/90 via-transparent to-transparent" />
+        <div className="pointer-events-none absolute inset-x-0 top-0 h-14 bg-gradient-to-b from-[#0a0c14]/70 to-transparent" />
         {isLink && (
           <span className="absolute right-3 top-3 inline-flex items-center gap-1 rounded-full border border-cyan/40 bg-cyan/15 px-2.5 py-1 text-[10px] font-bold uppercase tracking-wide text-cyan">
             <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-cyan" />

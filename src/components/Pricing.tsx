@@ -7,7 +7,7 @@ import { SectionHeading } from "./SectionHeading";
 import { Reveal } from "./Reveal";
 import { TiltCard } from "./TiltCard";
 
-export function Pricing() {
+export function Pricing({ showHeading = true, inner = false }: { showHeading?: boolean; inner?: boolean }) {
   const scrollRef = useRef<HTMLDivElement>(null);
 
   const handleScroll = (direction: "left" | "right") => {
@@ -24,7 +24,7 @@ export function Pricing() {
   return (
     <section
       id="pricing"
-      className="section section-tone-a relative overflow-hidden border-y border-border"
+      className={`relative overflow-hidden ${inner ? "section-inner section-tone-a border-b border-border" : "section section-tone-a border-y border-border"}`}
     >
       {/* Grid texture */}
       <div className="pointer-events-none absolute inset-0 grid-bg opacity-20" />
@@ -37,6 +37,7 @@ export function Pricing() {
       <div className="pointer-events-none absolute right-0 bottom-0 -z-10 h-64 w-64 rounded-full bg-[radial-gradient(closest-side,rgba(124,92,255,0.12),transparent)] blur-3xl" />
 
       <div className="container-page">
+        {showHeading && (
         <SectionHeading
           eyebrow="Transparent estimates"
           accent="cyan"
@@ -51,8 +52,9 @@ export function Pricing() {
           align="left"
           wide
         />
+        )}
 
-        <div className="mx-auto mt-14 grid max-w-6xl gap-5 sm:grid-cols-2 lg:grid-cols-3 lg:gap-6">
+        <div className={`mx-auto grid max-w-6xl gap-5 sm:grid-cols-2 lg:grid-cols-3 lg:gap-6 ${showHeading ? "mt-14" : "mt-0"}`}>
           {pricingTiers.map((tier, i) => (
             <Reveal key={tier.name} delay={i % 3}>
               <div className="relative h-full pt-3">

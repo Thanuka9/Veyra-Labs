@@ -5,13 +5,14 @@ import { LucideIcon } from "./LucideIcon";
 import { SectionHeading } from "./SectionHeading";
 import { Reveal } from "./Reveal";
 
-export function TechStack() {
+export function TechStack({ showHeading = true, inner = false }: { showHeading?: boolean; inner?: boolean }) {
   return (
-    <section id="tech" className="section section-tone-b relative overflow-hidden">
+    <section id="tech" className={`relative overflow-hidden ${inner ? "section-inner section-tone-b" : "section section-tone-b"}`}>
       <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-cyan/30 to-transparent" />
       <div className="pointer-events-none absolute left-0 top-1/2 h-64 w-64 -translate-y-1/2 rounded-full bg-[radial-gradient(closest-side,rgba(34,211,238,0.08),transparent)] blur-3xl" />
 
       <div className="container-page">
+        {showHeading && (
         <SectionHeading
           eyebrow="Technology"
           accent="cyan"
@@ -25,9 +26,9 @@ export function TechStack() {
           align="left"
           wide
         />
+        )}
 
-        {/* Category pills */}
-        <Reveal className="mt-10">
+        <Reveal className={showHeading ? "mt-10" : "mt-0"}>
           <div className="flex flex-wrap gap-3">
             {techCategories.map((cat) => (
               <div

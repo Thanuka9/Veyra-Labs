@@ -1,7 +1,5 @@
 import type { Metadata } from "next";
-import { Navbar } from "@/components/Navbar";
-import { Footer } from "@/components/Footer";
-import { PageHero } from "@/components/PageHero";
+import { InnerPageLayout } from "@/components/InnerPageLayout";
 import { Pricing } from "@/components/Pricing";
 
 export const metadata: Metadata = {
@@ -13,18 +11,19 @@ export const metadata: Metadata = {
 
 export default function PricingPage() {
   return (
-    <>
-      <Navbar />
-      <main id="main-content" className="relative z-[1] flex-1">
-        <PageHero
-          title="Pricing & estimates"
-          subtitle="Starting rates by engagement type — every project scoped with a fixed quote, sprint demos and 30-day post-launch support."
-          breadcrumbs={[{ label: "Home", href: "/" }, { label: "Pricing" }]}
-          tone="b"
-        />
-        <Pricing />
-      </main>
-      <Footer />
-    </>
+    <InnerPageLayout
+      hero={{
+        eyebrow: "Estimates",
+        accent: "cyan",
+        title: "Pricing & estimates",
+        subtitle:
+          "Starting rates by engagement type — every project scoped with a fixed quote, sprint demos and 30-day post-launch support.",
+        breadcrumbs: [{ label: "Home", href: "/" }, { label: "Pricing" }],
+        cta: { label: "Get a custom quote", href: "/#contact" },
+        secondaryCta: { label: "Compare services", href: "/services" },
+      }}
+    >
+      <Pricing showHeading={false} inner />
+    </InnerPageLayout>
   );
 }

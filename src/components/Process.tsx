@@ -80,14 +80,15 @@ function ProcessStepItem({
   );
 }
 
-export function Process() {
+export function Process({ showHeading = true, inner = false }: { showHeading?: boolean; inner?: boolean }) {
   const sectionRef = useRef<HTMLDivElement>(null);
   const live = useScrollTrigger(sectionRef, { rootMargin: "0px 0px -5% 0px", threshold: 0.02 });
 
   return (
-    <section id="process" className="section section-tone-a relative overflow-hidden">
+    <section id="process" className={`relative overflow-hidden ${inner ? "section-inner section-tone-a" : "section section-tone-a"}`}>
       <div className="pointer-events-none absolute inset-x-0 top-1/2 -z-10 h-px bg-gradient-to-r from-transparent via-violet/30 to-transparent" />
       <div className="container-page" ref={sectionRef}>
+        {showHeading && (
         <SectionHeading
           eyebrow="How we work"
           accent="violet"
@@ -101,8 +102,9 @@ export function Process() {
           align="left"
           wide
         />
+        )}
 
-        <div className="relative mt-16 space-y-6">
+        <div className={`relative space-y-6 ${showHeading ? "mt-16" : "mt-0"}`}>
           <div
             className={cn(
               "process-timeline-line pointer-events-none absolute bottom-8 left-8 top-8 hidden w-px bg-gradient-to-b from-violet/60 via-cyan/40 to-transparent lg:block",

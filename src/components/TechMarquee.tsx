@@ -74,7 +74,7 @@ function MarqueeRow({
 /**
  * Infinite auto-scrolling tech marquee strip — signals premium engineering credibility.
  */
-export function TechMarquee() {
+export function TechMarquee({ embedded = false }: { embedded?: boolean }) {
   const rowRef = useRef<HTMLDivElement>(null);
 
   // Pause on hover
@@ -97,7 +97,11 @@ export function TechMarquee() {
   const row2 = TECH_ITEMS.slice(half - 2);
 
   return (
-    <div className="tech-marquee-section section-tone-a relative overflow-hidden border-y border-border py-8">
+    <div
+      className={`tech-marquee-section relative overflow-hidden section-tone-a ${
+        embedded ? "section-inner-tight border-b border-border py-6" : "border-y border-border py-8 section"
+      }`}
+    >
       {/* Edge fades */}
       <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-12 bg-gradient-to-r from-[var(--surface)] to-transparent md:w-28" />
       <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-12 bg-gradient-to-l from-[var(--surface)] to-transparent md:w-28" />

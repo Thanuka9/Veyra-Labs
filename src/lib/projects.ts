@@ -14,6 +14,10 @@ export type Project = {
   tags: string[];
   labels?: string[];
   image?: string;
+  /** CSS object-position for screenshot framing in cards */
+  imagePosition?: string;
+  /** cover = crop to frame (full websites); contain = fit entire UI screenshot */
+  imageFit?: "contain" | "cover";
   cover?: string;
   href?: string;
   linkLabel?: string;
@@ -34,7 +38,9 @@ export const projects: Project[] = [
     category: "Website",
     tags: ["Next.js", "Framer Motion", "SEO", "i18n"],
     labels: ["Personal Brand", "Live Production"],
-    image: "/projects/thanuka-careers-hero.png",
+    image: "/projects/thanuka-careers-hero-full.png",
+    imageFit: "contain",
+    imagePosition: "center top",
     href: "https://thanukaellepola.careers/en",
     linkLabel: "Visit live site → thanukaellepola.careers",
     featured: true,
@@ -42,6 +48,13 @@ export const projects: Project[] = [
     metrics: [
       { label: "Live sections", value: "9+" },
       { label: "Deployed", value: "Live" },
+    ],
+    gallery: [
+      { src: "/projects/thanuka-careers-card.png", caption: "Hero — enterprise intelligence positioning" },
+      { src: "/projects/thanuka-careers-labs.png", caption: "AI Labs — Neural Playgrounds with RAG Orchestrator" },
+      { src: "/projects/thanuka-careers-projects.png", caption: "Case studies grid with project cards" },
+      { src: "/projects/thanuka-careers-skills-card.png", caption: "Skills & expertise showcase" },
+      { src: "/projects/thanuka-careers-hero.png", caption: "Full overview with navigation" },
     ],
   },
   {

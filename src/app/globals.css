@@ -1235,6 +1235,33 @@ input, textarea, select { cursor: auto; }
   }
 
   /* Full-bleed sections that still respect side padding */
+  .section-inner {
+    padding-top: 4rem;
+    padding-bottom: 5rem;
+    scroll-margin-top: 5.5rem;
+  }
+
+  @media (max-width: 768px) {
+    .section-inner {
+      padding-top: 3rem;
+      padding-bottom: 3.5rem;
+      scroll-margin-top: 4.5rem;
+    }
+  }
+
+  .section-inner-tight {
+    padding-top: 2.5rem;
+    padding-bottom: 4rem;
+  }
+
+  @media (max-width: 768px) {
+    .section-inner-tight {
+      padding-top: 2rem;
+      padding-bottom: 3rem;
+    }
+  }
+
+  /* Full-bleed sections that still respect side padding */
   .section-shell {
     width: 100%;
   }

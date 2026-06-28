@@ -1,7 +1,5 @@
 import type { Metadata } from "next";
-import { Navbar } from "@/components/Navbar";
-import { Footer } from "@/components/Footer";
-import { PageHero } from "@/components/PageHero";
+import { InnerPageLayout } from "@/components/InnerPageLayout";
 import { Testimonials } from "@/components/Testimonials";
 
 export const metadata: Metadata = {
@@ -13,17 +11,18 @@ export const metadata: Metadata = {
 
 export default function TestimonialsPage() {
   return (
-    <>
-      <Navbar />
-      <main id="main-content" className="relative z-[1] flex-1">
-        <PageHero
-          title="Client testimonials"
-          subtitle="Verified quotes from production engagements — role and industry only, no client names without written permission."
-          breadcrumbs={[{ label: "Home", href: "/" }, { label: "Testimonials" }]}
-        />
-        <Testimonials />
-      </main>
-      <Footer />
-    </>
+    <InnerPageLayout
+      hero={{
+        eyebrow: "Client feedback",
+        accent: "emerald",
+        title: "Client testimonials",
+        subtitle:
+          "Verified quotes from production engagements — role and industry only, no client names without written permission.",
+        breadcrumbs: [{ label: "Home", href: "/" }, { label: "Testimonials" }],
+        cta: { label: "Become our next success story", href: "/#contact" },
+      }}
+    >
+      <Testimonials showHeading={false} inner />
+    </InnerPageLayout>
   );
 }

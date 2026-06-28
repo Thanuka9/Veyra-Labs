@@ -1,7 +1,5 @@
 import type { Metadata } from "next";
-import { Navbar } from "@/components/Navbar";
-import { Footer } from "@/components/Footer";
-import { PageHero } from "@/components/PageHero";
+import { InnerPageLayout } from "@/components/InnerPageLayout";
 import { Services } from "@/components/Services";
 
 export const metadata: Metadata = {
@@ -13,18 +11,19 @@ export const metadata: Metadata = {
 
 export default function ServicesPage() {
   return (
-    <>
-      <Navbar />
-      <main id="main-content" className="relative z-[1] flex-1">
-        <PageHero
-          title="Services"
-          subtitle="Six core offerings with fixed-scope quotes, sprint demos and 30-day post-launch support — plus DevOps, security and PWA add-ons."
-          breadcrumbs={[{ label: "Home", href: "/" }, { label: "Services" }]}
-          tone="b"
-        />
-        <Services />
-      </main>
-      <Footer />
-    </>
+    <InnerPageLayout
+      hero={{
+        eyebrow: "What we build",
+        accent: "violet",
+        title: "Services",
+        subtitle:
+          "Six core offerings with fixed-scope quotes, sprint demos and 30-day post-launch support — plus DevOps, security and PWA add-ons.",
+        breadcrumbs: [{ label: "Home", href: "/" }, { label: "Services" }],
+        cta: { label: "Request a quote", href: "/#contact" },
+        secondaryCta: { label: "See pricing", href: "/pricing" },
+      }}
+    >
+      <Services showHeading={false} inner />
+    </InnerPageLayout>
   );
 }

@@ -4,9 +4,9 @@ import { SectionHeading } from "./SectionHeading";
 import { Reveal } from "./Reveal";
 import { TiltCard } from "./TiltCard";
 
-export function Services() {
+export function Services({ showHeading = true, inner = false }: { showHeading?: boolean; inner?: boolean }) {
   return (
-    <section id="services" className="section section-tone-a relative overflow-hidden">
+    <section id="services" className={`relative overflow-hidden ${inner ? "section-inner section-tone-a" : "section section-tone-a"}`}>
       {/* Section ambient */}
       <div className="pointer-events-none absolute left-1/2 top-0 -z-10 h-96 w-96 -translate-x-1/2 rounded-full bg-[radial-gradient(closest-side,rgba(124,92,255,0.12),transparent)] blur-3xl" />
       <div className="pointer-events-none absolute right-0 bottom-0 -z-10 h-64 w-64 rounded-full bg-[radial-gradient(closest-side,rgba(34,211,238,0.08),transparent)] blur-3xl" />
@@ -14,6 +14,7 @@ export function Services() {
       <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-violet/40 to-transparent" />
 
       <div className="container-page">
+        {showHeading && (
         <SectionHeading
           eyebrow="Services"
           accent="violet"
@@ -27,8 +28,9 @@ export function Services() {
           align="left"
           wide
         />
+        )}
 
-        <div className="mt-14 grid gap-5 md:grid-cols-2 xl:grid-cols-3">
+        <div className={showHeading ? "mt-14 grid gap-5 md:grid-cols-2 xl:grid-cols-3" : "grid gap-5 md:grid-cols-2 xl:grid-cols-3"}>
           {coreServices.map((s, i) => {
             const Icon = s.icon;
             return (

@@ -3,7 +3,6 @@ import Link from "next/link";
 import Image from "next/image";
 import { notFound } from "next/navigation";
 import {
-  ArrowLeft,
   ArrowUpRight,
   CheckCircle,
   Shield,
@@ -23,6 +22,7 @@ import {
 } from "lucide-react";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
+import { PageCta } from "@/components/PageCta";
 import { Reveal } from "@/components/Reveal";
 import { CaseStudyGallery } from "@/components/CaseStudyGallery";
 import { CaseStudyProof, type ProofHighlight } from "@/components/CaseStudyProof";
@@ -550,22 +550,30 @@ export default async function CaseStudyPage({ params }: { params: Promise<{ slug
   return (
     <>
       <Navbar />
-      <main id="main-content" className="relative z-[1] flex-1 pb-20 pt-24 md:pb-28 md:pt-28">
+      <main id="main-content" className="relative z-[1] flex-1 section-tone-base">
         <div className="pointer-events-none absolute inset-x-0 top-0 h-[520px] bg-[radial-gradient(ellipse_at_top,rgba(124,92,255,0.12),transparent_65%)]" />
 
-        <div className="container-page relative">
+        <div className="container-page relative border-b border-border pb-12 pt-[5.5rem] md:pb-16 md:pt-28">
           <Reveal>
-            <Link
-              href="/#work"
-              className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-muted transition-colors hover:text-foreground"
-            >
-              <ArrowLeft size={16} />
-              Back to portfolio
-            </Link>
+            <nav aria-label="Breadcrumb" className="mb-6 flex flex-wrap items-center gap-1 text-sm text-muted">
+              <Link href="/" className="transition-colors hover:text-cyan">
+                Home
+              </Link>
+              <span className="text-muted/60" aria-hidden>
+                /
+              </span>
+              <Link href="/work" className="transition-colors hover:text-cyan">
+                Work
+              </Link>
+              <span className="text-muted/60" aria-hidden>
+                /
+              </span>
+              <span className="text-foreground/80">{study.title}</span>
+            </nav>
           </Reveal>
 
           {/* Hero */}
-          <div className="mt-8 max-w-4xl">
+          <div className="max-w-4xl">
             <Reveal>
               <span className="rounded-full border border-violet/30 bg-violet/10 px-3.5 py-1 text-xs font-bold uppercase tracking-wider text-violet">
                 {study.category}
@@ -607,14 +615,15 @@ export default async function CaseStudyPage({ params }: { params: Promise<{ slug
             {heroImage ? (
               <div className="relative overflow-hidden rounded-2xl border border-border bg-[#07080f] shadow-[0_24px_80px_-24px_rgba(0,0,0,0.8)]">
                 <div className="absolute inset-x-0 top-0 z-10 h-px bg-gradient-to-r from-transparent via-violet/40 to-transparent" />
-                <div className="relative aspect-[16/9] w-full">
+                <div className="relative aspect-[16/9] w-full bg-[#0a0c14]">
                   <Image
                     src={heroImage}
                     alt={`${study.title} hero screenshot`}
                     fill
                     unoptimized
                     priority
-                    className="object-cover object-top"
+                    className="object-contain p-2 sm:p-3"
+                    style={{ objectPosition: "center top" }}
                     sizes="(max-width: 1280px) 100vw, 1280px"
                   />
                 </div>
@@ -828,6 +837,7 @@ export default async function CaseStudyPage({ params }: { params: Promise<{ slug
             </aside>
           </div>
         </div>
+        <PageCta />
       </main>
       <Footer />
     </>

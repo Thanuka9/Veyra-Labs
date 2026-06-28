@@ -16,7 +16,9 @@ const filters: ("All" | ProjectCategory)[] = [
   "Website",
 ];
 
-export function Work() {
+import { SubsectionLabel } from "./SubsectionLabel";
+
+export function Work({ showHeading = true, inner = false }: { showHeading?: boolean; inner?: boolean }) {
   const [active, setActive] = useState<(typeof filters)[number]>("All");
 
   const visible = useMemo(
@@ -25,9 +27,11 @@ export function Work() {
   );
 
   return (
-    <section id="work" className="section section-tone-a relative">
+    <section id="work" className={`relative ${inner ? "section-inner section-tone-b" : "section section-tone-a"}`}>
       <div className="pointer-events-none absolute inset-x-0 top-0 -z-10 h-px bg-gradient-to-r from-transparent via-border to-transparent" />
       <div className="container-page">
+        {!showHeading && inner && <SubsectionLabel>Full portfolio</SubsectionLabel>}
+        {showHeading && (
         <SectionHeading
           eyebrow="Full portfolio"
           title={
@@ -39,8 +43,9 @@ export function Work() {
           align="left"
           wide
         />
+        )}
 
-        <div className="mt-10 flex flex-wrap gap-2">
+        <div className={`flex flex-wrap gap-2 ${showHeading ? "mt-10" : "mt-0"}`}>
           {filters.map((f) => (
             <button
               key={f}

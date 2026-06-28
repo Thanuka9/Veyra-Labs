@@ -1,7 +1,5 @@
 import type { Metadata } from "next";
-import { Navbar } from "@/components/Navbar";
-import { Footer } from "@/components/Footer";
-import { PageHero } from "@/components/PageHero";
+import { InnerPageLayout } from "@/components/InnerPageLayout";
 import { TechMarquee } from "@/components/TechMarquee";
 import { TechStack } from "@/components/TechStack";
 
@@ -14,18 +12,19 @@ export const metadata: Metadata = {
 
 export default function TechnologyPage() {
   return (
-    <>
-      <Navbar />
-      <main id="main-content" className="relative z-[1] flex-1">
-        <PageHero
-          title="Technology"
-          subtitle="Battle-tested tools we use to design, build and deploy intelligent products on Google Cloud."
-          breadcrumbs={[{ label: "Home", href: "/" }, { label: "Technology" }]}
-        />
-        <TechMarquee />
-        <TechStack />
-      </main>
-      <Footer />
-    </>
+    <InnerPageLayout
+      hero={{
+        eyebrow: "Stack",
+        accent: "cyan",
+        title: "Technology",
+        subtitle:
+          "Battle-tested tools we use to design, build and deploy intelligent products on Google Cloud — every item below has shipped in a live client project.",
+        breadcrumbs: [{ label: "Home", href: "/" }, { label: "Technology" }],
+        cta: { label: "Discuss your stack", href: "/#contact" },
+      }}
+    >
+      <TechMarquee embedded />
+      <TechStack showHeading={false} inner />
+    </InnerPageLayout>
   );
 }

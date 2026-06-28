@@ -4,11 +4,16 @@ import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import { ArrowRight, Calendar, Sparkles, Star, Zap } from "lucide-react";
 
-const slides = [
-  { src: "/projects/thanuka-careers-hero.png", label: "thanukaellepola.careers — Live" },
-  { src: "/projects/trainiq-hero.png", label: "TrainIQ — Enterprise LMS" },
-  { src: "/projects/kapruka-home.png", label: "Kapruka Flow — AI Commerce" },
-  { src: "/projects/codex-home.png", label: "CodeX — Architecture AI" },
+const slides: Array<{
+  src: string;
+  label: string;
+  position?: string;
+  fit?: "contain" | "cover";
+}> = [
+  { src: "/projects/thanuka-careers-card.png", label: "thanukaellepola.careers — Live", position: "center center", fit: "cover" },
+  { src: "/projects/trainiq-hero.png", label: "TrainIQ — Enterprise LMS", position: "center top" },
+  { src: "/projects/kapruka-home.png", label: "Kapruka Flow — AI Commerce", position: "center top" },
+  { src: "/projects/codex-home.png", label: "CodeX — Architecture AI", position: "center top" },
 ];
 
 const stats = [
@@ -26,8 +31,19 @@ const cycleWords = [
   "data pipelines",
 ];
 
-/** Simple CSS-transition based slide — no Framer Motion scale on images */
-function Slide({ src, alt, active }: { src: string; alt: string; active: boolean }) {
+function Slide({
+  src,
+  alt,
+  active,
+  position,
+  fit = "contain",
+}: {
+  src: string;
+  alt: string;
+  active: boolean;
+  position?: string;
+  fit?: "contain" | "cover";
+}) {
   return (
     <div
       className="absolute inset-0 transition-opacity duration-500"
@@ -40,8 +56,8 @@ function Slide({ src, alt, active }: { src: string; alt: string; active: boolean
         priority={src === slides[0].src}
         sizes="(max-width: 1280px) 100vw, 680px"
         unoptimized
-        className="object-cover object-top"
-        style={{ objectPosition: "center top" }}
+        className={fit === "cover" ? "object-cover" : "object-contain p-2 sm:p-3"}
+        style={{ objectPosition: position ?? "center top" }}
       />
     </div>
   );
@@ -285,11 +301,17 @@ export function Hero() {
               </div>
 
               {/* Slides — pure CSS opacity crossfade, no scale transform */}
-              <div className="relative aspect-[16/10] overflow-hidden bg-background">
+              <div className="relative aspect-[16/10] overflow-hidden bg-[#0a0c14]">
                 {slides.map((slide, i) => (
-                  <Slide key={slide.src} src={slide.src} alt={slide.label} active={i === index} />
+                  <Slide
+                    key={slide.src}
+                    src={slide.src}
+                    alt={slide.label}
+                    active={i === index}
+                    position={slide.position}
+                    fit={slide.fit}
+                  />
                 ))}
-                <div className="pointer-events-none absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-surface to-transparent" />
               </div>
             </div>
 
