@@ -157,8 +157,8 @@ function FeaturedTile({
 
   const media = (
     <div
-      className={`relative w-full overflow-hidden bg-[#0a0c14] ${
-        isHero ? "aspect-[16/9] w-full" : ""
+      className={`relative w-full overflow-hidden ${
+        isHero ? "aspect-[16/9] w-full bg-[#10131f] ring-1 ring-inset ring-white/10" : "bg-[#0a0c14]"
       }`}
     >
       {project.image &&
@@ -169,7 +169,7 @@ function FeaturedTile({
             fill
             unoptimized
             sizes="(max-width: 1024px) 100vw, 600px"
-            className="object-contain p-1.5 sm:p-2"
+            className={imageFit === "cover" ? "object-cover" : "object-contain p-1.5 sm:p-2"}
             style={{ objectPosition: imagePosition }}
           />
         ) : (
@@ -182,7 +182,9 @@ function FeaturedTile({
             sizes="(max-width: 768px) 100vw, 33vw"
           />
         ))}
-      <div className="pointer-events-none absolute inset-x-0 top-0 h-12 bg-gradient-to-b from-[#0a0c14]/70 to-transparent" />
+      <div className="pointer-events-none absolute inset-0 ring-1 ring-inset ring-white/[0.06]" />
+      <div className="pointer-events-none absolute inset-x-0 top-0 h-14 bg-gradient-to-b from-[#10131f]/80 to-transparent" />
+      <div className="pointer-events-none absolute inset-x-0 bottom-0 h-10 bg-gradient-to-t from-[#10131f]/60 to-transparent" />
       {badges}
 
       {!isHero && (
