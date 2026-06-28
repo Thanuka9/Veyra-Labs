@@ -81,7 +81,7 @@ export function WhyVeyra({ inner = false }: { inner?: boolean }) {
 
           <Reveal delay={3}>
             <a
-              href="/#contact"
+              href="/contact"
               className="group mt-8 inline-flex items-center gap-2 rounded-xl bg-gradient-to-r from-violet to-cyan px-6 py-3.5 text-sm font-semibold text-white shadow-[0_0_32px_-8px_rgba(124,92,255,0.6)] transition-all hover:scale-[1.03] hover:shadow-[0_0_48px_-6px_rgba(124,92,255,0.8)] relative overflow-hidden"
             >
               <span className="absolute inset-0 -translate-x-full skew-x-[-20deg] bg-white/10 transition-transform duration-700 group-hover:translate-x-[120%]" />

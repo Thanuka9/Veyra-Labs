@@ -19,7 +19,7 @@ export default function TestimonialsPage() {
         subtitle:
           "Verified quotes from production engagements — role and industry only, no client names without written permission.",
         breadcrumbs: [{ label: "Home", href: "/" }, { label: "Testimonials" }],
-        cta: { label: "Become our next success story", href: "/#contact" },
+        cta: { label: "Become our next success story", href: "/contact" },
       }}
     >
       <Testimonials showHeading={false} inner />

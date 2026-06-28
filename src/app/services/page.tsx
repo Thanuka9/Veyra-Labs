@@ -19,7 +19,7 @@ export default function ServicesPage() {
         subtitle:
           "Six core offerings with fixed-scope quotes, sprint demos and 30-day post-launch support — plus DevOps, security and PWA add-ons.",
         breadcrumbs: [{ label: "Home", href: "/" }, { label: "Services" }],
-        cta: { label: "Request a quote", href: "/#contact" },
+        cta: { label: "Request a quote", href: "/contact" },
         secondaryCta: { label: "See pricing", href: "/pricing" },
       }}
     >

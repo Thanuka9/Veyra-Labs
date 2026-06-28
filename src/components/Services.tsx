@@ -78,7 +78,7 @@ export function Services({ showHeading = true, inner = false }: { showHeading?: 
                   </div>
 
                   <a
-                    href="/#contact"
+                    href="/contact"
                     className="group/cta mt-auto flex items-center gap-1.5 pt-5 text-sm font-semibold text-cyan transition-all hover:gap-2.5 hover:text-foreground"
                   >
                     Request a quote

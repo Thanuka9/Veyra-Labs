@@ -96,7 +96,7 @@ export function Pricing({ showHeading = true, inner = false }: { showHeading?: b
                     </ul>
 
                     <a
-                      href="/#contact"
+                      href="/contact"
                       className={`group/cta mt-6 relative inline-flex items-center justify-center gap-2 overflow-hidden rounded-xl px-4 py-3 text-sm font-semibold transition-all hover:scale-[1.02] ${
                         tier.highlight
                           ? "bg-gradient-to-r from-violet to-cyan text-white shadow-[0_0_24px_-8px_rgba(124,92,255,0.5)] hover:shadow-[0_0_40px_-8px_rgba(124,92,255,0.7)]"

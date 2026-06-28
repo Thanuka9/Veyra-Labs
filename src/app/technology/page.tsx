@@ -20,7 +20,7 @@ export default function TechnologyPage() {
         subtitle:
           "Battle-tested tools we use to design, build and deploy intelligent products on Google Cloud — every item below has shipped in a live client project.",
         breadcrumbs: [{ label: "Home", href: "/" }, { label: "Technology" }],
-        cta: { label: "Discuss your stack", href: "/#contact" },
+        cta: { label: "Discuss your stack", href: "/contact" },
       }}
     >
       <TechMarquee embedded />

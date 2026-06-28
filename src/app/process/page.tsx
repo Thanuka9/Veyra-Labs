@@ -20,7 +20,7 @@ export default function ProcessPage() {
         subtitle:
           "A transparent five-step model from discovery to production — fixed milestones, weekly demos and documented handoff.",
         breadcrumbs: [{ label: "Home", href: "/" }, { label: "Process" }],
-        cta: { label: "Book a discovery call", href: "/#contact" },
+        cta: { label: "Book a discovery call", href: "/contact" },
       }}
     >
       <Process showHeading={false} inner />

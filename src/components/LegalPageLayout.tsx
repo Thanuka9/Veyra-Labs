@@ -62,7 +62,7 @@ export function LegalPageLayout({ title, description, sections }: LegalPageLayou
                 Terms of Service
               </Link>
               <span aria-hidden>·</span>
-              <Link href="/#contact" className="hover:text-cyan">
+              <Link href="/contact" className="hover:text-cyan">
                 Contact
               </Link>
             </nav>

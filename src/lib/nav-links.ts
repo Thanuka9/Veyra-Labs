@@ -27,7 +27,7 @@ export const FOOTER_COMPANY_LINKS = [
 ];
 
 export function contactHref(onHome: boolean) {
-  return onHome ? "#contact" : "/#contact";
+  return "/contact";
 }
 
 export function uniqueGalleryImages<T extends { src: string }>(images: T[]): T[] {

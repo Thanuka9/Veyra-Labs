@@ -210,7 +210,7 @@ export function BrandStory({ inner = false }: { inner?: boolean }) {
             </ul>
             <div className="mt-8 flex flex-wrap gap-3">
               <Link
-                href="/#contact"
+                href="/contact"
                 className="inline-flex items-center gap-2 rounded-xl bg-gradient-to-r from-violet/90 to-indigo/90 px-5 py-2.5 text-sm font-semibold text-white shadow-[0_0_24px_-10px_rgba(124,92,255,0.5)] transition-transform hover:scale-[1.02]"
               >
                 Start working with us

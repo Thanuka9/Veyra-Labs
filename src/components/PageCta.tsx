@@ -21,7 +21,7 @@ export function PageCta() {
             </div>
             <div className="relative mt-6 flex shrink-0 flex-col gap-3 sm:mt-0">
               <Link
-                href="/#contact"
+                href="/contact"
                 className="group inline-flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-violet to-cyan px-6 py-3.5 text-sm font-semibold text-white shadow-[0_0_32px_-8px_rgba(124,92,255,0.6)] transition-all hover:scale-[1.02]"
               >
                 <Calendar size={16} />

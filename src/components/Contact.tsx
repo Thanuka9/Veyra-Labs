@@ -11,7 +11,13 @@ import { Reveal } from "./Reveal";
 
 const projectTypes = contactProjectTypes;
 
-export function Contact() {
+export function Contact({
+  showHeading = true,
+  inner = false,
+}: {
+  showHeading?: boolean;
+  inner?: boolean;
+} = {}) {
   const [type, setType] = useState(projectTypes[0]);
   const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
   const [errorMsg, setErrorMsg] = useState("");
@@ -70,7 +76,10 @@ export function Contact() {
   }
 
   return (
-    <section id="contact" className="section section-tone-b relative">
+    <section
+      id="contact"
+      className={inner ? "relative py-8 sm:py-12 lg:py-16" : "section section-tone-b relative"}
+    >
       <div className="container-page">
         <div className="relative overflow-hidden rounded-3xl border border-violet/20 bg-gradient-to-br from-surface via-surface to-surface-2 p-8 sm:p-12 lg:p-14">
           <div className="pointer-events-none absolute inset-0 grid-bg opacity-30" />
@@ -81,20 +90,24 @@ export function Contact() {
           <div className="relative grid gap-12 lg:grid-cols-[1fr_1.05fr] lg:gap-16">
             <Reveal>
             <div>
-              <span className="inline-flex items-center gap-2 rounded-full border border-cyan/30 bg-cyan/10 px-3.5 py-1.5 text-xs font-semibold uppercase tracking-wider text-cyan">
-                <Calendar size={13} />
-                Free discovery call
-              </span>
-              <h2 className="mt-5 text-balance text-3xl font-bold tracking-tight sm:text-4xl lg:text-5xl">
-                Ready to build something{" "}
-                <span className="text-gradient">your clients will love?</span>
-              </h2>
-              <p className="mt-5 max-w-md text-pretty leading-relaxed text-muted">
-                Tell us about your product, timeline and goals. We&apos;ll respond within
-                24 hours with next steps — no obligation, no sales pitch.
-              </p>
+              {showHeading && (
+                <>
+                  <span className="inline-flex items-center gap-2 rounded-full border border-cyan/30 bg-cyan/10 px-3.5 py-1.5 text-xs font-semibold uppercase tracking-wider text-cyan">
+                    <Calendar size={13} />
+                    Free discovery call
+                  </span>
+                  <h2 className="mt-5 text-balance text-3xl font-bold tracking-tight sm:text-4xl lg:text-5xl">
+                    Ready to build something{" "}
+                    <span className="text-gradient">your clients will love?</span>
+                  </h2>
+                  <p className="mt-5 max-w-md text-pretty leading-relaxed text-muted">
+                    Tell us about your product, timeline and goals. We&apos;ll respond within
+                    24 hours with next steps — no obligation, no sales pitch.
+                  </p>
+                </>
+              )}
 
-              <div className="mt-7 space-y-3">
+              <div className={showHeading ? "mt-7 space-y-3" : "space-y-3"}>
                 <a
                   href={`mailto:${CONTACT_EMAIL}`}
                   className="flex items-center gap-2.5 text-sm font-medium text-foreground transition-colors hover:text-cyan"

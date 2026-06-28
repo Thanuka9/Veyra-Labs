@@ -827,7 +827,7 @@ export default async function CaseStudyPage({ params }: { params: Promise<{ slug
                     We build high-trust custom software with full system auditing.
                   </p>
                   <Link
-                    href="/#contact"
+                    href="/contact"
                     className="mt-4 inline-block w-full rounded-xl border border-violet/30 bg-violet/10 py-2.5 text-xs font-bold uppercase tracking-wider text-white transition-transform hover:scale-[1.02]"
                   >
                     Request a consult
