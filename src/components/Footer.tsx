@@ -38,7 +38,7 @@ export function Footer() {
       <div className="container-page py-14 lg:py-16">
         <div className="grid gap-12 lg:grid-cols-12 lg:gap-10">
           <Reveal className="max-w-sm lg:col-span-4">
-            <BrandLogo variant="wordmark" className="h-10" />
+            <BrandLogo variant="lockup" className="h-10" />
             <p className="mt-5 max-w-md text-sm leading-relaxed text-muted">
               Veyra Labs is a boutique software & AI engineering studio. We design, build and deploy
               intelligent products  -  SaaS platforms, AI systems, e-commerce and premium brand websites.
