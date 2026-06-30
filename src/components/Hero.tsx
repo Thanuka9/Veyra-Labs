@@ -10,10 +10,10 @@ const slides: Array<{
   position?: string;
   fit?: "contain" | "cover";
 }> = [
-  { src: "/projects/thanuka-careers-card.png", label: "thanukaellepola.careers  -  Live", position: "center center", fit: "cover" },
-  { src: "/projects/trainiq-hero.png", label: "TrainIQ  -  Enterprise LMS", position: "center top" },
-  { src: "/projects/kapruka-home.png", label: "Kapruka Flow  -  AI Commerce", position: "center top" },
-  { src: "/projects/codex-home.png", label: "CodeX  -  Architecture AI", position: "center top" },
+  { src: "/projects/thanuka-careers-card.png", label: "thanukaellepola.careers  -  Live", position: "center top", fit: "cover" },
+  { src: "/projects/trainiq-hero.png", label: "TrainIQ  -  Enterprise LMS", position: "center top", fit: "cover" },
+  { src: "/projects/kapruka-home.png", label: "Kapruka Flow  -  AI Commerce", position: "center top", fit: "cover" },
+  { src: "/projects/codex-home.png", label: "CodeX  -  Architecture AI", position: "center top", fit: "cover" },
 ];
 
 const stats = [
