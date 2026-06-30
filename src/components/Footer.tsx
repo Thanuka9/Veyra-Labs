@@ -38,7 +38,7 @@ export function Footer() {
       <div className="container-page py-14 lg:py-16">
         <div className="grid gap-12 lg:grid-cols-12 lg:gap-10">
           <Reveal className="max-w-sm lg:col-span-4">
-            <BrandLogo variant="lockup" className="h-10" />
+            <BrandLogo variant="lockup" className="h-12 w-auto" />
             <p className="mt-5 max-w-md text-sm leading-relaxed text-muted">
               Veyra Labs is a boutique software & AI engineering studio. We design, build and deploy
               intelligent products  -  SaaS platforms, AI systems, e-commerce and premium brand websites.
@@ -113,9 +113,9 @@ export function Footer() {
               <h4 className="text-xs font-bold uppercase tracking-wider text-foreground">Starting rates</h4>
               <ul className="mt-4 space-y-3">
                  {[
+                  { tier: "E-Commerce", price: "$1,500 - $2,000" },
                   { tier: "Portfolio", price: "$800 - $1,500" },
                   { tier: "Premium Website", price: "$1,200 - $3,500" },
-                  { tier: "E-Commerce", price: "$1,500 - $2,000" },
                   { tier: "AI & LLM", price: "$2,500 - $12,000" },
                   { tier: "SaaS Platform", price: "$8,000 - $25,000+" },
                   { tier: "ML & Analytics", price: "$4,000 - $15,000+" },

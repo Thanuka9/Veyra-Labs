@@ -8,21 +8,21 @@ import { Reveal } from "./Reveal";
 import { SectionHeading } from "./SectionHeading";
 
 const filters = [
+  "All",
   "Portfolio",
   "SaaS Platform",
   "AI & LLM",
   "Data Science",
   "E-Commerce",
-  "Website",
 ];
 
 import { SubsectionLabel } from "./SubsectionLabel";
 
 export function Work({ showHeading = true, inner = false }: { showHeading?: boolean; inner?: boolean }) {
-  const [active, setActive] = useState<(typeof filters)[number]>("Portfolio");
+  const [active, setActive] = useState<(typeof filters)[number]>("All");
 
   const visible = useMemo(
-    () => (active === "Portfolio" ? projects : projects.filter((p) => p.category === active)),
+    () => (active === "All" ? projects : projects.filter((p) => p.category === active)),
     [active]
   );
 
@@ -71,8 +71,9 @@ export function Work({ showHeading = true, inner = false }: { showHeading?: bool
                 animate={{ opacity: 1, scale: 1 }}
                 exit={{ opacity: 0, scale: 0.96 }}
                 transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
+                className="h-full"
               >
-                <Reveal delay={i % 3} variant="scale">
+                <Reveal delay={i % 3} variant="scale" className="h-full">
                   <ProjectCard project={p} />
                 </Reveal>
               </motion.div>

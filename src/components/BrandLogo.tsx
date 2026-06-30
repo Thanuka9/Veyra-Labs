@@ -2,7 +2,7 @@ import Image from "next/image";
 import { cn } from "@/lib/cn";
 
 /** Bump when logo source files change to bust CDN/browser cache. */
-const BRAND_V = "4";
+const BRAND_V = "5";
 
 type BrandLogoProps = {
   /** wordmark = official Veyra Labs main logo (V + wordmark). lockup = dark-theme lockup. icon = main wordmark scaled. */

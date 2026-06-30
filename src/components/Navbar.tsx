@@ -48,7 +48,7 @@ export function Navbar() {
             className="group flex shrink-0 items-center transition-opacity hover:opacity-90"
             aria-label="Veyra Labs home"
           >
-            <BrandLogo variant="lockup" className="h-7 w-auto sm:h-8" priority />
+            <BrandLogo variant="lockup" className="h-9 w-auto sm:h-10" priority />
           </Link>
 
           <nav className="hidden min-w-0 flex-1 justify-center lg:flex" aria-label="Primary">

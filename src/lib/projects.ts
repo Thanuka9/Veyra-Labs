@@ -3,7 +3,7 @@ export type ProjectCategory =
   | "AI & LLM"
   | "Data Science"
   | "E-Commerce"
-  | "Website";
+  | "Portfolio";
 
 export type Project = {
   slug: string;
@@ -35,7 +35,7 @@ export const projects: Project[] = [
     tagline: "Premium AI architect & enterprise solutions website",
     description:
       "A conversion-engineered personal brand platform  -  animated hero, case studies, AI lab demos, client testimonials and strategic inquiry flows. Built to win enterprise clients.",
-    category: "Website",
+    category: "Portfolio",
     tags: ["Next.js", "Framer Motion", "SEO", "i18n"],
     labels: ["Personal Brand", "Live Production"],
     image: "/projects/thanuka-careers-hero-wide.png",
@@ -56,6 +56,32 @@ export const projects: Project[] = [
       { src: "/projects/thanuka-careers-skills-card.png", caption: "Skills & expertise showcase" },
       { src: "/projects/thanuka-careers-hero.png", caption: "Full overview with navigation" },
     ],
+  },
+  {
+    slug: "nimasha-portfolio",
+    name: "Academic Research Portfolio",
+    tagline: "Publication-grade computational chemistry site",
+    description:
+      "Custom molecular canvas animation, filterable academic timelines, abstract viewer and print-optimised CV  -  Next.js 16 + Tailwind v4.",
+    category: "Portfolio",
+    tags: ["Next.js 16", "Canvas", "Framer Motion"],
+    labels: ["Client Project", "Live Production"],
+    image: "/projects/nimasha-portfolio-hero.png",
+    href: "/case-studies/nimasha-portfolio",
+    linkLabel: "Read case study →",
+  },
+  {
+    slug: "azeem-portfolio",
+    name: "Creative Portfolio",
+    tagline: "Conversion-focused video editor site",
+    description:
+      "Cinematic showreels, animated project archive, review collection and lead-capture contact flow that turns viewers into clients.",
+    category: "Portfolio",
+    tags: ["React", "Lead capture", "Responsive"],
+    labels: ["Client Project", "Live Production"],
+    image: "/projects/azeem-portfolio-hero.png",
+    href: "/case-studies/azeem-portfolio",
+    linkLabel: "Read case study →",
   },
   {
     slug: "trainiq",
@@ -162,32 +188,6 @@ export const projects: Project[] = [
     labels: ["Internal SaaS", "Prototype"],
     cover: "from-violet-600/30 via-indigo-600/20 to-cyan-500/20",
     href: "/case-studies/job-hunter-ai",
-    linkLabel: "Read case study →",
-  },
-  {
-    slug: "nimasha-portfolio",
-    name: "Academic Research Portfolio",
-    tagline: "Publication-grade computational chemistry site",
-    description:
-      "Custom molecular canvas animation, filterable academic timelines, abstract viewer and print-optimised CV  -  Next.js 16 + Tailwind v4.",
-    category: "Website",
-    tags: ["Next.js 16", "Canvas", "Framer Motion"],
-    labels: ["Client Project", "Live Production"],
-    image: "/projects/nimasha-portfolio-hero.png",
-    href: "/case-studies/nimasha-portfolio",
-    linkLabel: "Read case study →",
-  },
-  {
-    slug: "azeem-portfolio",
-    name: "Creative Portfolio",
-    tagline: "Conversion-focused video editor site",
-    description:
-      "Cinematic showreels, animated project archive, review collection and lead-capture contact flow that turns viewers into clients.",
-    category: "Website",
-    tags: ["React", "Lead capture", "Responsive"],
-    labels: ["Client Project", "Live Production"],
-    image: "/projects/azeem-portfolio-hero.png",
-    href: "/case-studies/azeem-portfolio",
     linkLabel: "Read case study →",
   },
   {

@@ -539,6 +539,25 @@ export type PricingTier = {
 
 export const pricingTiers: PricingTier[] = [
   {
+    name: "E-Commerce Starter",
+    price: "$1,500 - $2,000",
+    priceNote: "Most popular entry point",
+    description:
+      "Professional online store  -  product catalog, cart, secure checkout and admin dashboard.",
+    features: [
+      "Up to 50 products",
+      "Mobile-responsive storefront",
+      "Cart & secure checkout",
+      "Payment gateway (Stripe/PayPal)",
+      "Admin order dashboard",
+      "SEO setup + SSL deployment",
+      "2 revision rounds",
+      "3-6 week delivery",
+    ],
+    cta: "Get e-commerce quote",
+    highlight: true,
+  },
+  {
     name: "Portfolio Website",
     price: "$800 - $1,500",
     priceNote: "Personal & creative brands",
@@ -572,25 +591,6 @@ export const pricingTiers: PricingTier[] = [
       "2-4 week delivery",
     ],
     cta: "Get website quote",
-  },
-  {
-    name: "E-Commerce Starter",
-    price: "$1,500 - $2,000",
-    priceNote: "Most popular entry point",
-    description:
-      "Professional online store  -  product catalog, cart, secure checkout and admin dashboard.",
-    features: [
-      "Up to 50 products",
-      "Mobile-responsive storefront",
-      "Cart & secure checkout",
-      "Payment gateway (Stripe/PayPal)",
-      "Admin order dashboard",
-      "SEO setup + SSL deployment",
-      "2 revision rounds",
-      "3-6 week delivery",
-    ],
-    cta: "Get e-commerce quote",
-    highlight: true,
   },
   {
     name: "AI & LLM Feature",

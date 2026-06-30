@@ -62,7 +62,7 @@ export function FeaturedWork({
   const isLink = Boolean(activeProject.href);
   const isExternal = activeProject.href ? !isInternalHref(activeProject.href) : false;
   const imagePosition = activeProject.imagePosition ?? "center top";
-  const imageFit = activeProject.imageFit ?? (activeProject.category === "Website" ? "cover" : "contain");
+  const imageFit = activeProject.imageFit ?? (activeProject.category === "Portfolio" ? "cover" : "contain");
 
   return (
     <section
