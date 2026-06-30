@@ -81,8 +81,14 @@ export function Footer() {
             </div>
             <div>
               <h4 className="text-xs font-bold uppercase tracking-wider text-foreground">Company</h4>
-              <ul className="mt-4 grid grid-cols-1 gap-x-4 gap-y-2.5 sm:grid-cols-2">
-                {company.map((l) => (
+              <ul className="mt-4 space-y-2.5">
+                {[
+                  { label: "About Veyra Labs", href: "/about" },
+                  { label: "Our Process", href: "/process" },
+                  { label: "Testimonials", href: "/testimonials" },
+                  { label: "Work & Case Studies", href: "/work" },
+                  { label: "Pricing & Estimates", href: "/pricing" },
+                ].map((l) => (
                   <li key={l.href}>
                     <Link href={l.href} className="text-sm text-muted transition-colors hover:text-cyan">
                       {l.label}
@@ -120,7 +126,10 @@ export function Footer() {
                   </li>
                 ))}
               </ul>
-              <Link href="/pricing" className="mt-4 inline-block text-xs font-semibold text-cyan hover:underline">
+              <Link
+                href="/pricing"
+                className="mt-4 inline-flex items-center gap-1 py-1.5 text-xs font-semibold text-cyan transition-colors hover:text-cyan/85 hover:underline"
+              >
                 Full pricing details →
               </Link>
             </div>
