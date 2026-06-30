@@ -27,6 +27,7 @@ export function ProjectCard({ project }: { project: Project }) {
             src={project.image}
             alt={`${project.name}  -  ${project.tagline}`}
             position={project.imagePosition ?? "center top"}
+            fit={project.imageFit}
             sizes="(max-width: 768px) 100vw, 33vw"
           />
         ) : (
