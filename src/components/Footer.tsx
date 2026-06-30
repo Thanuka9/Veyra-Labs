@@ -112,9 +112,10 @@ export function Footer() {
             <div>
               <h4 className="text-xs font-bold uppercase tracking-wider text-foreground">Starting rates</h4>
               <ul className="mt-4 space-y-3">
-                {[
+                 {[
+                  { tier: "Portfolio", price: "$800 – $1,500" },
+                  { tier: "Premium Website", price: "$1,200 – $3,500" },
                   { tier: "E-Commerce", price: "$1,500 – $2,000" },
-                  { tier: "Website", price: "$1,200 – $3,500" },
                   { tier: "AI & LLM", price: "$2,500 – $12,000" },
                   { tier: "SaaS Platform", price: "$8,000 – $25,000+" },
                   { tier: "ML & Analytics", price: "$4,000 – $15,000+" },

@@ -12,15 +12,18 @@ export function Testimonials({
   showStats = true,
   showHeading = true,
   inner = false,
+  theme = "light",
 }: {
   showStats?: boolean;
   showHeading?: boolean;
   inner?: boolean;
+  theme?: "light" | "dark";
 }) {
   const [active, setActive] = useState(0);
   const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
   const count = testimonials.length;
+  const isDark = theme === "dark";
 
   const next = () => setActive((a) => (a + 1) % count);
   const prev = () => setActive((a) => (a - 1 + count) % count);
@@ -71,17 +74,24 @@ export function Testimonials({
         className={cn("mb-3 transition-colors duration-300", isCurrent ? "text-violet" : "text-violet/40")}
       />
 
-      <blockquote className="flex-1 text-sm leading-relaxed text-gray-700 sm:text-[15px]">
+      <blockquote
+        className={cn(
+          "flex-1 text-sm leading-relaxed sm:text-[15px]",
+          isDark ? "text-gray-300" : "text-gray-700"
+        )}
+      >
         &ldquo;{t.quote}&rdquo;
       </blockquote>
 
-      <figcaption className="mt-5 border-t border-gray-200 pt-4">
+      <figcaption className={cn("mt-5 border-t pt-4", isDark ? "border-border/70" : "border-gray-200")}>
         <div className="flex items-start gap-3">
           <div
             className={cn(
               "flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-[11px] font-bold",
               isCurrent
                 ? "bg-violet/15 text-violet ring-1 ring-violet/25"
+                : isDark
+                ? "bg-[#0a0c14] text-gray-400"
                 : "bg-gray-100 text-gray-500"
             )}
             aria-hidden
@@ -89,9 +99,11 @@ export function Testimonials({
             {t.role.charAt(0)}
           </div>
           <div className="min-w-0">
-            <div className="text-sm font-medium text-gray-900">{t.role}</div>
-            <div className="text-xs text-gray-500">{t.context}</div>
-            <div className="mt-1 text-[10px] font-medium uppercase tracking-wider text-gray-400">
+            <div className={cn("text-sm font-medium", isDark ? "text-foreground/80" : "text-gray-900")}>
+              {t.role}
+            </div>
+            <div className={cn("text-xs", isDark ? "text-muted" : "text-gray-500")}>{t.context}</div>
+            <div className={cn("mt-1 text-[10px] font-medium uppercase tracking-wider", isDark ? "text-muted/60" : "text-gray-400")}>
               Verified client · identity withheld
             </div>
           </div>
@@ -99,7 +111,10 @@ export function Testimonials({
         {t.projectSlug && (
           <Link
             href={`/case-studies/${t.projectSlug}`}
-            className="mt-3 inline-flex items-center gap-1 text-xs font-medium text-violet hover:text-violet/80 hover:underline"
+            className={cn(
+              "mt-3 inline-flex items-center gap-1 text-xs font-medium hover:underline",
+              isDark ? "text-cyan/70 hover:text-cyan" : "text-violet hover:text-violet/80"
+            )}
           >
             View related case study
             <ArrowUpRight size={12} />
@@ -113,12 +128,19 @@ export function Testimonials({
     <section
       id="testimonials"
       className={`relative overflow-hidden ${inner ? "section-inner" : "section"}`}
-      style={{ background: "#f8f9fc" }}
+      style={{ background: isDark ? "#080910" : "#f8f9fc" }}
     >
       {/* Top divider */}
       <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-violet/20 to-transparent" />
       {/* Subtle ambient glow */}
-      <div className="pointer-events-none absolute left-1/2 top-0 h-[320px] w-[640px] -translate-x-1/2 rounded-full bg-[radial-gradient(closest-side,rgba(124,92,255,0.06),transparent)] blur-3xl" />
+      <div
+        className="pointer-events-none absolute left-1/2 top-0 h-[320px] w-[640px] -translate-x-1/2 rounded-full blur-3xl"
+        style={{
+          background: isDark
+            ? "radial-gradient(closest-side,rgba(124,92,255,0.07),transparent)"
+            : "radial-gradient(closest-side,rgba(124,92,255,0.06),transparent)",
+        }}
+      />
 
       <div className="container-page relative">
         {showHeading && (
@@ -128,11 +150,13 @@ export function Testimonials({
             title={
               <>
                 Trusted to solve{" "}
-                <span className="bg-gradient-to-r from-violet to-indigo-500 bg-clip-text text-transparent">real bottlenecks</span>
+                <span className="bg-gradient-to-r from-violet to-indigo-500 bg-clip-text text-transparent">
+                  real bottlenecks
+                </span>
               </>
             }
             subtitle="Quotes from verified engagements — role and industry only, no names without permission."
-            theme="light"
+            theme={theme}
           />
         )}
 
@@ -142,7 +166,12 @@ export function Testimonials({
             <button
               onClick={handlePrev}
               aria-label="Previous testimonial"
-              className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-gray-200 bg-white text-gray-500 shadow-sm transition-all hover:border-violet/40 hover:text-violet"
+              className={cn(
+                "flex h-10 w-10 shrink-0 items-center justify-center rounded-full border shadow-sm transition-all",
+                isDark
+                  ? "border-border/80 bg-[#0a0c14] text-muted hover:border-violet/25 hover:text-foreground/80"
+                  : "border-gray-200 bg-white text-gray-500 hover:border-violet/40 hover:text-violet"
+              )}
             >
               <ChevronLeft size={20} />
             </button>
@@ -158,7 +187,11 @@ export function Testimonials({
                     className={cn(
                       "group flex flex-col rounded-2xl border p-6 transition-all duration-500",
                       isCurrent
-                        ? "flex-[1.3] scale-[1.01] border-violet/20 bg-white shadow-[0_8px_32px_-12px_rgba(124,92,255,0.15),0_4px_16px_-8px_rgba(0,0,0,0.08)] ring-1 ring-violet/10"
+                        ? isDark
+                          ? "flex-[1.3] scale-[1.01] border-violet/25 bg-[#0c0e18] shadow-[0_16px_48px_-20px_rgba(124,92,255,0.15),0_8px_24px_-12px_rgba(0,0,0,0.7)] ring-1 ring-violet/15"
+                          : "flex-[1.3] scale-[1.01] border-violet/20 bg-white shadow-[0_8px_32px_-12px_rgba(124,92,255,0.15),0_4px_16px_-8px_rgba(0,0,0,0.08)] ring-1 ring-violet/10"
+                        : isDark
+                        ? "flex-1 cursor-pointer border-border/60 bg-[#080910]/90 opacity-75 hover:border-violet/15 hover:opacity-100"
                         : "flex-1 cursor-pointer border-gray-200 bg-white/70 opacity-75 hover:border-violet/20 hover:opacity-100"
                     )}
                   >
@@ -171,7 +204,12 @@ export function Testimonials({
             <button
               onClick={handleNext}
               aria-label="Next testimonial"
-              className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-gray-200 bg-white text-gray-500 shadow-sm transition-all hover:border-violet/40 hover:text-violet"
+              className={cn(
+                "flex h-10 w-10 shrink-0 items-center justify-center rounded-full border shadow-sm transition-all",
+                isDark
+                  ? "border-border/80 bg-[#0a0c14] text-muted hover:border-violet/25 hover:text-foreground/80"
+                  : "border-gray-200 bg-white text-gray-500 hover:border-violet/40 hover:text-violet"
+              )}
             >
               <ChevronRight size={20} />
             </button>
@@ -187,6 +225,8 @@ export function Testimonials({
                   "rounded-full transition-all duration-300",
                   i === active
                     ? "h-2 w-6 bg-violet shadow-[0_0_8px_rgba(124,92,255,0.3)]"
+                    : isDark
+                    ? "h-2 w-2 bg-border/80 hover:bg-muted/50"
                     : "h-2 w-2 bg-gray-300 hover:bg-gray-400"
                 )}
               />
@@ -196,14 +236,26 @@ export function Testimonials({
 
         {/* Mobile single-card */}
         <div className={`lg:hidden ${showHeading ? "mt-10" : "mt-0"}`}>
-          <div className="relative overflow-hidden rounded-2xl border border-violet/15 bg-white p-6 shadow-lg">
+          <div
+            className={cn(
+              "relative overflow-hidden rounded-2xl border p-6 shadow-lg",
+              isDark
+                ? "border-violet/15 bg-[#0a0c14] shadow-[0_12px_40px_-24px_rgba(0,0,0,0.9)]"
+                : "border-violet/15 bg-white"
+            )}
+          >
             {renderCard(testimonials[active], true)}
           </div>
 
           <div className="mt-4 flex items-center justify-between">
             <button
               onClick={handlePrev}
-              className="flex h-9 w-9 items-center justify-center rounded-full border border-gray-200 bg-white text-gray-500 shadow-sm hover:border-violet/30"
+              className={cn(
+                "flex h-9 w-9 items-center justify-center rounded-full border shadow-sm",
+                isDark
+                  ? "border-border/80 bg-[#0a0c14] text-muted hover:border-violet/25"
+                  : "border-gray-200 bg-white text-gray-500 hover:border-violet/30"
+              )}
             >
               <ChevronLeft size={18} />
             </button>
@@ -214,14 +266,19 @@ export function Testimonials({
                   onClick={() => handleDot(i)}
                   className={cn(
                     "rounded-full transition-all duration-300",
-                    i === active ? "h-1.5 w-4 bg-violet" : "h-1.5 w-1.5 bg-gray-300"
+                    i === active ? "h-1.5 w-4 bg-violet" : isDark ? "h-1.5 w-1.5 bg-border/80" : "h-1.5 w-1.5 bg-gray-300"
                   )}
                 />
               ))}
             </div>
             <button
               onClick={handleNext}
-              className="flex h-9 w-9 items-center justify-center rounded-full border border-gray-200 bg-white text-gray-500 shadow-sm hover:border-violet/30"
+              className={cn(
+                "flex h-9 w-9 items-center justify-center rounded-full border shadow-sm",
+                isDark
+                  ? "border-border/80 bg-[#0a0c14] text-muted hover:border-violet/25"
+                  : "border-gray-200 bg-white text-gray-500 hover:border-violet/30"
+              )}
             >
               <ChevronRight size={18} />
             </button>
@@ -230,15 +287,26 @@ export function Testimonials({
 
         {showStats && (
           <Reveal className="mt-12">
-            <div className="flex flex-wrap items-center justify-center gap-x-8 gap-y-3 rounded-2xl border border-gray-200 bg-white px-6 py-4 text-center shadow-sm">
+            <div
+              className={cn(
+                "flex flex-wrap items-center justify-center gap-x-8 gap-y-3 rounded-2xl border px-6 py-4 text-center shadow-sm",
+                isDark
+                  ? "border-violet/10 bg-[#080a12] shadow-[0_4px_24px_-8px_rgba(124,92,255,0.08)]"
+                  : "border-gray-200 bg-white"
+              )}
+            >
               {[
                 { v: "7", l: "Verified quotes on this page" },
                 { v: "8+", l: "Countries served" },
                 { v: "100%", l: "Deployments with documented handoff" },
               ].map((s) => (
                 <div key={s.l}>
-                  <span className="text-lg font-semibold text-gray-900">{s.v}</span>
-                  <span className="ml-2 text-xs text-gray-500">{s.l}</span>
+                  <span className={cn("text-lg font-semibold", isDark ? "text-foreground" : "text-gray-900")}>
+                    {s.v}
+                  </span>
+                  <span className={cn("ml-2 text-xs", isDark ? "text-muted" : "text-gray-500")}>
+                    {s.l}
+                  </span>
                 </div>
               ))}
             </div>

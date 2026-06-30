@@ -18,9 +18,9 @@ export default function Home() {
         <TechMarquee />
         <OutcomesBanner condensed />
         <FeaturedWork variant="summary" />
-        <HomeServicesSummary />
+        <HomeServicesSummary theme="dark" />
         <HomeProcessSummary />
-        <Testimonials />
+        <Testimonials theme="dark" />
         <Contact />
       </main>
       <Footer />

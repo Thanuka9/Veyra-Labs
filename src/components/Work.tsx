@@ -7,8 +7,8 @@ import { ProjectCard } from "./ProjectCard";
 import { Reveal } from "./Reveal";
 import { SectionHeading } from "./SectionHeading";
 
-const filters: ("All" | ProjectCategory)[] = [
-  "All",
+const filters = [
+  "Portfolio",
   "SaaS Platform",
   "AI & LLM",
   "Data Science",
@@ -19,10 +19,10 @@ const filters: ("All" | ProjectCategory)[] = [
 import { SubsectionLabel } from "./SubsectionLabel";
 
 export function Work({ showHeading = true, inner = false }: { showHeading?: boolean; inner?: boolean }) {
-  const [active, setActive] = useState<(typeof filters)[number]>("All");
+  const [active, setActive] = useState<(typeof filters)[number]>("Portfolio");
 
   const visible = useMemo(
-    () => (active === "All" ? projects : projects.filter((p) => p.category === active)),
+    () => (active === "Portfolio" ? projects : projects.filter((p) => p.category === active)),
     [active]
   );
 

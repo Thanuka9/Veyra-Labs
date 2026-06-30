@@ -260,8 +260,9 @@ const INTENTS: Intent[] = [
   {
     patterns: [/website|portfolio|landing page|marketing site|brand site|personal brand/i],
     reply: () => {
-      const tier = pricingTiers.find((t) => t.name.includes("Premium Website"))!;
-      return `**Premium Website — ${tier.price}**\n\n${tier.description}\n\n**Includes:** ${tier.features.join(", ")}.\n\nSee our live example: [thanukaellepola.careers](https://thanukaellepola.careers/en) — built by Veyra Labs.`;
+      const portTier = pricingTiers.find((t) => t.name.includes("Portfolio Website"))!;
+      const premTier = pricingTiers.find((t) => t.name.includes("Premium Website"))!;
+      return `**Portfolio Website — ${portTier.price}**\n\n${portTier.description}\n\n**Premium Website — ${premTier.price}**\n\n${premTier.description}\n\nSee our live example: [thanukaellepola.careers](https://thanukaellepola.careers/en) — built by Veyra Labs.`;
     },
   },
   {
