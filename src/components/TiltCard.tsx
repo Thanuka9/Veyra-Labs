@@ -10,7 +10,7 @@ type TiltCardProps = {
 };
 
 /**
- * 3D tilt card — event-driven RAF, runs ONLY while mouse is over the card.
+ * 3D tilt card  -  event-driven RAF, runs ONLY while mouse is over the card.
  * Idle cards = zero CPU/GPU cost.
  */
 export function TiltCard({

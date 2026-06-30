@@ -34,7 +34,7 @@ export const projects: Project[] = [
     name: "Thanuka Ellepola Careers",
     tagline: "Premium AI architect & enterprise solutions website",
     description:
-      "A conversion-engineered personal brand platform — animated hero, case studies, AI lab demos, client testimonials and strategic inquiry flows. Built to win enterprise clients.",
+      "A conversion-engineered personal brand platform  -  animated hero, case studies, AI lab demos, client testimonials and strategic inquiry flows. Built to win enterprise clients.",
     category: "Website",
     tags: ["Next.js", "Framer Motion", "SEO", "i18n"],
     labels: ["Personal Brand", "Live Production"],
@@ -50,8 +50,8 @@ export const projects: Project[] = [
       { label: "Deployed", value: "Live" },
     ],
     gallery: [
-      { src: "/projects/thanuka-careers-card.png", caption: "Hero — enterprise intelligence positioning" },
-      { src: "/projects/thanuka-careers-labs.png", caption: "AI Labs — Neural Playgrounds with RAG Orchestrator" },
+      { src: "/projects/thanuka-careers-card.png", caption: "Hero  -  enterprise intelligence positioning" },
+      { src: "/projects/thanuka-careers-labs.png", caption: "AI Labs  -  Neural Playgrounds with RAG Orchestrator" },
       { src: "/projects/thanuka-careers-projects.png", caption: "Case studies grid with project cards" },
       { src: "/projects/thanuka-careers-skills-card.png", caption: "Skills & expertise showcase" },
       { src: "/projects/thanuka-careers-hero.png", caption: "Full overview with navigation" },
@@ -62,7 +62,7 @@ export const projects: Project[] = [
     name: "TrainIQ",
     tagline: "Enterprise workforce training & AI performance platform",
     description:
-      "Multi-tenant LMS with level-based exams, knowledge bases, LearnIQ local LLM assistant, ProctorIQ integrity, RBAC, 2FA and enterprise audit logging — deployed for Collective RCM.",
+      "Multi-tenant LMS with level-based exams, knowledge bases, LearnIQ local LLM assistant, ProctorIQ integrity, RBAC, 2FA and enterprise audit logging  -  deployed for Collective RCM.",
     category: "SaaS Platform",
     tags: ["Flask", "PostgreSQL", "MongoDB", "Local LLM", "RBAC"],
     labels: ["Client Project", "Live Production"],
@@ -81,7 +81,7 @@ export const projects: Project[] = [
     name: "CodeX",
     tagline: "Architecture intelligence for any codebase",
     description:
-      "Turns any GitHub repository into instant visual documentation and system architecture — for teams onboarding into unfamiliar codebases.",
+      "Turns any GitHub repository into instant visual documentation and system architecture  -  for teams onboarding into unfamiliar codebases.",
     category: "AI & LLM",
     tags: ["Next.js", "LLM", "Cloud Run"],
     labels: ["Internal SaaS", "Demo App"],
@@ -96,7 +96,7 @@ export const projects: Project[] = [
     name: "Kapruka Flow",
     tagline: "AI-first intent-driven shopping",
     description:
-      "Challenge / demo project using Kapruka MCP. Built for the Kapruka Agent Challenge 2026. Describe what you need in natural language — the AI composes optimised carts over a live commerce MCP with real checkout.",
+      "Challenge / demo project using Kapruka MCP. Built for the Kapruka Agent Challenge 2026. Describe what you need in natural language  -  the AI composes optimised carts over a live commerce MCP with real checkout.",
     category: "E-Commerce",
     tags: ["Next.js", "FastAPI", "AI Agents", "MCP"],
     labels: ["Challenge Build", "Demo App"],
@@ -143,7 +143,7 @@ export const projects: Project[] = [
     name: "ReviewRadar AI",
     tagline: "Review intelligence at scale",
     description:
-      "End-to-end pipeline — ingest, clean, feature-engineer and analyse millions of reviews with NLP sentiment, TF-IDF and geo-clustering.",
+      "End-to-end pipeline  -  ingest, clean, feature-engineer and analyse millions of reviews with NLP sentiment, TF-IDF and geo-clustering.",
     category: "Data Science",
     tags: ["Python", "PostgreSQL", "NLP", "Pandas"],
     labels: ["Internal Product", "Prototype"],
@@ -156,7 +156,7 @@ export const projects: Project[] = [
     name: "Job Hunter AI",
     tagline: "Autonomous career-application agent",
     description:
-      "Hybrid-RAG engine that discovers roles, ranks them with an LLM, and autonomously submits applications via Playwright — grounded by FAISS.",
+      "Hybrid-RAG engine that discovers roles, ranks them with an LLM, and autonomously submits applications via Playwright  -  grounded by FAISS.",
     category: "AI & LLM",
     tags: ["RAG", "FAISS", "Playwright", "GPT-4o"],
     labels: ["Internal SaaS", "Prototype"],
@@ -169,7 +169,7 @@ export const projects: Project[] = [
     name: "Academic Research Portfolio",
     tagline: "Publication-grade computational chemistry site",
     description:
-      "Custom molecular canvas animation, filterable academic timelines, abstract viewer and print-optimised CV — Next.js 16 + Tailwind v4.",
+      "Custom molecular canvas animation, filterable academic timelines, abstract viewer and print-optimised CV  -  Next.js 16 + Tailwind v4.",
     category: "Website",
     tags: ["Next.js 16", "Canvas", "Framer Motion"],
     labels: ["Client Project", "Live Production"],

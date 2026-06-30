@@ -192,7 +192,7 @@ export async function buildEstimatePdfDoc(estimate: ProjectEstimate, skipImages 
 
   doc.setFontSize(8);
   doc.setTextColor(100, 105, 120);
-  doc.text("For a fixed-scope quote, book a free discovery call — no obligation.", margin + (iconData && !skipImages ? 10 : 0), footerY + 6);
+  doc.text("For a fixed-scope quote, book a free discovery call  -  no obligation.", margin + (iconData && !skipImages ? 10 : 0), footerY + 6);
   doc.setTextColor(124, 92, 255);
   doc.text(CONTACT_EMAIL, margin + (iconData && !skipImages ? 10 : 0), footerY + 11);
   doc.setTextColor(120, 125, 140);

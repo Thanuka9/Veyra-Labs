@@ -28,11 +28,11 @@ function splitBlocks(text: string): Block[] {
     const lines = raw.split("\n").filter((l) => l.trim());
     if (lines.length === 0) continue;
 
-    const allBullets = lines.every((l) => /^[•\-–]\s/.test(l.trim()));
+    const allBullets = lines.every((l) => /^[•\--]\s/.test(l.trim()));
     if (allBullets && lines.length >= 1) {
       result.push({
         type: "list",
-        items: lines.map((l) => l.trim().replace(/^[•\-–]\s+/, "")),
+        items: lines.map((l) => l.trim().replace(/^[•\--]\s+/, "")),
       });
       continue;
     }
@@ -82,8 +82,8 @@ function Block({ block }: { block: Block }) {
     <div className="chat-md-paragraph">
       {block.lines.map((line, li) => {
         const trimmed = line.trim();
-        const bullet = /^[•\-–]\s/.test(trimmed);
-        const content = bullet ? trimmed.replace(/^[•\-–]\s+/, "") : trimmed;
+        const bullet = /^[•\--]\s/.test(trimmed);
+        const content = bullet ? trimmed.replace(/^[•\--]\s+/, "") : trimmed;
         if (bullet) {
           return (
             <div key={li} className="chat-md-inline-bullet">

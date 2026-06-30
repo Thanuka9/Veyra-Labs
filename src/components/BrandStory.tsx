@@ -24,7 +24,7 @@ const principles = [
   {
     icon: Target,
     title: "Outcome-first delivery",
-    text: "We scope around business results — revenue, efficiency, compliance or conversion — not feature checklists for their own sake.",
+    text: "We scope around business results  -  revenue, efficiency, compliance or conversion  -  not feature checklists for their own sake.",
   },
   {
     icon: Shield,
@@ -39,7 +39,7 @@ const principles = [
   {
     icon: Rocket,
     title: "Ship in tight iterations",
-    text: "Weekly demos, fixed milestones and deployable increments — so you see progress in production, not slide decks.",
+    text: "Weekly demos, fixed milestones and deployable increments  -  so you see progress in production, not slide decks.",
   },
 ];
 
@@ -88,14 +88,14 @@ export function BrandStory({ inner = false }: { inner?: boolean }) {
                 <p className="mt-5 text-pretty leading-relaxed text-muted">
                   Veyra Labs is a boutique software and AI engineering studio. We partner with
                   founders, operators and enterprise teams to design, build and deploy systems that
-                  hold up in production — not prototypes that stall after the first demo.
+                  hold up in production  -  not prototypes that stall after the first demo.
                 </p>
               </Reveal>
               <Reveal delay={3}>
                 <p className="mt-4 text-pretty leading-relaxed text-muted">
                   Our work spans multi-tenant SaaS, applied AI, e-commerce, premium marketing sites
                   and data platforms. Every engagement is led in-house: architecture, implementation,
-                  cloud deployment and handoff documentation — so you always know who owns the outcome.
+                  cloud deployment and handoff documentation  -  so you always know who owns the outcome.
                 </p>
               </Reveal>
               <Reveal delay={4}>
@@ -110,7 +110,7 @@ export function BrandStory({ inner = false }: { inner?: boolean }) {
                   >
                     thanukaellepola.careers
                   </a>
-                  , we optimise for clarity, performance and long-term maintainability — the things
+                  , we optimise for clarity, performance and long-term maintainability  -  the things
                   clients feel six months after launch, not just on day one.
                 </p>
               </Reveal>
@@ -170,7 +170,7 @@ export function BrandStory({ inner = false }: { inner?: boolean }) {
               How we work with clients
             </h3>
             <p className="mt-2 max-w-2xl text-sm leading-relaxed text-muted sm:text-base">
-              A small studio model with enterprise discipline — fast enough for founders, rigorous
+              A small studio model with enterprise discipline  -  fast enough for founders, rigorous
               enough for compliance-heavy teams.
             </p>
           </Reveal>
@@ -197,7 +197,7 @@ export function BrandStory({ inner = false }: { inner?: boolean }) {
           <div className="rounded-2xl border border-border/80 bg-gradient-to-br from-[#080a12] via-surface to-surface p-6 sm:p-8">
             <h3 className="text-xl font-bold tracking-tight sm:text-2xl">What clients hire us for</h3>
             <p className="mt-2 max-w-2xl text-sm text-muted">
-              Typical engagements — often combined in a single roadmap when a product needs more than
+              Typical engagements  -  often combined in a single roadmap when a product needs more than
               one layer.
             </p>
             <ul className="mt-6 grid gap-3 sm:grid-cols-2">

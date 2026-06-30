@@ -60,7 +60,7 @@ export function Contact({
           company,
           projectType: type,
           message,
-          source: "Contact form — veyralabs.com",
+          source: "Contact form  -  veyralabs.com",
         })
       );
       setStatus("success");
@@ -102,7 +102,7 @@ export function Contact({
                   </h2>
                   <p className="mt-5 max-w-md text-pretty leading-relaxed text-muted">
                     Tell us about your product, timeline and goals. We&apos;ll respond within
-                    24 hours with next steps — no obligation, no sales pitch.
+                    24 hours with next steps  -  no obligation, no sales pitch.
                   </p>
                 </>
               )}
@@ -135,7 +135,7 @@ export function Contact({
                 </p>
                 <p className="mt-2 text-sm leading-relaxed text-muted">
                   AI-driven forecasting kernels achieving <strong className="text-foreground">R² &gt; 0.90</strong> and{" "}
-                  <strong className="text-foreground">40% reduction</strong> in manual audit overhead across enterprise RCM workflows — Collective RCM.
+                  <strong className="text-foreground">40% reduction</strong> in manual audit overhead across enterprise RCM workflows  -  Collective RCM.
                 </p>
               </div>
             </div>
@@ -147,7 +147,7 @@ export function Contact({
                 <CheckCircle2 size={40} className="text-emerald-400" />
                 <h3 className="mt-4 text-xl font-bold">Inquiry sent!</h3>
                 <p className="mt-2 max-w-sm text-sm text-muted">
-                  Thanks — we&apos;ll review your project and respond within 24 hours.
+                  Thanks  -  we&apos;ll review your project and respond within 24 hours.
                 </p>
                 <button
                   type="button"
@@ -205,7 +205,7 @@ export function Contact({
                 </div>
 
                 <Field
-                  label="Verification — what is 6 + 6?"
+                  label="Verification  -  what is 6 + 6?"
                   name="human_ver"
                   placeholder="12"
                   required

@@ -188,7 +188,7 @@ export function VeyraChat() {
     setSavedEstimates((prev) => ({ ...prev, [estimate.id]: estimate }));
     setEstimateEmailSent((prev) => ({ ...prev, [estimate.id]: emailSent }));
     const emailLine = emailSent
-      ? "We've emailed our team — **reply within 24 hours**."
+      ? "We've emailed our team  -  **reply within 24 hours**."
       : "Download your PDF below.";
     setMessages((prev) => [
       ...prev,
@@ -220,7 +220,7 @@ export function VeyraChat() {
           email: lead.email.trim(),
           projectType: "Discovery call",
           message: summary,
-          source: "Veyra chatbot — veyralabs.com",
+          source: "Veyra chatbot  -  veyralabs.com",
         })
       );
       trackEvent("submit", "chat_lead", "discovery_call");
@@ -317,13 +317,13 @@ export function VeyraChat() {
           {/* ── Body ── */}
           <div className="veyra-chat-body">
             {estimateMode && !typing ? (
-              /* Full-screen estimate — no chat overlap */
+              /* Full-screen estimate  -  no chat overlap */
               <div className="veyra-chat-estimate-only">
                 <EstimateWizard embedded onComplete={handleEstimateComplete} onCancel={exitEstimateMode} />
               </div>
             ) : (
               <>
-                {/* Messages — isolated scroll region */}
+                {/* Messages  -  isolated scroll region */}
                 <div className="veyra-chat-messages-pane">
                   <div ref={scrollRef} className="veyra-chat-messages" onScroll={handleScroll}>
                     {messages.map((msg) => {
@@ -366,7 +366,7 @@ export function VeyraChat() {
                   )}
                 </div>
 
-                {/* Lead form — fixed slot, not in scroll */}
+                {/* Lead form  -  fixed slot, not in scroll */}
                 {leadMode && !typing && (
                   <div className="veyra-chat-lead-slot chat-fade-in">
                     <form onSubmit={handleLeadSubmit} className="chat-lead-form">
@@ -410,7 +410,7 @@ export function VeyraChat() {
                   </div>
                 )}
 
-                {/* Quick actions — collapsible */}
+                {/* Quick actions  -  collapsible */}
                 {showQuickActionsBar && (
                   <div className="veyra-chat-quick-bar">
                     <button
@@ -441,7 +441,7 @@ export function VeyraChat() {
                           className="veyra-chat-estimate-btn"
                         >
                           <LucideIcon icon={Calculator} size={16} className="text-violet" />
-                          Get estimate — PDF quote in 1 min
+                          Get estimate  -  PDF quote in 1 min
                         </button>
                         <div className="chat-quick-grid">
                           {CHAT_QUICK_REPLIES.filter((q) => q.id !== "estimate").map((q) => {

@@ -5,7 +5,7 @@ import { Pricing } from "@/components/Pricing";
 export const metadata: Metadata = {
   title: "Pricing",
   description:
-    "Veyra Labs project estimates — transparent starting rates for e-commerce, websites, AI, SaaS, ML and data engineering engagements.",
+    "Veyra Labs project estimates  -  transparent starting rates for e-commerce, websites, AI, SaaS, ML and data engineering engagements.",
   alternates: { canonical: "/pricing" },
 };
 
@@ -17,7 +17,7 @@ export default function PricingPage() {
         accent: "cyan",
         title: "Pricing & estimates",
         subtitle:
-          "Starting rates by engagement type — every project scoped with a fixed quote, sprint demos and 30-day post-launch support.",
+          "Starting rates by engagement type  -  every project scoped with a fixed quote, sprint demos and 30-day post-launch support.",
         breadcrumbs: [{ label: "Home", href: "/" }, { label: "Pricing" }],
         cta: { label: "Get a custom quote", href: "/contact" },
         secondaryCta: { label: "Compare services", href: "/services" },

@@ -12,7 +12,7 @@ type BrandLogoProps = {
 };
 
 const assets = {
-  /** Official main logo — veyra_labs_main_logo_wordmark */
+  /** Official main logo  -  veyra_labs_main_logo_wordmark */
   wordmark: { src: `/brand/wordmark-main.png?v=${BRAND_V}`, w: 280, h: 60, alt: "Veyra Labs" },
   icon: { src: `/brand/wordmark-main.png?v=${BRAND_V}`, w: 280, h: 60, alt: "Veyra Labs" },
   /** White text lockup for dark backgrounds without a light badge */

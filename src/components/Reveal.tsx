@@ -77,7 +77,7 @@ export function useScrollTrigger(
   return triggered;
 }
 
-/** Per-step scroll reveal — stricter threshold so steps appear one-by-one while scrolling. */
+/** Per-step scroll reveal  -  stricter threshold so steps appear one-by-one while scrolling. */
 export function RevealStep({
   children,
   index,
@@ -121,7 +121,7 @@ export function RevealStep({
 }
 
 /**
- * Scroll reveal — pure CSS transitions, hydration-safe.
+ * Scroll reveal  -  pure CSS transitions, hydration-safe.
  */
 export function Reveal({
   children,

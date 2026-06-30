@@ -31,7 +31,7 @@ export function Services({ showHeading = true, inner = false }: { showHeading?: 
                 <span className="bg-gradient-to-r from-violet to-indigo-500 bg-clip-text text-transparent">one accountable team</span>
               </>
             }
-            subtitle="Six core offerings — each with a fixed-scope quote, sprint demos and 30-day post-launch support. Add-ons available for DevOps, security and PWA."
+            subtitle="Six core offerings  -  each with a fixed-scope quote, sprint demos and 30-day post-launch support. Add-ons available for DevOps, security and PWA."
             align="left"
             wide
             theme="light"
@@ -116,7 +116,7 @@ export function Services({ showHeading = true, inner = false }: { showHeading?: 
                 Add-on services & <span className="bg-gradient-to-r from-cyan to-blue-500 bg-clip-text text-transparent">deploy enhancements</span>
               </>
             }
-            subtitle="Bundle these with any core project or engage standalone — optimized performance, cloud DevOps, security hardening, and database integrations."
+            subtitle="Bundle these with any core project or engage standalone  -  optimized performance, cloud DevOps, security hardening, and database integrations."
             align="left"
             wide
             theme="light"

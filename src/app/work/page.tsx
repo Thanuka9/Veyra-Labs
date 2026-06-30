@@ -6,7 +6,7 @@ import { Work } from "@/components/Work";
 export const metadata: Metadata = {
   title: "Work & Case Studies",
   description:
-    "Explore Veyra Labs portfolio — enterprise SaaS, AI systems, e-commerce platforms and premium websites shipped to production.",
+    "Explore Veyra Labs portfolio  -  enterprise SaaS, AI systems, e-commerce platforms and premium websites shipped to production.",
   alternates: { canonical: "/work" },
 };
 
@@ -18,7 +18,7 @@ export default function WorkPage() {
         accent: "indigo",
         title: "Work & case studies",
         subtitle:
-          "Flagship deliveries and our full portfolio — SaaS, AI, data systems and premium websites engineered for production.",
+          "Flagship deliveries and our full portfolio  -  SaaS, AI, data systems and premium websites engineered for production.",
         breadcrumbs: [{ label: "Home", href: "/" }, { label: "Work" }],
         cta: { label: "Start a project", href: "/contact" },
         secondaryCta: { label: "View pricing", href: "/pricing" },

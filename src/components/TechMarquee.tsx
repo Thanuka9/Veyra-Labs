@@ -72,7 +72,7 @@ function MarqueeRow({
 }
 
 /**
- * Infinite auto-scrolling tech marquee strip — signals premium engineering credibility.
+ * Infinite auto-scrolling tech marquee strip  -  signals premium engineering credibility.
  */
 export function TechMarquee({ embedded = false }: { embedded?: boolean }) {
   const rowRef = useRef<HTMLDivElement>(null);

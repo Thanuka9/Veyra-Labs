@@ -10,10 +10,10 @@ const slides: Array<{
   position?: string;
   fit?: "contain" | "cover";
 }> = [
-  { src: "/projects/thanuka-careers-card.png", label: "thanukaellepola.careers — Live", position: "center center", fit: "cover" },
-  { src: "/projects/trainiq-hero.png", label: "TrainIQ — Enterprise LMS", position: "center top" },
-  { src: "/projects/kapruka-home.png", label: "Kapruka Flow — AI Commerce", position: "center top" },
-  { src: "/projects/codex-home.png", label: "CodeX — Architecture AI", position: "center top" },
+  { src: "/projects/thanuka-careers-card.png", label: "thanukaellepola.careers  -  Live", position: "center center", fit: "cover" },
+  { src: "/projects/trainiq-hero.png", label: "TrainIQ  -  Enterprise LMS", position: "center top" },
+  { src: "/projects/kapruka-home.png", label: "Kapruka Flow  -  AI Commerce", position: "center top" },
+  { src: "/projects/codex-home.png", label: "CodeX  -  Architecture AI", position: "center top" },
 ];
 
 const stats = [
@@ -22,7 +22,7 @@ const stats = [
   { v: "R² > 0.90", l: "On billing datasets" },
 ];
 
-/** Words that cycle in the headline — each describes a service vertical */
+/** Words that cycle in the headline  -  each describes a service vertical */
 const cycleWords = [
   "SaaS platforms",
   "AI systems",
@@ -63,7 +63,7 @@ function Slide({
   );
 }
 
-/** CSS-only cycling word — no Framer Motion blur/filter on headline */
+/** CSS-only cycling word  -  no Framer Motion blur/filter on headline */
 function CyclingWord({ word, visible }: { word: string; visible: boolean }) {
   return (
     <span
@@ -101,13 +101,13 @@ export function Hero() {
     return () => clearInterval(id);
   }, []);
 
-  // Entry animation — single rAF
+  // Entry animation  -  single rAF
   useEffect(() => {
     const id = requestAnimationFrame(() => setEntered(true));
     return () => cancelAnimationFrame(id);
   }, []);
 
-  // Parallax on scroll — pure DOM, no React state
+  // Parallax on scroll  -  pure DOM, no React state
   useEffect(() => {
     const section = sectionRef.current;
     const showcase = showcaseRef.current;
@@ -115,7 +115,7 @@ export function Hero() {
 
     const onScroll = () => {
       const rect = section.getBoundingClientRect();
-      if (rect.bottom < 0) return; // off screen — skip
+      if (rect.bottom < 0) return; // off screen  -  skip
       const progress = Math.max(0, Math.min(1, -rect.top / rect.height));
       showcase.style.transform = `translateY(${progress * 36}px)`;
       showcase.style.opacity = `${1 - progress * 0.55}`;
@@ -203,7 +203,7 @@ export function Hero() {
               style={{ ...(entered ? shownStyle : hiddenStyle), transition: `${transBase} 0.16s` }}
             >
               Veyra Labs partners with founders and enterprises to design, engineer and ship
-              SaaS platforms, AI systems, e-commerce experiences and premium websites — from
+              SaaS platforms, AI systems, e-commerce experiences and premium websites  -  from
               first prototype to production deployment on Google Cloud.
             </p>
 
@@ -274,7 +274,7 @@ export function Hero() {
             </div>
           </div>
 
-          {/* Showcase browser — plain div, parallax via direct DOM style */}
+          {/* Showcase browser  -  plain div, parallax via direct DOM style */}
           <div
             ref={showcaseRef}
             className="relative w-full max-w-[600px] lg:max-w-none lg:justify-self-end xl:max-w-[580px]"
@@ -300,7 +300,7 @@ export function Hero() {
                 </div>
               </div>
 
-              {/* Slides — pure CSS opacity crossfade, no scale transform */}
+              {/* Slides  -  pure CSS opacity crossfade, no scale transform */}
               <div className="relative aspect-[16/10] overflow-hidden bg-[#0a0c14]">
                 {slides.map((slide, i) => (
                   <Slide

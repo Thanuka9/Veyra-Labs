@@ -1,4 +1,4 @@
-/** Primary site navigation — page routes. */
+/** Primary site navigation  -  page routes. */
 export const SITE_NAV_LINKS = [
   { href: "/work", label: "Work" },
   { href: "/services", label: "Services" },

@@ -29,7 +29,7 @@ export function saveCookieConsent(value: CookieConsentValue) {
   window.dispatchEvent(new CustomEvent("veyra-cookie-consent-change", { detail: value }));
 }
 
-/** Clears saved choice so the banner shows again — used from footer “Cookie settings”. */
+/** Clears saved choice so the banner shows again  -  used from footer “Cookie settings”. */
 export function resetCookieConsent() {
   try {
     localStorage.removeItem(CONSENT_KEY);

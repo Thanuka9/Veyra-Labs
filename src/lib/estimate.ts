@@ -1,5 +1,5 @@
 export const ESTIMATE_DISCLAIMER =
-  "This is an automated ballpark estimate only — not a binding quote or contract. The final amount may differ based on your specific requirements, integrations, scope changes, and complexity identified during a free discovery call with Veyra Labs.";
+  "This is an automated ballpark estimate only  -  not a binding quote or contract. The final amount may differ based on your specific requirements, integrations, scope changes, and complexity identified during a free discovery call with Veyra Labs.";
 
 export type ProjectTypeId =
   | "ecommerce"
@@ -68,7 +68,7 @@ export const PROJECT_TYPES: ProjectType[] = [
     description: "Catalog, cart, checkout & admin dashboard",
     baseMin: 1500,
     baseMax: 2000,
-    timeline: "3–6 weeks",
+    timeline: "3-6 weeks",
   },
   {
     id: "website",
@@ -77,7 +77,7 @@ export const PROJECT_TYPES: ProjectType[] = [
     description: "Brand, portfolio or marketing site with lead capture",
     baseMin: 1200,
     baseMax: 3500,
-    timeline: "2–4 weeks",
+    timeline: "2-4 weeks",
   },
   {
     id: "saas",
@@ -86,7 +86,7 @@ export const PROJECT_TYPES: ProjectType[] = [
     description: "Multi-tenant app with auth, billing & admin",
     baseMin: 8000,
     baseMax: 25000,
-    timeline: "8–16 weeks",
+    timeline: "8-16 weeks",
   },
   {
     id: "ai",
@@ -95,7 +95,7 @@ export const PROJECT_TYPES: ProjectType[] = [
     description: "Chatbot, RAG, agents or copilot integration",
     baseMin: 2500,
     baseMax: 12000,
-    timeline: "4–10 weeks",
+    timeline: "4-10 weeks",
   },
   {
     id: "ml",
@@ -104,7 +104,7 @@ export const PROJECT_TYPES: ProjectType[] = [
     description: "Forecasting models & interactive ML dashboards",
     baseMin: 4000,
     baseMax: 15000,
-    timeline: "6–12 weeks",
+    timeline: "6-12 weeks",
   },
   {
     id: "data",
@@ -113,7 +113,7 @@ export const PROJECT_TYPES: ProjectType[] = [
     description: "ETL pipelines, warehousing & analytics",
     baseMin: 3000,
     baseMax: 10000,
-    timeline: "4–8 weeks",
+    timeline: "4-8 weeks",
   },
   {
     id: "devops",
@@ -122,7 +122,7 @@ export const PROJECT_TYPES: ProjectType[] = [
     description: "Docker, CI/CD & GCP deployment",
     baseMin: 800,
     baseMax: 4000,
-    timeline: "1–3 weeks",
+    timeline: "1-3 weeks",
   },
   {
     id: "security",
@@ -131,7 +131,7 @@ export const PROJECT_TYPES: ProjectType[] = [
     description: "2FA, RBAC, audit logs & hardening",
     baseMin: 1500,
     baseMax: 5000,
-    timeline: "2–4 weeks",
+    timeline: "2-4 weeks",
   },
   {
     id: "mobile",
@@ -140,13 +140,13 @@ export const PROJECT_TYPES: ProjectType[] = [
     description: "Mobile-first UI & PWA wrapper",
     baseMin: 500,
     baseMax: 1500,
-    timeline: "1–2 weeks",
+    timeline: "1-2 weeks",
   },
   {
     id: "custom",
     label: "Custom / Mixed Scope",
     icon: "sparkles",
-    description: "Multiple deliverables — scoped on discovery call",
+    description: "Multiple deliverables  -  scoped on discovery call",
     baseMin: 2000,
     baseMax: 20000,
     timeline: "Varies",
@@ -155,13 +155,13 @@ export const PROJECT_TYPES: ProjectType[] = [
 
 export const SCOPE_OPTIONS: ScopeOption[] = [
   { id: "catalog-50", label: "Up to 50 products", min: 0, max: 0, appliesTo: ["ecommerce"] },
-  { id: "catalog-200", label: "51–200 products", min: 400, max: 800, appliesTo: ["ecommerce"] },
+  { id: "catalog-200", label: "51-200 products", min: 400, max: 800, appliesTo: ["ecommerce"] },
   { id: "catalog-unlimited", label: "200+ products / variants", min: 900, max: 1800, appliesTo: ["ecommerce"] },
   { id: "payments-multi", label: "Multiple payment gateways", min: 300, max: 600, appliesTo: ["ecommerce"] },
   { id: "ai-commerce", label: "AI product discovery / concierge", min: 2500, max: 6000, appliesTo: ["ecommerce"] },
   { id: "pages-5", label: "Up to 5 pages / sections", min: 0, max: 0, appliesTo: ["website"] },
-  { id: "pages-8", label: "6–8 pages / sections", min: 400, max: 800, appliesTo: ["website"] },
-  { id: "pages-12", label: "9–12 pages / sections", min: 900, max: 1500, appliesTo: ["website"] },
+  { id: "pages-8", label: "6-8 pages / sections", min: 400, max: 800, appliesTo: ["website"] },
+  { id: "pages-12", label: "9-12 pages / sections", min: 900, max: 1500, appliesTo: ["website"] },
   { id: "motion-premium", label: "Premium motion & animations", min: 500, max: 1200, appliesTo: ["website"] },
   { id: "cms", label: "CMS / content management", min: 600, max: 1400, appliesTo: ["website"] },
   { id: "auth-basic", label: "User auth & profiles", min: 1500, max: 3500, appliesTo: ["saas"] },
@@ -187,7 +187,7 @@ export const SCOPE_OPTIONS: ScopeOption[] = [
 
 export const TIMELINE_OPTIONS: TimelineOption[] = [
   { id: "standard", label: "Standard timeline", multiplier: 1, note: "Recommended pace with sprint demos" },
-  { id: "rush", label: "Rush delivery (+15%)", multiplier: 1.15, note: "Accelerated sprints — subject to availability" },
+  { id: "rush", label: "Rush delivery (+15%)", multiplier: 1.15, note: "Accelerated sprints  -  subject to availability" },
 ];
 
 export function getScopeForType(typeId: ProjectTypeId): ScopeOption[] {
@@ -231,7 +231,7 @@ export function formatUsd(n: number): string {
 
 export function formatRange(min: number, max: number): string {
   if (min === max) return formatUsd(min);
-  return `${formatUsd(min)} – ${formatUsd(max)}`;
+  return `${formatUsd(min)} - ${formatUsd(max)}`;
 }
 
 export function generateEstimateId(): string {
@@ -246,7 +246,7 @@ export function generateEstimateId(): string {
 function longestTimeline(projects: ProjectType[]): string {
   if (projects.length === 0) return "Varies";
   if (projects.length === 1) return projects[0].timeline;
-  const order = ["1–2 weeks", "1–3 weeks", "2–4 weeks", "3–4 weeks", "3–6 weeks", "4–10 weeks", "6–12 weeks", "8–16 weeks", "Varies"];
+  const order = ["1-2 weeks", "1-3 weeks", "2-4 weeks", "3-4 weeks", "3-6 weeks", "4-10 weeks", "6-12 weeks", "8-16 weeks", "Varies"];
   let best = projects[0].timeline;
   for (const p of projects) {
     if (order.indexOf(p.timeline) > order.indexOf(best)) best = p.timeline;
@@ -275,7 +275,7 @@ export function buildEstimate(input: {
 
   for (const project of projects) {
     lineItems.push({
-      label: `${project.label} — base package`,
+      label: `${project.label}  -  base package`,
       min: project.baseMin,
       max: project.baseMax,
     });

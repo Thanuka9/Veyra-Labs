@@ -42,7 +42,7 @@ export function HomeServicesSummary({
               <span className="bg-gradient-to-r from-violet to-indigo-500 bg-clip-text text-transparent">one accountable team</span>
             </>
           }
-          subtitle="From SaaS and AI to e-commerce and premium sites — scoped quotes, sprint demos, and production handoff."
+          subtitle="From SaaS and AI to e-commerce and premium sites  -  scoped quotes, sprint demos, and production handoff."
           align="left"
           wide
           theme={theme}

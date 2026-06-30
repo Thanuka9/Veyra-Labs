@@ -95,7 +95,7 @@ function ParticleField() {
         if (p.y < 0 || p.y > h) { p.vy *= -1; p.y = Math.max(0, Math.min(h, p.y)); }
       }
 
-      // Draw connections — only every other frame to halve draw calls
+      // Draw connections  -  only every other frame to halve draw calls
       if (frameCount % 2 === 0) {
         for (let i = 0; i < particles.length; i++) {
           for (let j = i + 1; j < particles.length; j++) {
@@ -238,7 +238,7 @@ function CursorGlow() {
 }
 
 /**
- * Fixed site-wide ambient background — aurora mesh, particle network, cursor glow.
+ * Fixed site-wide ambient background  -  aurora mesh, particle network, cursor glow.
  */
 export function SiteBackground() {
   return (

@@ -275,7 +275,7 @@ const caseStudyData: Record<string, CaseStudyDetail> = {
     image: "/projects/revops-landing.png",
     tags: ["FastAPI", "React", "Scikit-Learn", "Python", "GCP"],
     gallery: [
-      { src: "/projects/revops-landing.png", caption: "RevOps AI — Predictive revenue cycle dashboard with forecasting, risk scoring, and HIPAA-aware audit workflows" },
+      { src: "/projects/revops-landing.png", caption: "RevOps AI  -  Predictive revenue cycle dashboard with forecasting, risk scoring, and HIPAA-aware audit workflows" },
     ],
     architecture: [
       { layerName: "Client Layer", icon: Globe, components: ["React 19 Dashboard", "Recharts Visualizations"] },
@@ -378,7 +378,7 @@ const caseStudyData: Record<string, CaseStudyDetail> = {
       "Evaluation and testing framework logs"
     ],
     proofHighlights: [
-      { label: "Build type", value: "Agent prototype", note: "Internal demo — no public UI" },
+      { label: "Build type", value: "Agent prototype", note: "Internal demo  -  no public UI" },
       { label: "Applications", value: "200+", note: "Submitted in controlled test cohort" },
       { label: "Match threshold", value: "85%+", note: "Vector alignment before filing" },
       { label: "Filing speed", value: "15× faster", note: "Vs. manual application workflow" },
@@ -409,7 +409,7 @@ const caseStudyData: Record<string, CaseStudyDetail> = {
     image: "/projects/monday-auditor.png",
     tags: ["Streamlit", "Pandas", "GraphQL", "Python", "Monday API"],
     gallery: [
-      { src: "/projects/monday-auditor.png", caption: "Monday Data Auditor — Board audit panel with missing-field detection and Excel export" },
+      { src: "/projects/monday-auditor.png", caption: "Monday Data Auditor  -  Board audit panel with missing-field detection and Excel export" },
     ],
     architecture: [
       { layerName: "Client UI", icon: Globe, components: ["Streamlit Web Interface", "Excel Downloader Component"] },
@@ -453,7 +453,7 @@ const caseStudyData: Record<string, CaseStudyDetail> = {
     image: "/projects/nimasha-portfolio-hero.png",
     tags: ["Next.js 16", "Canvas", "Framer Motion", "Tailwind CSS"],
     gallery: [
-      { src: "/projects/nimasha-portfolio-hero.png", caption: "Academic portfolio — Computational chemistry publications with molecular canvas hero" },
+      { src: "/projects/nimasha-portfolio-hero.png", caption: "Academic portfolio  -  Computational chemistry publications with molecular canvas hero" },
     ],
     architecture: [
       { layerName: "User Client", icon: Globe, components: ["Next.js SPA frontend", "Custom Molecular HTML5 Canvas"] },
@@ -498,7 +498,7 @@ const caseStudyData: Record<string, CaseStudyDetail> = {
     image: "/projects/azeem-portfolio-hero.png",
     tags: ["React", "Firebase", "Video Player Optimization", "Tailwind CSS"],
     gallery: [
-      { src: "/projects/azeem-portfolio-hero.png", caption: "Creative portfolio — Cinematic showreel hero, project archive, and lead-capture flow" },
+      { src: "/projects/azeem-portfolio-hero.png", caption: "Creative portfolio  -  Cinematic showreel hero, project archive, and lead-capture flow" },
     ],
     architecture: [
       { layerName: "Client App", icon: Globe, components: ["React 19 SPA", "Lazy-Loaded Video Component", "Framer Motion Canvas"] },
@@ -543,7 +543,7 @@ export default async function CaseStudyPage({ params }: { params: Promise<{ slug
     study.gallery && study.gallery.length > 0
       ? study.gallery
       : study.image
-        ? [{ src: study.image, caption: `${study.title} — product interface` }]
+        ? [{ src: study.image, caption: `${study.title}  -  product interface` }]
         : []
   );
 

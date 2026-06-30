@@ -6,7 +6,7 @@ import { TechStack } from "@/components/TechStack";
 export const metadata: Metadata = {
   title: "Technology",
   description:
-    "Production stack at Veyra Labs — Next.js, Python, FastAPI, Google Cloud, OpenAI, PostgreSQL, Stripe and enterprise-grade tooling.",
+    "Production stack at Veyra Labs  -  Next.js, Python, FastAPI, Google Cloud, OpenAI, PostgreSQL, Stripe and enterprise-grade tooling.",
   alternates: { canonical: "/technology" },
 };
 
@@ -18,7 +18,7 @@ export default function TechnologyPage() {
         accent: "cyan",
         title: "Technology",
         subtitle:
-          "Battle-tested tools we use to design, build and deploy intelligent products on Google Cloud — every item below has shipped in a live client project.",
+          "Battle-tested tools we use to design, build and deploy intelligent products on Google Cloud  -  every item below has shipped in a live client project.",
         breadcrumbs: [{ label: "Home", href: "/" }, { label: "Technology" }],
         cta: { label: "Discuss your stack", href: "/contact" },
       }}

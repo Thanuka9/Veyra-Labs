@@ -155,7 +155,7 @@ export function Testimonials({
                 </span>
               </>
             }
-            subtitle="Quotes from verified engagements — role and industry only, no names without permission."
+            subtitle="Quotes from verified engagements  -  role and industry only, no names without permission."
             theme={theme}
           />
         )}

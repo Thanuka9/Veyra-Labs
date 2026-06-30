@@ -22,7 +22,7 @@ export function TechStack({ showHeading = true, inner = false }: { showHeading?:
               <span className="text-gradient">battle-tested in live products</span>
             </>
           }
-          subtitle="We don't experiment on your budget. Every tool below has shipped in a real client project — from enterprise LMS platforms to AI commerce and predictive healthcare analytics."
+          subtitle="We don't experiment on your budget. Every tool below has shipped in a real client project  -  from enterprise LMS platforms to AI commerce and predictive healthcare analytics."
           align="left"
           wide
         />
@@ -96,7 +96,7 @@ export function TechStack({ showHeading = true, inner = false }: { showHeading?:
             </span>
             <p className="text-center text-xs text-muted sm:text-left">
               <span className="font-semibold text-foreground">{productionTechTools.length}</span>{" "}
-              technologies across live client deliveries — every tool above, no experimental stack on your project.
+              technologies across live client deliveries  -  every tool above, no experimental stack on your project.
             </p>
           </div>
         </Reveal>

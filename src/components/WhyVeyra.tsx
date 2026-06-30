@@ -7,7 +7,7 @@ const reasons = [
   {
     icon: Rocket,
     title: "Ship fast, ship right",
-    text: "We deliver production-ready code in tight iterations — not endless prototypes. Every sprint ends with something deployable.",
+    text: "We deliver production-ready code in tight iterations  -  not endless prototypes. Every sprint ends with something deployable.",
     gradient: "from-violet/20 to-violet/5",
     iconColor: "text-violet",
     iconBg: "bg-violet/10 border-violet/30",
@@ -15,7 +15,7 @@ const reasons = [
   {
     icon: Shield,
     title: "Enterprise-grade from day one",
-    text: "Auth, RBAC, audit logging, testing and observability are built in — not bolted on after launch.",
+    text: "Auth, RBAC, audit logging, testing and observability are built in  -  not bolted on after launch.",
     gradient: "from-cyan/20 to-cyan/5",
     iconColor: "text-cyan",
     iconBg: "bg-cyan/10 border-cyan/30",
@@ -54,7 +54,7 @@ export function WhyVeyra({ inner = false }: { inner?: boolean }) {
           <Reveal delay={2}>
             <p className="mt-5 text-pretty leading-relaxed text-muted">
               We&apos;re not a generic dev shop. Veyra Labs is a boutique engineering studio
-              specialising in intelligent products — the kind that combine beautiful UX with
+              specialising in intelligent products  -  the kind that combine beautiful UX with
               serious backend, AI and data engineering. When you hire us, you get a partner
               invested in your outcome.
             </p>

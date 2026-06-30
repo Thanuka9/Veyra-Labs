@@ -39,7 +39,7 @@ export function Work({ showHeading = true, inner = false }: { showHeading?: bool
               Every engagement, <span className="text-gradient">engineered to impress</span>
             </>
           }
-          subtitle="Browse our complete portfolio — SaaS platforms, AI products, data systems and premium websites delivered for clients and partners."
+          subtitle="Browse our complete portfolio  -  SaaS platforms, AI products, data systems and premium websites delivered for clients and partners."
           align="left"
           wide
         />

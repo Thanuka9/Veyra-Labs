@@ -86,8 +86,8 @@ export function FeaturedWork({
             }
             subtitle={
               variant === "summary"
-                ? "Live platforms, AI tools, and premium sites — a sample of recent work."
-                : "A selection of live platforms, AI tools and premium websites we've designed and engineered — including enterprise SaaS and conversion-focused brand sites."
+                ? "Live platforms, AI tools, and premium sites  -  a sample of recent work."
+                : "A selection of live platforms, AI tools and premium websites we've designed and engineered  -  including enterprise SaaS and conversion-focused brand sites."
             }
             align="left"
             wide

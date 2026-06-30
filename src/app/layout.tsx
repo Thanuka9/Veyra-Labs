@@ -25,7 +25,7 @@ const googleVerification = process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION;
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: {
-    default: "Veyra Labs — Software & AI Engineering Studio",
+    default: "Veyra Labs  -  Software & AI Engineering Studio",
     template: "%s | Veyra Labs",
   },
   description:
@@ -55,9 +55,9 @@ export const metadata: Metadata = {
     apple: "/brand/app-icon.png",
   },
   openGraph: {
-    title: "Veyra Labs — Software & AI Engineering Studio",
+    title: "Veyra Labs  -  Software & AI Engineering Studio",
     description:
-      "We design, engineer and ship intelligent products — SaaS, AI, e-commerce and premium websites with proven enterprise outcomes.",
+      "We design, engineer and ship intelligent products  -  SaaS, AI, e-commerce and premium websites with proven enterprise outcomes.",
     url: siteUrl,
     siteName: "Veyra Labs",
     type: "website",
@@ -66,9 +66,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Veyra Labs — Software & AI Engineering Studio",
+    title: "Veyra Labs  -  Software & AI Engineering Studio",
     description:
-      "Enterprise SaaS, AI systems, e-commerce & premium websites — battle-tested in production.",
+      "Enterprise SaaS, AI systems, e-commerce & premium websites  -  battle-tested in production.",
     images: ["/brand/lockup-dark.png"],
   },
 };

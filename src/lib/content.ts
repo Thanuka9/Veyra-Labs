@@ -42,7 +42,7 @@ export const services: Service[] = [
     shortTitle: "SaaS Engineering",
     title: "SaaS Product Engineering",
     description:
-      "Multi-tenant platforms with auth, billing, admin dashboards and APIs — from MVP to enterprise.",
+      "Multi-tenant platforms with auth, billing, admin dashboards and APIs  -  from MVP to enterprise.",
     longDescription:
       "We architect and ship production SaaS: tenant isolation, role-based access, Stripe billing, user and admin dashboards, and GCP deployment. Ideal for B2B tools, internal platforms and vertical SaaS.",
     icon: Boxes,
@@ -55,7 +55,7 @@ export const services: Service[] = [
       "GCP deployment + CI/CD",
       "30-day post-launch support",
     ],
-    timeline: "8–16 weeks",
+    timeline: "8-16 weeks",
     priceFrom: "$8,000",
     priceTo: "$25,000+",
     priceNote: "Scoped to feature set & user tiers",
@@ -66,7 +66,7 @@ export const services: Service[] = [
     shortTitle: "E-Commerce",
     title: "E-Commerce & Storefronts",
     description:
-      "Online stores with product catalog, cart, secure checkout and admin — mobile-first and SEO-ready.",
+      "Online stores with product catalog, cart, secure checkout and admin  -  mobile-first and SEO-ready.",
     longDescription:
       "Conversion-focused storefronts from starter catalogs to AI shopping experiences. Includes product pages, cart and checkout, payment gateways (Stripe/PayPal), order admin and performance tuning.",
     icon: ShoppingCart,
@@ -79,7 +79,7 @@ export const services: Service[] = [
       "Admin order dashboard",
       "SEO setup, SSL & deployment",
     ],
-    timeline: "3–6 weeks",
+    timeline: "3-6 weeks",
     priceFrom: "$1,500",
     priceTo: "$2,000",
     priceNote: "Starter store · scales with catalog & features",
@@ -93,7 +93,7 @@ export const services: Service[] = [
     description:
       "Brand and marketing sites with custom design, motion, lead capture and Core Web Vitals optimisation.",
     longDescription:
-      "High-end company sites, personal brands and portfolio platforms. Custom UI/UX, up to 8+ sections, contact flows, Google Analytics, and deployment with SSL — built to convert visitors into leads.",
+      "High-end company sites, personal brands and portfolio platforms. Custom UI/UX, up to 8+ sections, contact flows, Google Analytics, and deployment with SSL  -  built to convert visitors into leads.",
     icon: Globe,
     points: ["Custom UI/UX design", "Framer-grade motion", "Lead capture forms", "SEO & analytics"],
     deliverables: [
@@ -104,7 +104,7 @@ export const services: Service[] = [
       "Google Analytics setup",
       "Deployment + SSL",
     ],
-    timeline: "2–4 weeks",
+    timeline: "2-4 weeks",
     priceFrom: "$1,200",
     priceTo: "$3,500",
     priceNote: "Brand & portfolio sites",
@@ -115,7 +115,7 @@ export const services: Service[] = [
     shortTitle: "AI & LLM",
     title: "AI & LLM Implementation",
     description:
-      "Production AI wired into your product — chatbots, RAG search, agents, copilots and local LLM options.",
+      "Production AI wired into your product  -  chatbots, RAG search, agents, copilots and local LLM options.",
     longDescription:
       "We integrate LLMs that work in production: grounded RAG over your documents, autonomous agent workflows, chat UIs (like this assistant), prompt engineering, and cloud or local model deployment.",
     icon: BrainCircuit,
@@ -128,7 +128,7 @@ export const services: Service[] = [
       "Rate limiting & caching",
       "Documentation & handoff",
     ],
-    timeline: "4–10 weeks",
+    timeline: "4-10 weeks",
     priceFrom: "$2,500",
     priceTo: "$12,000+",
     priceNote: "Standalone or add-on to any project",
@@ -141,7 +141,7 @@ export const services: Service[] = [
     description:
       "Forecasting models, predictive scoring and interactive ML dashboards deployed on your data.",
     longDescription:
-      "Revenue forecasting, predictive scoring and operational analytics — models trained and validated on your data, served via API and visualised in dashboards your team can use daily.",
+      "Revenue forecasting, predictive scoring and operational analytics  -  models trained and validated on your data, served via API and visualised in dashboards your team can use daily.",
     icon: LineChart,
     points: ["Forecasting models", "Predictive scoring", "ML dashboards", "API inference"],
     deliverables: [
@@ -152,7 +152,7 @@ export const services: Service[] = [
       "Accuracy / performance reporting",
       "Optional retraining pipeline",
     ],
-    timeline: "6–12 weeks",
+    timeline: "6-12 weeks",
     priceFrom: "$4,000",
     priceTo: "$15,000+",
     priceNote: "Healthcare, finance & ops analytics",
@@ -163,7 +163,7 @@ export const services: Service[] = [
     shortTitle: "Data Engineering",
     title: "Data Science & Engineering",
     description:
-      "ETL pipelines, NLP, warehousing and analytics — from messy data ingestion to actionable insight.",
+      "ETL pipelines, NLP, warehousing and analytics  -  from messy data ingestion to actionable insight.",
     longDescription:
       "End-to-end data pipelines: load, clean, transform and visualise complex datasets. Includes PostgreSQL warehousing, scheduled jobs, NLP/sentiment analysis, EDA reports and export/API access.",
     icon: Database,
@@ -176,7 +176,7 @@ export const services: Service[] = [
       "Scheduled data jobs",
       "Export / API access layer",
     ],
-    timeline: "4–8 weeks",
+    timeline: "4-8 weeks",
     priceFrom: "$3,000",
     priceTo: "$10,000+",
     priceNote: "Ingestion through insight",
@@ -189,7 +189,7 @@ export const services: Service[] = [
     description:
       "Docker, CI/CD, GCP deployment, monitoring and security hardening for production releases.",
     longDescription:
-      "Infrastructure setup for teams that need reliable shipping: containerised services, automated deployments, environment configuration, uptime monitoring and security hardening — standalone or bundled with a build.",
+      "Infrastructure setup for teams that need reliable shipping: containerised services, automated deployments, environment configuration, uptime monitoring and security hardening  -  standalone or bundled with a build.",
     icon: Cloud,
     points: ["Docker & compose", "Google Cloud Run", "CI/CD pipelines", "Monitoring & alerts"],
     deliverables: [
@@ -200,7 +200,7 @@ export const services: Service[] = [
       "Uptime monitoring & alerts",
       "Security hardening checklist",
     ],
-    timeline: "1–3 weeks",
+    timeline: "1-3 weeks",
     priceFrom: "$800",
     priceTo: "$4,000",
     priceNote: "Add-on or standalone setup",
@@ -224,7 +224,7 @@ export const services: Service[] = [
       "Pen-test readiness checklist",
       "Compliance documentation",
     ],
-    timeline: "2–4 weeks",
+    timeline: "2-4 weeks",
     priceFrom: "$1,500",
     priceTo: "$5,000",
     priceNote: "Add-on or standalone audit",
@@ -247,7 +247,7 @@ export const services: Service[] = [
       "Cross-browser device matrix QA",
       "Performance audit report",
     ],
-    timeline: "+1–2 weeks",
+    timeline: "+1-2 weeks",
     priceFrom: "$500",
     priceTo: "$1,500",
     priceNote: "Add-on to any web project",
@@ -269,7 +269,7 @@ export const services: Service[] = [
       "Interactive dashboard",
       "Conversion tracking verification",
     ],
-    timeline: "+1–2 weeks",
+    timeline: "+1-2 weeks",
     priceFrom: "$1,200",
     priceTo: "$3,000",
     priceNote: "Custom tags & dashboards",
@@ -291,7 +291,7 @@ export const services: Service[] = [
       "Custom webhook handlers",
       "API testing & verification logs",
     ],
-    timeline: "+2–3 weeks",
+    timeline: "+2-3 weeks",
     priceFrom: "$1,000",
     priceTo: "$4,500",
     priceNote: "Custom scoped by API",
@@ -313,7 +313,7 @@ export const services: Service[] = [
       "Database query optimization script",
       "Webpack/Turbopack bundle analysis",
     ],
-    timeline: "+1–2 weeks",
+    timeline: "+1-2 weeks",
     priceFrom: "$600",
     priceTo: "$1,800",
     priceNote: "Sub-second load times",
@@ -331,7 +331,7 @@ export const footerServiceLinks = coreServices.map((s) => ({
 export const contactProjectTypes = [
   ...coreServices.map((s) => s.title),
   ...addonServices.map((s) => `${s.shortTitle} (add-on)`),
-  "Not sure yet — let's talk",
+  "Not sure yet  -  let's talk",
 ];
 
 export type Outcome = {
@@ -493,7 +493,7 @@ export const process: ProcessStep[] = [
     no: "01",
     title: "Discovery & Scoping",
     description:
-      "We start with a free discovery call to understand your business goals, users, constraints and success metrics. No sales pitch — just clarity.",
+      "We start with a free discovery call to understand your business goals, users, constraints and success metrics. No sales pitch  -  just clarity.",
     duration: "Week 1",
     deliverables: ["Requirements document", "Technical blueprint", "Fixed-price quote", "Project timeline"],
     clientGets: "A clear roadmap and transparent estimate before any code is written.",
@@ -503,16 +503,16 @@ export const process: ProcessStep[] = [
     title: "Design & Architecture",
     description:
       "Wireframes, data models and system architecture come together. You review interactive prototypes and approve the direction before development begins.",
-    duration: "Week 1–2",
+    duration: "Week 1-2",
     deliverables: ["UI wireframes", "Database schema", "API design", "Architecture diagram"],
-    clientGets: "Visual proof of what you're buying — no surprises at launch.",
+    clientGets: "Visual proof of what you're buying  -  no surprises at launch.",
   },
   {
     no: "03",
     title: "Agile Build Sprints",
     description:
-      "Modular, tested code shipped in 1–2 week sprints. You see working features after every sprint — frontend, backend, AI and data layers in lockstep.",
-    duration: "Week 2–10",
+      "Modular, tested code shipped in 1-2 week sprints. You see working features after every sprint  -  frontend, backend, AI and data layers in lockstep.",
+    duration: "Week 2-10",
     deliverables: ["Sprint demos", "Staging environment", "Automated tests", "Progress reports"],
     clientGets: "Working software every sprint, not a big reveal at the end.",
   },
@@ -523,7 +523,7 @@ export const process: ProcessStep[] = [
       "Production deployment on Google Cloud or Vercel, performance tuning, documentation and a structured handoff. We stay on for 30 days post-launch.",
     duration: "Final week",
     deliverables: ["Production deployment", "Documentation", "Admin training", "30-day support"],
-    clientGets: "A live, production-ready product you own — with support while you settle in.",
+    clientGets: "A live, production-ready product you own  -  with support while you settle in.",
   },
 ];
 
@@ -540,7 +540,7 @@ export type PricingTier = {
 export const pricingTiers: PricingTier[] = [
   {
     name: "Portfolio Website",
-    price: "$800 – $1,500",
+    price: "$800 - $1,500",
     priceNote: "Personal & creative brands",
     description:
       "Clean, high-performance portfolio site to showcase your creative work, skills, and capture leads.",
@@ -551,13 +551,13 @@ export const pricingTiers: PricingTier[] = [
       "Basic SEO & Analytics",
       "Mobile-responsive build",
       "SSL deployment",
-      "1–3 week delivery",
+      "1-3 week delivery",
     ],
     cta: "Get portfolio quote",
   },
   {
     name: "Premium Website",
-    price: "$1,200 – $3,500",
+    price: "$1,200 - $3,500",
     priceNote: "Brand & portfolio sites",
     description:
       "Custom brand or portfolio site with motion, lead capture and performance optimisation.",
@@ -569,16 +569,16 @@ export const pricingTiers: PricingTier[] = [
       "Google Analytics",
       "Core Web Vitals optimised",
       "Deployment + SSL",
-      "2–4 week delivery",
+      "2-4 week delivery",
     ],
     cta: "Get website quote",
   },
   {
     name: "E-Commerce Starter",
-    price: "$1,500 – $2,000",
+    price: "$1,500 - $2,000",
     priceNote: "Most popular entry point",
     description:
-      "Professional online store — product catalog, cart, secure checkout and admin dashboard.",
+      "Professional online store  -  product catalog, cart, secure checkout and admin dashboard.",
     features: [
       "Up to 50 products",
       "Mobile-responsive storefront",
@@ -587,17 +587,17 @@ export const pricingTiers: PricingTier[] = [
       "Admin order dashboard",
       "SEO setup + SSL deployment",
       "2 revision rounds",
-      "3–6 week delivery",
+      "3-6 week delivery",
     ],
     cta: "Get e-commerce quote",
     highlight: true,
   },
   {
     name: "AI & LLM Feature",
-    price: "$2,500 – $12,000",
+    price: "$2,500 - $12,000",
     priceNote: "Standalone or add-on",
     description:
-      "Production AI — chatbots, RAG search, autonomous agents or local/cloud LLM integration.",
+      "Production AI  -  chatbots, RAG search, autonomous agents or local/cloud LLM integration.",
     features: [
       "AI architecture design",
       "RAG or agent pipeline",
@@ -606,16 +606,16 @@ export const pricingTiers: PricingTier[] = [
       "Prompt engineering & evals",
       "Rate limiting & caching",
       "Local or cloud LLM",
-      "4–10 week delivery",
+      "4-10 week delivery",
     ],
     cta: "Discuss AI scope",
   },
   {
     name: "SaaS Platform",
-    price: "$8,000 – $25,000+",
+    price: "$8,000 - $25,000+",
     priceNote: "Enterprise-grade",
     description:
-      "Full multi-tenant SaaS — auth, billing, dashboards, RBAC and cloud deployment.",
+      "Full multi-tenant SaaS  -  auth, billing, dashboards, RBAC and cloud deployment.",
     features: [
       "Multi-tenant architecture",
       "Auth, 2FA & RBAC",
@@ -624,16 +624,16 @@ export const pricingTiers: PricingTier[] = [
       "REST/GraphQL API",
       "PostgreSQL + caching",
       "GCP deployment + CI/CD",
-      "8–16 week delivery",
+      "8-16 week delivery",
     ],
     cta: "Book discovery call",
   },
   {
     name: "ML & Predictive Analytics",
-    price: "$4,000 – $15,000+",
+    price: "$4,000 - $15,000+",
     priceNote: "Forecasting & dashboards",
     description:
-      "Predictive models and interactive dashboards — trained on your data, deployed with API access.",
+      "Predictive models and interactive dashboards  -  trained on your data, deployed with API access.",
     features: [
       "Data audit & feature engineering",
       "Model training & validation",
@@ -642,13 +642,13 @@ export const pricingTiers: PricingTier[] = [
       "Accuracy reporting",
       "Optional retraining pipeline",
       "Healthcare & ops experience",
-      "6–12 week delivery",
+      "6-12 week delivery",
     ],
     cta: "Discuss ML scope",
   },
   {
     name: "Data Science & Engineering",
-    price: "$3,000 – $10,000+",
+    price: "$3,000 - $10,000+",
     priceNote: "Pipelines & warehousing",
     description:
       "ETL pipelines, NLP, PostgreSQL warehousing and analytics from ingestion to insight.",
@@ -660,7 +660,7 @@ export const pricingTiers: PricingTier[] = [
       "Scheduled data jobs",
       "Export / API access",
       "NLP & sentiment (optional)",
-      "4–8 week delivery",
+      "4-8 week delivery",
     ],
     cta: "Discuss data scope",
   },
@@ -675,7 +675,7 @@ export const stats: { value: string; label: string }[] = [
 
 export type Testimonial = {
   quote: string;
-  /** Job title or function — no fabricated personal names. */
+  /** Job title or function  -  no fabricated personal names. */
   role: string;
   /** Industry / engagement context (anonymized). */
   context: string;
@@ -699,14 +699,14 @@ export const testimonials: Testimonial[] = [
   },
   {
     quote:
-      "Their RAG pipeline implementation was impressive — they had our 50,000-document knowledge base fully searchable and integrated into our internal tool within a month. The team is deeply technical and zero-fluff.",
+      "Their RAG pipeline implementation was impressive  -  they had our 50,000-document knowledge base fully searchable and integrated into our internal tool within a month. The team is deeply technical and zero-fluff.",
     role: "Engineering Lead",
     context: "Enterprise AI product team",
     projectSlug: "codex",
   },
   {
     quote:
-      "The e-commerce storefront they built converted at 3.8% on launch week — well above our previous 1.2%. Mobile-first performance was exactly what we needed to compete on Google Shopping.",
+      "The e-commerce storefront they built converted at 3.8% on launch week  -  well above our previous 1.2%. Mobile-first performance was exactly what we needed to compete on Google Shopping.",
     role: "Founder",
     context: "D2C retail brand",
     projectSlug: "kapruka-flow",
@@ -726,13 +726,13 @@ export const testimonials: Testimonial[] = [
   },
   {
     quote:
-      "Veyra Labs built our customer-facing AI chatbot from scratch — it handles 85% of tier-1 support queries with no human handoff. Saved us two full-time support roles in the first quarter.",
+      "Veyra Labs built our customer-facing AI chatbot from scratch  -  it handles 85% of tier-1 support queries with no human handoff. Saved us two full-time support roles in the first quarter.",
     role: "Director of Operations",
     context: "Public-sector technology program (anonymized)",
   },
 ];
 
-export const CONTACT_EMAIL = "thanuka.ellepola@gmail.com";
+export const CONTACT_EMAIL = "veyralabs0@gmail.com";
 export const CONTACT_LINKEDIN =
   "https://www.linkedin.com/in/thanuka-ellepola-a559b01aa/";
 export const CONTACT_LOCATION = "Colombo, Sri Lanka · Remote-first worldwide";

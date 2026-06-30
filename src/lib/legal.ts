@@ -23,7 +23,7 @@ export const privacySections: LegalSection[] = [
     id: "overview",
     title: "Overview",
     paragraphs: [
-      `${COMPANY_NAME} (“we”, “us”, “our”) respects your privacy. This policy explains what personal data we collect when you visit our website, use our chat assistant, request a project estimate, or contact us — and how we use, store, and protect that information.`,
+      `${COMPANY_NAME} (“we”, “us”, “our”) respects your privacy. This policy explains what personal data we collect when you visit our website, use our chat assistant, request a project estimate, or contact us  -  and how we use, store, and protect that information.`,
       "We process data in accordance with applicable privacy laws. By using our website you acknowledge this policy. If you do not agree, please do not use our services.",
     ],
   },
@@ -32,10 +32,10 @@ export const privacySections: LegalSection[] = [
     title: "Information we collect",
     paragraphs: ["We may collect the following categories of information:"],
     bullets: [
-      "Contact details you provide — name, email address, company name, and project description — via our contact form, chatbot, or estimate wizard.",
-      "Communications — messages you send us and our replies, including estimate references and inquiry content.",
-      "Technical data — IP address (anonymised where possible), browser type, device information, pages visited, and referral source, collected through analytics when you consent to cookies.",
-      "Usage data — interactions with our chat assistant and estimate tools to improve our services.",
+      "Contact details you provide  -  name, email address, company name, and project description  -  via our contact form, chatbot, or estimate wizard.",
+      "Communications  -  messages you send us and our replies, including estimate references and inquiry content.",
+      "Technical data  -  IP address (anonymised where possible), browser type, device information, pages visited, and referral source, collected through analytics when you consent to cookies.",
+      "Usage data  -  interactions with our chat assistant and estimate tools to improve our services.",
     ],
   },
   {
@@ -54,14 +54,14 @@ export const privacySections: LegalSection[] = [
     id: "legal-bases",
     title: "Legal bases for processing",
     paragraphs: [
-      "Where applicable under GDPR and similar laws, we rely on: (a) your consent — for marketing contact and non-essential cookies; (b) contract performance — to respond to your project inquiries; (c) legitimate interests — to operate and improve our website, prevent abuse, and understand aggregate usage; and (d) legal obligation — where required by law.",
+      "Where applicable under GDPR and similar laws, we rely on: (a) your consent  -  for marketing contact and non-essential cookies; (b) contract performance  -  to respond to your project inquiries; (c) legitimate interests  -  to operate and improve our website, prevent abuse, and understand aggregate usage; and (d) legal obligation  -  where required by law.",
     ],
   },
   {
     id: "sharing",
     title: "Sharing and processors",
     paragraphs: [
-      "We do not sell your personal data. We may share information with trusted service providers who help us operate the website — for example email delivery, hosting, and analytics (Google Analytics, when enabled). These providers process data only on our instructions and under appropriate safeguards.",
+      "We do not sell your personal data. We may share information with trusted service providers who help us operate the website  -  for example email delivery, hosting, and analytics (Google Analytics, when enabled). These providers process data only on our instructions and under appropriate safeguards.",
       "We may disclose information if required by law, court order, or to protect the rights, property, or safety of Veyra Labs, our clients, or others.",
     ],
   },
@@ -69,7 +69,7 @@ export const privacySections: LegalSection[] = [
     id: "retention",
     title: "Data retention",
     paragraphs: [
-      "Inquiry and estimate records are kept for as long as needed to fulfil your request, maintain business records, and resolve disputes — typically up to 24 months unless a longer period is required by law or an ongoing client relationship.",
+      "Inquiry and estimate records are kept for as long as needed to fulfil your request, maintain business records, and resolve disputes  -  typically up to 24 months unless a longer period is required by law or an ongoing client relationship.",
       "Analytics data is retained according to our analytics provider’s default retention settings.",
     ],
   },
@@ -126,7 +126,7 @@ export const cookieSections: LegalSection[] = [
     id: "what-are-cookies",
     title: "What are cookies?",
     paragraphs: [
-      "Cookies are small text files stored on your device when you visit a website. They help the site remember preferences, keep sessions secure, and — with your consent — understand how visitors use the site.",
+      "Cookies are small text files stored on your device when you visit a website. They help the site remember preferences, keep sessions secure, and  -  with your consent  -  understand how visitors use the site.",
     ],
   },
   {
@@ -134,9 +134,9 @@ export const cookieSections: LegalSection[] = [
     title: "How we use cookies",
     paragraphs: ["Veyra Labs uses cookies in the following categories:"],
     bullets: [
-      "Strictly necessary — required for core site functionality, security, and remembering your cookie preference. These cannot be disabled on our site.",
-      "Analytics — help us understand traffic and usage (e.g. Google Analytics with IP anonymisation). Loaded only if you accept analytics cookies.",
-      "Functional — remember chat or UI preferences such as quick-actions visibility in our assistant (stored locally in your browser).",
+      "Strictly necessary  -  required for core site functionality, security, and remembering your cookie preference. These cannot be disabled on our site.",
+      "Analytics  -  help us understand traffic and usage (e.g. Google Analytics with IP anonymisation). Loaded only if you accept analytics cookies.",
+      "Functional  -  remember chat or UI preferences such as quick-actions visibility in our assistant (stored locally in your browser).",
     ],
   },
   {
@@ -152,7 +152,7 @@ export const cookieSections: LegalSection[] = [
     title: "Managing your preferences",
     paragraphs: [
       "When you first visit, choose Accept all or Essential only in the cookie prompt beside our chat widget.",
-      "You can change your choice anytime using Cookie settings in the website footer — this clears your saved preference and shows the prompt again.",
+      "You can change your choice anytime using Cookie settings in the website footer  -  this clears your saved preference and shows the prompt again.",
       "You can also clear cookies through your browser settings. Disabling essential cookies may affect site functionality.",
     ],
   },
@@ -197,10 +197,10 @@ export const termsSections: LegalSection[] = [
       "While this website provides indicative ballpark estimates, all paid engineering engagements are governed by a separate, signed Master Services Agreement (MSA) and Statement of Work (SOW). Standard engagement parameters include:",
     ],
     bullets: [
-      "Milestone Billing — Standard engagements are structured as 40% upfront deposit, 40% upon major midpoint delivery/milestone validation, and 20% upon final production handoff and deployment.",
-      "IP Ownership — 100% intellectual property ownership of all custom-developed codebase and digital assets is transferred to the client upon receipt of final milestone payment.",
-      "Cancellation & Offboarding — Either party may terminate an active engagement with 14 days written notice. Billing is prorated to deliverables completed up to the termination date.",
-      "Standard Support & SLAs — Every project handoff includes 30 days of post-launch maintenance covering critical bug fixes and deployment support. Optional service level agreements (SLAs) are available for managed hosting, 24/7 uptime monitoring, and monthly feature revisions.",
+      "Milestone Billing  -  Standard engagements are structured as 40% upfront deposit, 40% upon major midpoint delivery/milestone validation, and 20% upon final production handoff and deployment.",
+      "IP Ownership  -  100% intellectual property ownership of all custom-developed codebase and digital assets is transferred to the client upon receipt of final milestone payment.",
+      "Cancellation & Offboarding  -  Either party may terminate an active engagement with 14 days written notice. Billing is prorated to deliverables completed up to the termination date.",
+      "Standard Support & SLAs  -  Every project handoff includes 30 days of post-launch maintenance covering critical bug fixes and deployment support. Optional service level agreements (SLAs) are available for managed hosting, 24/7 uptime monitoring, and monthly feature revisions.",
     ],
   },
   {
@@ -218,7 +218,7 @@ export const termsSections: LegalSection[] = [
     id: "ip",
     title: "Intellectual property",
     paragraphs: [
-      "All content on this website — including text, graphics, logos, case study summaries, and software — is owned by Veyra Labs or its licensors and protected by applicable intellectual property laws. You may not reproduce or distribute content without prior written consent, except for personal, non-commercial reference.",
+      "All content on this website  -  including text, graphics, logos, case study summaries, and software  -  is owned by Veyra Labs or its licensors and protected by applicable intellectual property laws. You may not reproduce or distribute content without prior written consent, except for personal, non-commercial reference.",
     ],
   },
   {

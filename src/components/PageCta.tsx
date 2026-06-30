@@ -16,7 +16,7 @@ export function PageCta() {
                 Ready to ship your next product?
               </h2>
               <p className="mt-3 text-sm leading-relaxed text-muted sm:text-base">
-                Book a free discovery call — we&apos;ll scope your project, share a fixed quote, and outline the first sprint.
+                Book a free discovery call  -  we&apos;ll scope your project, share a fixed quote, and outline the first sprint.
               </p>
             </div>
             <div className="relative mt-6 flex shrink-0 flex-col gap-3 sm:mt-0">

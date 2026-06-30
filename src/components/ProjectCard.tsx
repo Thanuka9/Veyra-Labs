@@ -25,7 +25,7 @@ export function ProjectCard({ project }: { project: Project }) {
         {project.image ? (
           <ProjectScreenshot
             src={project.image}
-            alt={`${project.name} — ${project.tagline}`}
+            alt={`${project.name}  -  ${project.tagline}`}
             position={project.imagePosition ?? "center top"}
             sizes="(max-width: 768px) 100vw, 33vw"
           />

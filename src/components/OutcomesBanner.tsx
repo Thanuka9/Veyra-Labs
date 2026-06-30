@@ -8,7 +8,7 @@ import { useScrollTrigger } from "./Reveal";
 import { TiltCard } from "./TiltCard";
 
 /**
- * CountUp — uses direct DOM refs for every-frame updates.
+ * CountUp  -  uses direct DOM refs for every-frame updates.
  * Only 2 React setState calls total (phase: idle→running→done),
  * not 2 calls × 60fps for the entire duration.
  */
@@ -45,7 +45,7 @@ function CountUp({
         const val = Math.round(eased * target);
         const pct = Math.round(eased * 100);
 
-        // Direct DOM — zero React overhead per frame
+        // Direct DOM  -  zero React overhead per frame
         if (digitsRef.current) digitsRef.current.textContent = String(val);
         if (barRef.current) barRef.current.style.width = `${pct}%`;
         if (shimmerRef.current) shimmerRef.current.style.width = `${pct}%`;

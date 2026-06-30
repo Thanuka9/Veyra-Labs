@@ -139,11 +139,11 @@ export function EstimateWizard({ onComplete, onCancel, embedded }: EstimateWizar
         sent = true;
         setEmailSent(true);
       } catch {
-        setEmailError("We couldn't email the team — download the PDF or try again below.");
+        setEmailError("We couldn't email the team  -  download the PDF or try again below.");
         setEmailSent(false);
       }
     } else if (!isEmailConfigured()) {
-      setEmailError("Email isn't configured on this environment — download your PDF below.");
+      setEmailError("Email isn't configured on this environment  -  download your PDF below.");
     }
 
     setEstimate(result);
@@ -170,7 +170,7 @@ export function EstimateWizard({ onComplete, onCancel, embedded }: EstimateWizar
       await sendEstimateEmail(estimate);
       setEmailSent(true);
     } catch {
-      setEmailError(`Send failed — please email ${CONTACT_EMAIL} with your estimate ID.`);
+      setEmailError(`Send failed  -  please email ${CONTACT_EMAIL} with your estimate ID.`);
     } finally {
       setResending(false);
     }
@@ -185,7 +185,7 @@ export function EstimateWizard({ onComplete, onCancel, embedded }: EstimateWizar
         embedded && "flex h-full min-h-0 flex-col rounded-none border-0 shadow-none"
       )}
     >
-      {/* Header — compact when embedded in chat (panel header already shows brand) */}
+      {/* Header  -  compact when embedded in chat (panel header already shows brand) */}
       <div className={cn("border-b border-violet/20 bg-surface-2/50", embedded ? "px-3 py-2.5" : "px-4 py-3")}>
         <div className="flex items-center justify-between gap-2">
           <div className="flex min-w-0 items-center gap-2">
@@ -245,7 +245,7 @@ export function EstimateWizard({ onComplete, onCancel, embedded }: EstimateWizar
             >
               <p className="text-xs font-semibold text-foreground">Select all services you need</p>
               <p className="mb-3 mt-1 text-[10px] leading-relaxed text-muted">
-                Pick one or more — we&apos;ll combine scope and pricing for mixed projects.
+                Pick one or more  -  we&apos;ll combine scope and pricing for mixed projects.
               </p>
               <div className="grid grid-cols-1 gap-2 sm:grid-cols-2">
                 {PROJECT_TYPES.map((pt) => {
@@ -307,7 +307,7 @@ export function EstimateWizard({ onComplete, onCancel, embedded }: EstimateWizar
               transition={{ duration: 0.2 }}
             >
               <p className="text-xs font-semibold text-foreground">Add scope options</p>
-              <p className="mb-3 mt-1 text-[10px] text-muted">Select all that apply — skip anything you&apos;re unsure about.</p>
+              <p className="mb-3 mt-1 text-[10px] text-muted">Select all that apply  -  skip anything you&apos;re unsure about.</p>
               <div className="space-y-4">
                 {scopeGroups.map((group) => (
                   <div key={group.typeId}>
@@ -491,7 +491,7 @@ export function EstimateResultCard({
         <div className="flex items-center gap-2 rounded-lg border border-emerald-500/30 bg-emerald-500/10 px-3 py-2">
           <Check size={14} className="shrink-0 text-emerald-400" />
           <p className="text-[10px] font-medium text-emerald-300">
-            Estimate sent to our team — we&apos;ll respond within 24 hours
+            Estimate sent to our team  -  we&apos;ll respond within 24 hours
             {estimate.clientEmail ? ` at ${estimate.clientEmail}` : ""}.
           </p>
         </div>

@@ -71,7 +71,7 @@ export function buildVeyraInquiryEmail(params: {
   return {
     name: params.name,
     email: params.email,
-    subject: `Veyra Labs — ${params.projectType} inquiry from ${params.name}`,
+    subject: `Veyra Labs  -  ${params.projectType} inquiry from ${params.name}`,
     message: lines.join("\n"),
   };
 }
@@ -91,7 +91,7 @@ function buildEstimateHtml(estimate: ProjectEstimate): string {
           ? "Included"
           : item.min === item.max
             ? `$${item.min.toLocaleString()}`
-            : `$${item.min.toLocaleString()} – $${item.max.toLocaleString()}`;
+            : `$${item.min.toLocaleString()} - $${item.max.toLocaleString()}`;
 
       return `
       <tr style="border-bottom: 1px solid #2A2B3D;">
@@ -241,7 +241,7 @@ export function buildEstimateEmail(estimate: ProjectEstimate, pdfBase64?: string
   const clientEmail = estimate.clientEmail?.trim() || "no-reply@veyralabs.com";
 
   const lines = [
-    "=== VEYRA LABS — CHAT ESTIMATE REQUEST ===",
+    "=== VEYRA LABS  -  CHAT ESTIMATE REQUEST ===",
     "",
     `Estimate ID: ${estimate.id}`,
     `Date: ${new Date(estimate.createdAt).toLocaleString("en-US", { dateStyle: "medium", timeStyle: "short" })}`,
@@ -277,7 +277,7 @@ export function buildEstimateEmail(estimate: ProjectEstimate, pdfBase64?: string
   return {
     name: clientName,
     email: clientEmail,
-    subject: `[Estimate ${estimate.id}] ${estimate.projectLabel} — ${formatRange(estimate.totalMin, estimate.totalMax)}`,
+    subject: `[Estimate ${estimate.id}] ${estimate.projectLabel}  -  ${formatRange(estimate.totalMin, estimate.totalMax)}`,
     message: lines.join("\n"),
     html_message: buildEstimateHtml(estimate),
     estimate_pdf: pdfBase64,
