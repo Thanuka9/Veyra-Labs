@@ -23,7 +23,7 @@ export default function Home() {
         <Testimonials theme="dark" />
         <Contact />
       </main>
-      <Footer />
+      <Footer showCta={false} />
     </>
   );
 }

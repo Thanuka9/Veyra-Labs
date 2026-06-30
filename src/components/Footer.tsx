@@ -14,26 +14,28 @@ const legal = [
   { label: "Terms of Service", href: "/terms" },
 ];
 
-export function Footer() {
+export function Footer({ showCta = true }: { showCta?: boolean }) {
   return (
     <footer className="mt-auto border-t border-border bg-surface">
-      <div className="border-b border-border bg-gradient-to-r from-violet/10 via-surface to-cyan/10">
-        <Reveal className="container-page flex flex-col items-start justify-between gap-6 py-10 sm:flex-row sm:items-center">
-          <div>
-            <p className="text-xs font-semibold uppercase tracking-wider text-violet">Ready to start?</p>
-            <p className="mt-1 text-xl font-bold tracking-tight sm:text-2xl">
-              Let&apos;s build your next product together.
-            </p>
-          </div>
-          <Link
-            href={contactHref(false)}
-            className="group inline-flex shrink-0 items-center gap-2 rounded-xl bg-gradient-to-r from-violet to-cyan px-6 py-3.5 text-sm font-semibold text-white shadow-[0_0_32px_-8px_rgba(124,92,255,0.55)] transition-transform hover:scale-[1.03]"
-          >
-            Book a free discovery call
-            <ArrowRight size={16} className="transition-transform group-hover:translate-x-0.5" />
-          </Link>
-        </Reveal>
-      </div>
+      {showCta && (
+        <div className="border-b border-border bg-gradient-to-r from-violet/10 via-surface to-cyan/10">
+          <Reveal className="container-page flex flex-col items-start justify-between gap-6 py-10 sm:flex-row sm:items-center">
+            <div>
+              <p className="text-xs font-semibold uppercase tracking-wider text-violet">Ready to start?</p>
+              <p className="mt-1 text-xl font-bold tracking-tight sm:text-2xl">
+                Let&apos;s build your next product together.
+              </p>
+            </div>
+            <Link
+              href={contactHref(false)}
+              className="group inline-flex shrink-0 items-center gap-2 rounded-xl bg-gradient-to-r from-violet to-cyan px-6 py-3.5 text-sm font-semibold text-white shadow-[0_0_32px_-8px_rgba(124,92,255,0.55)] transition-transform hover:scale-[1.03]"
+            >
+              Book a free discovery call
+              <ArrowRight size={16} className="transition-transform group-hover:translate-x-0.5" />
+            </Link>
+          </Reveal>
+        </div>
+      )}
 
       <div className="container-page py-14 lg:py-16">
         <div className="grid gap-12 lg:grid-cols-12 lg:gap-10">

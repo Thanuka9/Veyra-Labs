@@ -20,7 +20,7 @@ export function InnerPageLayout({
         {children}
         {showCta && <PageCta />}
       </main>
-      <Footer />
+      <Footer showCta={showCta} />
     </>
   );
 }
