@@ -539,6 +539,23 @@ export type PricingTier = {
 
 export const pricingTiers: PricingTier[] = [
   {
+    name: "Portfolio Website",
+    price: "$800 - $1,500",
+    priceNote: "Personal & creative brands",
+    description:
+      "Clean, high-performance portfolio site to showcase your creative work, skills, and capture leads.",
+    features: [
+      "Up to 5 sections/pages",
+      "Optimized media showcase",
+      "Contact/inquiry form",
+      "Basic SEO & Analytics",
+      "Mobile-responsive build",
+      "SSL deployment",
+      "1-3 week delivery",
+    ],
+    cta: "Get portfolio quote",
+  },
+  {
     name: "E-Commerce Starter",
     price: "$1,500 - $2,000",
     priceNote: "Most popular entry point",
@@ -556,23 +573,6 @@ export const pricingTiers: PricingTier[] = [
     ],
     cta: "Get e-commerce quote",
     highlight: true,
-  },
-  {
-    name: "Portfolio Website",
-    price: "$800 - $1,500",
-    priceNote: "Personal & creative brands",
-    description:
-      "Clean, high-performance portfolio site to showcase your creative work, skills, and capture leads.",
-    features: [
-      "Up to 5 sections/pages",
-      "Optimized media showcase",
-      "Contact/inquiry form",
-      "Basic SEO & Analytics",
-      "Mobile-responsive build",
-      "SSL deployment",
-      "1-3 week delivery",
-    ],
-    cta: "Get portfolio quote",
   },
   {
     name: "Premium Website",
