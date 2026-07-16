@@ -2,6 +2,7 @@ export const ESTIMATE_DISCLAIMER =
   "This is an automated ballpark estimate only  -  not a binding quote or contract. The final amount may differ based on your specific requirements, integrations, scope changes, and complexity identified when you contact Veyra Labs.";
 
 export type ProjectTypeId =
+  | "portfolio"
   | "ecommerce"
   | "website"
   | "saas"
@@ -11,6 +12,9 @@ export type ProjectTypeId =
   | "devops"
   | "security"
   | "mobile"
+  | "analytics"
+  | "integrations"
+  | "performance"
   | "custom";
 
 export type ProjectType = {
@@ -21,6 +25,8 @@ export type ProjectType = {
   baseMin: number;
   baseMax: number;
   timeline: string;
+  /** Mirrors the pricing page: core packages vs add-on services */
+  category: "core" | "addon";
 };
 
 export type ScopeOption = {
@@ -62,6 +68,16 @@ export type ProjectEstimate = {
 
 export const PROJECT_TYPES: ProjectType[] = [
   {
+    id: "portfolio",
+    label: "Portfolio Website",
+    icon: "palette",
+    description: "Personal & creative brand site with lead capture",
+    baseMin: 500,
+    baseMax: 1000,
+    timeline: "1-3 weeks",
+    category: "core",
+  },
+  {
     id: "ecommerce",
     label: "E-Commerce Store",
     icon: "cart",
@@ -69,24 +85,17 @@ export const PROJECT_TYPES: ProjectType[] = [
     baseMin: 1000,
     baseMax: 2000,
     timeline: "3-6 weeks",
+    category: "core",
   },
   {
     id: "website",
-    label: "Website & Portfolio",
+    label: "Premium Website",
     icon: "globe",
-    description: "Portfolio from $500, premium brand site up to $3,500",
-    baseMin: 500,
+    description: "Custom brand site with motion & lead capture",
+    baseMin: 1200,
     baseMax: 3500,
     timeline: "2-4 weeks",
-  },
-  {
-    id: "saas",
-    label: "SaaS Platform",
-    icon: "layers",
-    description: "Multi-tenant app with auth, billing & admin",
-    baseMin: 8000,
-    baseMax: 25000,
-    timeline: "8-16 weeks",
+    category: "core",
   },
   {
     id: "ai",
@@ -96,6 +105,17 @@ export const PROJECT_TYPES: ProjectType[] = [
     baseMin: 2500,
     baseMax: 12000,
     timeline: "4-10 weeks",
+    category: "core",
+  },
+  {
+    id: "saas",
+    label: "SaaS Platform",
+    icon: "layers",
+    description: "Multi-tenant app with auth, billing & admin",
+    baseMin: 8000,
+    baseMax: 25000,
+    timeline: "8-16 weeks",
+    category: "core",
   },
   {
     id: "ml",
@@ -105,6 +125,7 @@ export const PROJECT_TYPES: ProjectType[] = [
     baseMin: 4000,
     baseMax: 15000,
     timeline: "6-12 weeks",
+    category: "core",
   },
   {
     id: "data",
@@ -114,33 +135,7 @@ export const PROJECT_TYPES: ProjectType[] = [
     baseMin: 3000,
     baseMax: 10000,
     timeline: "4-8 weeks",
-  },
-  {
-    id: "devops",
-    label: "Cloud & DevOps",
-    icon: "cloud",
-    description: "Docker, CI/CD & GCP deployment",
-    baseMin: 800,
-    baseMax: 4000,
-    timeline: "1-3 weeks",
-  },
-  {
-    id: "security",
-    label: "Security & Compliance",
-    icon: "shield",
-    description: "2FA, RBAC, audit logs & hardening",
-    baseMin: 1500,
-    baseMax: 5000,
-    timeline: "2-4 weeks",
-  },
-  {
-    id: "mobile",
-    label: "Mobile / PWA",
-    icon: "smartphone",
-    description: "Mobile-first UI & PWA wrapper",
-    baseMin: 500,
-    baseMax: 1500,
-    timeline: "1-2 weeks",
+    category: "core",
   },
   {
     id: "custom",
@@ -150,39 +145,130 @@ export const PROJECT_TYPES: ProjectType[] = [
     baseMin: 2000,
     baseMax: 20000,
     timeline: "Varies",
+    category: "core",
+  },
+  {
+    id: "devops",
+    label: "Cloud & DevOps",
+    icon: "cloud",
+    description: "Docker, CI/CD & GCP deployment",
+    baseMin: 800,
+    baseMax: 4000,
+    timeline: "1-3 weeks",
+    category: "addon",
+  },
+  {
+    id: "security",
+    label: "Security & Compliance",
+    icon: "shield",
+    description: "2FA, RBAC, audit logs & hardening",
+    baseMin: 1500,
+    baseMax: 5000,
+    timeline: "2-4 weeks",
+    category: "addon",
+  },
+  {
+    id: "mobile",
+    label: "Mobile-Responsive & PWA",
+    icon: "smartphone",
+    description: "Cross-device QA & installable PWA setup",
+    baseMin: 500,
+    baseMax: 1500,
+    timeline: "1-2 weeks",
+    category: "addon",
+  },
+  {
+    id: "analytics",
+    label: "Analytics & BI Dashboards",
+    icon: "bar",
+    description: "GTM, telemetry, dashboards & funnel analysis",
+    baseMin: 1200,
+    baseMax: 3000,
+    timeline: "1-2 weeks",
+    category: "addon",
+  },
+  {
+    id: "integrations",
+    label: "Third-Party API Integrations",
+    icon: "link",
+    description: "CRM sync, payments, webhooks & migrations",
+    baseMin: 1000,
+    baseMax: 4500,
+    timeline: "2-3 weeks",
+    category: "addon",
+  },
+  {
+    id: "performance",
+    label: "Speed Optimization",
+    icon: "gauge",
+    description: "Core Web Vitals, caching, CDN & DB tuning",
+    baseMin: 600,
+    baseMax: 1800,
+    timeline: "1-2 weeks",
+    category: "addon",
   },
 ];
 
+export const CORE_PROJECT_TYPES = PROJECT_TYPES.filter((p) => p.category === "core");
+export const ADDON_PROJECT_TYPES = PROJECT_TYPES.filter((p) => p.category === "addon");
+
 export const SCOPE_OPTIONS: ScopeOption[] = [
+  // Portfolio
+  { id: "portfolio-5", label: "Up to 5 sections/pages", min: 0, max: 0, appliesTo: ["portfolio"] },
+  { id: "portfolio-media", label: "Optimized media showcase / gallery", min: 0, max: 0, appliesTo: ["portfolio"] },
+  { id: "portfolio-extra", label: "6-8 sections/pages", min: 200, max: 400, appliesTo: ["portfolio"] },
+  { id: "portfolio-blog", label: "Blog / articles section", min: 250, max: 500, appliesTo: ["portfolio"] },
+  // E-commerce
   { id: "catalog-50", label: "Up to 50 products", min: 0, max: 0, appliesTo: ["ecommerce"] },
   { id: "catalog-200", label: "51-200 products", min: 400, max: 800, appliesTo: ["ecommerce"] },
   { id: "catalog-unlimited", label: "200+ products / variants", min: 900, max: 1800, appliesTo: ["ecommerce"] },
   { id: "payments-multi", label: "Multiple payment gateways", min: 300, max: 600, appliesTo: ["ecommerce"] },
   { id: "ai-commerce", label: "AI product discovery / concierge", min: 2500, max: 6000, appliesTo: ["ecommerce"] },
-  { id: "pages-5", label: "Up to 5 pages / sections", min: 0, max: 0, appliesTo: ["website"] },
-  { id: "pages-8", label: "6-8 pages / sections", min: 400, max: 800, appliesTo: ["website"] },
+  // Premium website
+  { id: "pages-8", label: "Up to 8 pages / sections", min: 0, max: 0, appliesTo: ["website"] },
   { id: "pages-12", label: "9-12 pages / sections", min: 900, max: 1500, appliesTo: ["website"] },
   { id: "motion-premium", label: "Premium motion & animations", min: 500, max: 1200, appliesTo: ["website"] },
   { id: "cms", label: "CMS / content management", min: 600, max: 1400, appliesTo: ["website"] },
+  // SaaS
   { id: "auth-basic", label: "User auth & profiles", min: 1500, max: 3500, appliesTo: ["saas"] },
   { id: "billing", label: "Stripe subscription billing", min: 2000, max: 4500, appliesTo: ["saas"] },
   { id: "rbac", label: "RBAC & multi-tenant", min: 2500, max: 6000, appliesTo: ["saas"] },
   { id: "admin", label: "Admin dashboard & analytics", min: 2000, max: 5000, appliesTo: ["saas"] },
+  // AI & LLM
   { id: "rag", label: "RAG / document search", min: 1500, max: 4000, appliesTo: ["ai"] },
   { id: "chatbot", label: "Custom chatbot (like this one)", min: 2000, max: 5500, appliesTo: ["ai"] },
   { id: "agents", label: "Autonomous agents / workflows", min: 3500, max: 9000, appliesTo: ["ai"] },
   { id: "local-llm", label: "Local LLM deployment", min: 2000, max: 6000, appliesTo: ["ai"] },
+  // ML & data
   { id: "forecast", label: "Predictive / forecasting models", min: 2000, max: 6000, appliesTo: ["ml"] },
   { id: "dashboard", label: "Interactive ML dashboard", min: 1500, max: 4000, appliesTo: ["ml"] },
   { id: "etl", label: "ETL / data pipeline", min: 2000, max: 5500, appliesTo: ["data", "ml"] },
   { id: "nlp", label: "NLP / sentiment analysis", min: 1500, max: 4500, appliesTo: ["data"] },
   { id: "warehouse", label: "PostgreSQL warehousing", min: 1000, max: 3500, appliesTo: ["data"] },
-  { id: "pwa", label: "PWA / mobile app wrapper", min: 500, max: 1500, appliesTo: ["ecommerce", "website", "saas", "mobile"] },
-  { id: "devops-setup", label: "Full cloud & CI/CD setup", min: 800, max: 4000, appliesTo: ["devops", "saas", "custom", "ml"] },
+  // Cloud & DevOps
+  { id: "devops-setup", label: "Full cloud & CI/CD setup", min: 0, max: 0, appliesTo: ["devops"] },
+  { id: "devops-bundle", label: "Cloud & CI/CD setup (bundled)", min: 800, max: 4000, appliesTo: ["saas", "custom", "ml"] },
   { id: "monitoring", label: "Monitoring, logs & alerts", min: 600, max: 2000, appliesTo: ["devops", "saas"] },
-  { id: "security-audit", label: "Security audit & hardening", min: 1500, max: 5000, appliesTo: ["security", "saas", "custom"] },
+  // Security
+  { id: "security-audit", label: "Security audit & hardening", min: 0, max: 0, appliesTo: ["security"] },
+  { id: "security-bundle", label: "Security audit (bundled)", min: 1500, max: 5000, appliesTo: ["saas", "custom"] },
   { id: "compliance-hipaa", label: "HIPAA-aware patterns", min: 2000, max: 6000, appliesTo: ["security", "saas"] },
-  { id: "responsive-qa", label: "Cross-device responsive QA", min: 400, max: 900, appliesTo: ["mobile", "website", "ecommerce"] },
+  // Mobile & PWA
+  { id: "pwa", label: "PWA / installable app wrapper", min: 0, max: 0, appliesTo: ["mobile"] },
+  { id: "pwa-bundle", label: "PWA / mobile app wrapper (bundled)", min: 500, max: 1500, appliesTo: ["ecommerce", "website", "portfolio", "saas"] },
+  { id: "responsive-qa", label: "Cross-device responsive QA", min: 400, max: 900, appliesTo: ["website", "portfolio", "ecommerce"] },
+  // Analytics & BI
+  { id: "gtm-tracking", label: "GTM & pixel tracking setup", min: 0, max: 0, appliesTo: ["analytics"] },
+  { id: "bi-dashboard", label: "Custom BI dashboard", min: 600, max: 1500, appliesTo: ["analytics"] },
+  { id: "funnel-analysis", label: "Funnel & user behavior analysis", min: 400, max: 1000, appliesTo: ["analytics"] },
+  // API integrations
+  { id: "crm-sync", label: "CRM sync (Salesforce/HubSpot)", min: 0, max: 0, appliesTo: ["integrations"] },
+  { id: "webhooks", label: "Custom webhooks & middleware", min: 400, max: 1200, appliesTo: ["integrations"] },
+  { id: "system-migration", label: "Data / system migration", min: 800, max: 2500, appliesTo: ["integrations"] },
+  // Speed optimization
+  { id: "cwv-audit", label: "Core Web Vitals audit & fixes", min: 0, max: 0, appliesTo: ["performance"] },
+  { id: "caching-cdn", label: "Redis caching & edge CDN", min: 300, max: 800, appliesTo: ["performance"] },
+  { id: "db-tuning", label: "Database query & index tuning", min: 400, max: 1000, appliesTo: ["performance"] },
 ];
 
 export const TIMELINE_OPTIONS: TimelineOption[] = [
@@ -246,7 +332,7 @@ export function generateEstimateId(): string {
 function longestTimeline(projects: ProjectType[]): string {
   if (projects.length === 0) return "Varies";
   if (projects.length === 1) return projects[0].timeline;
-  const order = ["1-2 weeks", "1-3 weeks", "2-4 weeks", "3-4 weeks", "3-6 weeks", "4-10 weeks", "6-12 weeks", "8-16 weeks", "Varies"];
+  const order = ["1-2 weeks", "1-3 weeks", "2-3 weeks", "2-4 weeks", "3-4 weeks", "3-6 weeks", "4-10 weeks", "6-12 weeks", "8-16 weeks", "Varies"];
   let best = projects[0].timeline;
   for (const p of projects) {
     if (order.indexOf(p.timeline) > order.indexOf(best)) best = p.timeline;

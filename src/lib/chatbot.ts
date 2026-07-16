@@ -60,7 +60,7 @@ We design, build and deploy intelligent products:
 • **ML & analytics**  -  forecasting models & dashboards ($4k-$15k+)
 • **Data engineering**  -  ETL, warehousing & NLP ($3k-$10k+)
 
-**Add-ons:** Cloud/DevOps, security & PWA polish available on any project.
+**Add-ons:** Cloud/DevOps, security & compliance, mobile/PWA, analytics & BI dashboards, API integrations and speed optimization  -  standalone or bundled with any project.
 
 **Our belief:** great software companies don't just write code  -  they **engineer outcomes**. We combine product thinking, full-stack engineering and applied AI so you launch faster and operate smarter.
 
@@ -244,13 +244,50 @@ const INTENTS: Intent[] = [
 
 **Next step:** [Contact Us](/contact) or email **${CONTACT_EMAIL}**  -  or tap **Get estimate** for a ballpark quote.`,
   },
+  // --- Specific add-on services (checked before broader tier/pricing intents) ---
   {
-    patterns: [
-      /price|pricing|cost|how much|budget|quote|rate|fee|afford|expensive|cheap|\$\d/i,
-    ],
-    reply: () =>
-      `Here are our **standard starting ranges** (USD, fixed quote after you contact us):\n\n${formatPricing()}\n\nYou can [click here to view our full pricing details](/pricing).\n\nEvery project includes sprint demos and **30-day post-launch support**.\n\nWant a tailored range? Tap **Get estimate** for an instant ballpark quote with PDF download.`,
+    patterns: [/devops|ci\/cd|docker|cloud deploy|infrastructure/i],
+    reply: () => {
+      const svc = services.find((s) => s.id === "devops")!;
+      return `**${svc.title}  -  ${svc.priceFrom} - ${svc.priceTo}**\n\n${svc.description}\n\n**Includes:** ${svc.deliverables.slice(0, 4).join(" · ")}.\n\n**Timeline:** ${svc.timeline} · Available standalone or bundled with any build.`;
+    },
   },
+  {
+    patterns: [/security|compliance|hipaa|audit log|2fa/i],
+    reply: () => {
+      const svc = services.find((s) => s.id === "security")!;
+      return `**${svc.title}  -  ${svc.priceFrom} - ${svc.priceTo}**\n\n${svc.description}\n\n**Includes:** ${svc.deliverables.slice(0, 4).join(" · ")}.\n\n**Timeline:** ${svc.timeline}.`;
+    },
+  },
+  {
+    patterns: [/analytics dashboard|bi dashboard|business intelligence|google tag manager|\bgtm\b|pixel tracking|funnel|user behavior|telemetry|analytics setup|analytics & bi|analytics and bi/i],
+    reply: () => {
+      const svc = services.find((s) => s.id === "analytics")!;
+      return `**${svc.title}  -  ${svc.priceFrom} - ${svc.priceTo}**\n\n${svc.description}\n\n**Includes:** ${svc.deliverables.join(" · ")}.\n\n**Timeline:** ${svc.timeline} · Available standalone or bundled with any build.\n\nYou can [click here to view all services](/services).`;
+    },
+  },
+  {
+    patterns: [/api integration|third.?party|crm sync|salesforce|hubspot|webhook|zapier|connect (my|our|the) (crm|tools|systems)|system migration|integrate (with|my|our)/i],
+    reply: () => {
+      const svc = services.find((s) => s.id === "integrations")!;
+      return `**${svc.title}  -  ${svc.priceFrom} - ${svc.priceTo}**\n\n${svc.description}\n\n**Includes:** ${svc.deliverables.join(" · ")}.\n\n**Timeline:** ${svc.timeline} · Scoped per API.\n\nYou can [click here to view all services](/services).`;
+    },
+  },
+  {
+    patterns: [/speed optimi|performance optimi|core web vitals|page speed|site (is )?slow|slow (site|website|load)|load(ing)? time|lighthouse|caching|cdn/i],
+    reply: () => {
+      const svc = services.find((s) => s.id === "performance")!;
+      return `**${svc.title}  -  ${svc.priceFrom} - ${svc.priceTo}**\n\n${svc.description}\n\n**Includes:** ${svc.deliverables.join(" · ")}.\n\n**Timeline:** ${svc.timeline} · Before/after speed reports included.\n\nYou can [click here to view all services](/services).`;
+    },
+  },
+  {
+    patterns: [/\bpwa\b|progressive web app|mobile.?(responsive|first|friendly|app)|installable|home.?screen|cross.?device/i],
+    reply: () => {
+      const svc = services.find((s) => s.id === "mobile")!;
+      return `**${svc.title}  -  ${svc.priceFrom} - ${svc.priceTo}**\n\n${svc.description}\n\nMobile-first is **default on every Veyra build**  -  this add-on adds deep cross-device QA and an installable PWA setup.\n\n**Includes:** ${svc.deliverables.slice(0, 4).join(" · ")}.\n\n**Timeline:** ${svc.timeline}.`;
+    },
+  },
+  // --- Core package tiers ---
   {
     patterns: [/e-?commerce|online store|shop|storefront|shopify|woocommerce|sell online/i],
     reply: () => {
@@ -302,6 +339,14 @@ const INTENTS: Intent[] = [
       return `**${tier.name}  -  ${tier.price}**\n\n${tier.description}\n\n**Includes:**\n${tier.features.map((f) => `• ${f}`).join("\n")}\n\nWe build production chatbots (like me!), RAG search and autonomous agents.\n\nYou can [click here to view our case studies](/work).`;
     },
   },
+  // --- Generic pricing (after specific tiers so targeted questions win) ---
+  {
+    patterns: [
+      /price|pricing|cost|how much|budget|quote|rate|fee|afford|expensive|cheap|\$\d/i,
+    ],
+    reply: () =>
+      `Here are our **standard starting ranges** (USD, fixed quote after you contact us):\n\n${formatPricing()}\n\n**Add-ons** (standalone or bundled):\n${formatAddons()}\n\nYou can [click here to view our full pricing details](/pricing).\n\nEvery project includes sprint demos and **30-day post-launch support**.\n\nWant a tailored range? Tap **Get estimate** for an instant ballpark quote with PDF download.`,
+  },
   {
     patterns: [/service|what do you (do|build|offer)|capabilit|special/i],
     reply: () =>
@@ -315,21 +360,7 @@ const INTENTS: Intent[] = [
   {
     patterns: [/project timeline|how long (does|will)|delivery time|turnaround|weeks to (build|deliver|ship)/i],
     reply: () =>
-      `Typical timelines by project type:\n\n• **E-Commerce:** 3-6 weeks\n• **Premium Website:** 2-4 weeks\n• **AI & LLM:** 4-10 weeks\n• **SaaS Platform:** 8-16 weeks\n• **ML & Analytics:** 6-12 weeks\n• **Data Engineering:** 4-8 weeks\n\nExact timeline depends on scope  -  tap **Get estimate** for a tailored range.`,
-  },
-  {
-    patterns: [/devops|ci\/cd|docker|cloud deploy|infrastructure/i],
-    reply: () => {
-      const svc = services.find((s) => s.id === "devops")!;
-      return `**${svc.title}  -  ${svc.priceFrom} - ${svc.priceTo}**\n\n${svc.description}\n\n**Includes:** ${svc.deliverables.slice(0, 4).join(" · ")}.\n\n**Timeline:** ${svc.timeline} · Available standalone or bundled with any build.`;
-    },
-  },
-  {
-    patterns: [/security|compliance|hipaa|audit log|2fa/i],
-    reply: () => {
-      const svc = services.find((s) => s.id === "security")!;
-      return `**${svc.title}  -  ${svc.priceFrom} - ${svc.priceTo}**\n\n${svc.description}\n\n**Includes:** ${svc.deliverables.slice(0, 4).join(" · ")}.\n\n**Timeline:** ${svc.timeline}.`;
-    },
+      `Typical timelines by project type:\n\n• **Portfolio Website:** 1-3 weeks\n• **Premium Website:** 2-4 weeks\n• **E-Commerce:** 3-6 weeks\n• **AI & LLM:** 4-10 weeks\n• **SaaS Platform:** 8-16 weeks\n• **ML & Analytics:** 6-12 weeks\n• **Data Engineering:** 4-8 weeks\n\n**Add-ons** (DevOps, security, PWA, analytics, integrations, speed optimization) typically add **1-3 weeks** each.\n\nExact timeline depends on scope  -  tap **Get estimate** for a tailored range.`,
   },
   {
     patterns: [/tech stack|technology stack|what tech|next\.?js|react|python|gcp|vercel|langchain/i],
@@ -390,7 +421,7 @@ const FALLBACK =
 
 /** Keywords that indicate the user is asking about Veyra Labs / our work */
 const ON_TOPIC_SIGNALS =
-  /\b(veyra|verra|veira|vyra|about|story|mission|founder|team|faq|estimate|quote|pricing|price|cost|budget|website|e-?commerce|storefront|online store|shop|saas|platform|software|develop|build|hire|agency|studio|project|discovery|contact|service|deliver|trainiq|codex|kapruka|techforge|case stud|portfolio|chatbot|llm|ai feature|machine learning|data science|next\.?js|react|flask|python|gcp|docker|devops|timeline|process|sprint|support|maintenance|launch|pdf|package|tier|landing page|brand site|multi-tenant|rbac|stripe|deploy|how much|how long|book a call|contact us|get started|revops|collective rcm|why choose|who are you|what are you|startup|nda|remote)\b/i;
+  /\b(veyra|verra|veira|vyra|about|story|mission|founder|team|faq|estimate|quote|pricing|price|cost|budget|website|e-?commerce|storefront|online store|shop|saas|platform|software|develop|build|hire|agency|studio|project|discovery|contact|service|deliver|trainiq|codex|kapruka|techforge|case stud|portfolio|chatbot|llm|ai feature|machine learning|data science|next\.?js|react|flask|python|gcp|docker|devops|timeline|process|sprint|support|maintenance|launch|pdf|package|tier|landing page|brand site|multi-tenant|rbac|stripe|deploy|how much|how long|book a call|contact us|get started|revops|collective rcm|why choose|who are you|what are you|startup|nda|remote|analytics|integration|webhook|crm|salesforce|hubspot|pwa|mobile|responsive|speed|performance|web vitals|caching|cdn|seo|security|compliance|hipaa)\b/i;
 
 /** Clearly unrelated topics  -  declined even if phrasing is vague */
 const OFF_TOPIC_PATTERNS: RegExp[] = [

@@ -7,6 +7,7 @@ import {
   AlertTriangle,
   ArrowLeft,
   ArrowRight,
+  BarChart3,
   Brain,
   Calculator,
   ChartColumn,
@@ -14,10 +15,13 @@ import {
   Database,
   Cloud,
   Download,
+  Gauge,
   Globe,
   Layers,
+  Link2,
   Loader2,
   Mail,
+  Palette,
   Shield,
   ShoppingCart,
   Smartphone,
@@ -26,7 +30,8 @@ import {
 } from "lucide-react";
 import {
   ESTIMATE_DISCLAIMER,
-  PROJECT_TYPES,
+  ADDON_PROJECT_TYPES,
+  CORE_PROJECT_TYPES,
   TIMELINE_OPTIONS,
   buildEstimate,
   formatRange,
@@ -44,6 +49,7 @@ import { LucideIcon } from "./LucideIcon";
 import { cn } from "@/lib/cn";
 
 const PROJECT_ICONS: Record<string, LucideIconType> = {
+  palette: Palette,
   cart: ShoppingCart,
   globe: Globe,
   layers: Layers,
@@ -53,6 +59,9 @@ const PROJECT_ICONS: Record<string, LucideIconType> = {
   cloud: Cloud,
   shield: Shield,
   smartphone: Smartphone,
+  bar: BarChart3,
+  link: Link2,
+  gauge: Gauge,
   sparkles: Sparkles,
 };
 
@@ -247,44 +256,54 @@ export function EstimateWizard({ onComplete, onCancel, embedded }: EstimateWizar
               <p className="mb-3 mt-1 text-[10px] leading-relaxed text-muted">
                 Pick one or more  -  we&apos;ll combine scope and pricing for mixed projects.
               </p>
-              <div className="grid grid-cols-1 gap-2 sm:grid-cols-2">
-                {PROJECT_TYPES.map((pt) => {
-                  const Icon = PROJECT_ICONS[pt.icon] ?? Sparkles;
-                  const selected = selectedTypes.includes(pt.id);
-                  return (
-                    <button
-                      key={pt.id}
-                      type="button"
-                      onClick={() => toggleType(pt.id)}
-                      className={cn(
-                        "relative flex items-start gap-2.5 rounded-xl border p-3 text-left transition-all",
-                        selected
-                          ? "border-violet/60 bg-violet/15 shadow-[0_0_20px_-8px_rgba(124,92,255,0.5)]"
-                          : "border-border bg-surface-2/80 hover:border-violet/30"
-                      )}
-                    >
-                      <div
-                        className={cn(
-                          "flex h-8 w-8 shrink-0 items-center justify-center rounded-lg",
-                          selected ? "bg-violet/25" : "bg-violet/10"
-                        )}
-                      >
-                        <LucideIcon icon={Icon} size={16} className={selected ? "text-violet" : "text-cyan/80"} />
-                      </div>
-                      <div className="min-w-0 flex-1">
-                        <span className="text-[11px] font-bold leading-tight">{pt.label}</span>
-                        <p className="mt-0.5 text-[10px] leading-snug text-muted">{pt.description}</p>
-                        <p className="mt-1 text-[10px] font-semibold text-cyan">{formatRange(pt.baseMin, pt.baseMax)}</p>
-                      </div>
-                      {selected && (
-                        <span className="absolute right-2 top-2 flex h-4 w-4 items-center justify-center rounded-full bg-violet text-white">
-                          <Check size={10} strokeWidth={3} />
-                        </span>
-                      )}
-                    </button>
-                  );
-                })}
-              </div>
+              {[
+                { title: "Core packages", types: CORE_PROJECT_TYPES },
+                { title: "Add-on services", types: ADDON_PROJECT_TYPES },
+              ].map((group, gi) => (
+                <div key={group.title} className={gi > 0 ? "mt-4" : undefined}>
+                  <p className="mb-1.5 text-[10px] font-bold uppercase tracking-wider text-violet">
+                    {group.title}
+                  </p>
+                  <div className="grid grid-cols-1 gap-2 sm:grid-cols-2">
+                    {group.types.map((pt) => {
+                      const Icon = PROJECT_ICONS[pt.icon] ?? Sparkles;
+                      const selected = selectedTypes.includes(pt.id);
+                      return (
+                        <button
+                          key={pt.id}
+                          type="button"
+                          onClick={() => toggleType(pt.id)}
+                          className={cn(
+                            "relative flex items-start gap-2.5 rounded-xl border p-3 text-left transition-all",
+                            selected
+                              ? "border-violet/60 bg-violet/15 shadow-[0_0_20px_-8px_rgba(124,92,255,0.5)]"
+                              : "border-border bg-surface-2/80 hover:border-violet/30"
+                          )}
+                        >
+                          <div
+                            className={cn(
+                              "flex h-8 w-8 shrink-0 items-center justify-center rounded-lg",
+                              selected ? "bg-violet/25" : "bg-violet/10"
+                            )}
+                          >
+                            <LucideIcon icon={Icon} size={16} className={selected ? "text-violet" : "text-cyan/80"} />
+                          </div>
+                          <div className="min-w-0 flex-1">
+                            <span className="text-[11px] font-bold leading-tight">{pt.label}</span>
+                            <p className="mt-0.5 text-[10px] leading-snug text-muted">{pt.description}</p>
+                            <p className="mt-1 text-[10px] font-semibold text-cyan">{formatRange(pt.baseMin, pt.baseMax)}</p>
+                          </div>
+                          {selected && (
+                            <span className="absolute right-2 top-2 flex h-4 w-4 items-center justify-center rounded-full bg-violet text-white">
+                              <Check size={10} strokeWidth={3} />
+                            </span>
+                          )}
+                        </button>
+                      );
+                    })}
+                  </div>
+                </div>
+              ))}
               {selectedTypes.length > 0 && (
                 <p className="mt-3 text-[10px] font-medium text-emerald-400">
                   {selectedTypes.length} service{selectedTypes.length > 1 ? "s" : ""} selected
