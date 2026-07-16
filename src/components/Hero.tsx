@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
-import { ArrowRight, Calendar, Sparkles, Star, Zap } from "lucide-react";
+import { ArrowRight, Mail, Sparkles, Star, Zap } from "lucide-react";
 
 const slides: Array<{
   src: string;
@@ -18,7 +18,7 @@ const slides: Array<{
 
 const stats = [
   { v: "15+", l: "Projects delivered" },
-  { v: "$1,500", l: "E-commerce from" },
+  { v: "$1,000", l: "E-commerce from" },
   { v: "R² > 0.90", l: "On billing datasets" },
 ];
 
@@ -217,8 +217,8 @@ export function Hero() {
                 className="group relative inline-flex items-center justify-center gap-2 overflow-hidden rounded-xl bg-gradient-to-r from-violet via-indigo to-cyan px-7 py-4 text-sm font-semibold text-white shadow-[0_0_40px_-10px_rgba(124,92,255,0.7)] transition-all hover:scale-[1.03] hover:shadow-[0_0_60px_-8px_rgba(124,92,255,0.9)]"
               >
                 <span className="absolute inset-0 -translate-x-full skew-x-[-20deg] bg-white/10 transition-transform duration-700 group-hover:translate-x-[120%]" />
-                <Calendar size={16} />
-                Book a discovery call
+                <Mail size={16} />
+                Contact Us
                 <ArrowRight size={16} className="transition-transform group-hover:translate-x-1" />
               </a>
               <a

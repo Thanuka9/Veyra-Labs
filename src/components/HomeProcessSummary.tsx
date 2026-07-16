@@ -29,7 +29,7 @@ export function HomeProcessSummary() {
               <span className="text-gradient">production in clear sprints</span>
             </>
           }
-          subtitle="A transparent five-step delivery model  -  fixed milestones, weekly demos, and documented handoff."
+          subtitle="A transparent four-phase delivery model  -  fixed milestones, weekly demos, and documented handoff."
           align="left"
           wide
         />

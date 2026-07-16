@@ -20,7 +20,7 @@ export default function WorkPage() {
         subtitle:
           "Flagship deliveries and our full portfolio  -  SaaS, AI, data systems and premium websites engineered for production.",
         breadcrumbs: [{ label: "Home", href: "/" }, { label: "Work" }],
-        cta: { label: "Start a project", href: "/contact" },
+        cta: { label: "Contact Us", href: "/contact" },
         secondaryCta: { label: "View pricing", href: "/pricing" },
       }}
     >

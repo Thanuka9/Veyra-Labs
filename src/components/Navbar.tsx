@@ -95,7 +95,7 @@ export function Navbar() {
               className="group relative hidden items-center gap-2 overflow-hidden rounded-xl bg-gradient-to-r from-violet to-cyan px-4 py-2 text-sm font-semibold text-white shadow-[0_0_28px_-8px_rgba(124,92,255,0.65)] transition-all hover:scale-[1.02] hover:shadow-[0_0_40px_-6px_rgba(124,92,255,0.9)] sm:inline-flex xl:px-5 xl:py-2.5"
             >
               <span className="absolute inset-0 -translate-x-full skew-x-[-20deg] bg-white/10 transition-transform duration-700 group-hover:translate-x-[120%]" />
-              Book a call
+              Contact Us
               <ArrowRight size={15} className="transition-transform group-hover:translate-x-0.5" />
             </Link>
 

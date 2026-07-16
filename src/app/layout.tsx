@@ -4,7 +4,7 @@ import { VeyraWidgetDock } from "@/components/VeyraWidgetDock";
 import { SiteBackground } from "@/components/SiteBackground";
 
 import { ScrollToTop } from "@/components/ScrollToTop";
-import { CONTACT_EMAIL, CONTACT_LINKEDIN } from "@/lib/content";
+import { CONTACT_EMAIL } from "@/lib/content";
 import { getSiteUrl } from "@/lib/site-url";
 import "./globals.css";
 
@@ -29,7 +29,7 @@ export const metadata: Metadata = {
     template: "%s | Veyra Labs",
   },
   description:
-    "Veyra Labs architects enterprise SaaS, AI systems, e-commerce and premium websites. 90%+ predictive accuracy, 40% audit overhead reduction, 15+ projects shipped. Book a free discovery call.",
+    "Veyra Labs architects enterprise SaaS, AI systems, e-commerce and premium websites. 90%+ predictive accuracy, 40% audit overhead reduction, 15+ projects shipped. Contact us for a free project quote.",
   keywords: [
     "software development agency",
     "SaaS development",
@@ -88,8 +88,6 @@ const organizationSchema = {
     addressLocality: "Colombo",
     addressCountry: "LK",
   },
-  areaServed: "Worldwide",
-  sameAs: [CONTACT_LINKEDIN],
   knowsAbout: [
     "SaaS Development",
     "Artificial Intelligence",
@@ -98,7 +96,7 @@ const organizationSchema = {
     "Full Stack Engineering",
     "Enterprise LMS",
   ],
-  priceRange: "$1,500 - $25,000+",
+  priceRange: "$500 - $25,000+",
 };
 
 const websiteSchema = {

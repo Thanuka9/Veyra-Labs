@@ -18,9 +18,9 @@ export default function ProcessPage() {
         accent: "violet",
         title: "Our process",
         subtitle:
-          "A transparent five-step model from discovery to production  -  fixed milestones, weekly demos and documented handoff.",
+          "A transparent four-phase model from discovery to production  -  fixed milestones, weekly demos and documented handoff.",
         breadcrumbs: [{ label: "Home", href: "/" }, { label: "Process" }],
-        cta: { label: "Book a discovery call", href: "/contact" },
+        cta: { label: "Contact Us", href: "/contact" },
       }}
     >
       <Process showHeading={false} inner />

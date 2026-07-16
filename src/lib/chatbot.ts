@@ -24,7 +24,7 @@ export const CHAT_QUICK_REPLIES: QuickReply[] = [
   { id: "process", label: "Process", message: "What is your process?", icon: "process" },
   { id: "ai", label: "AI & chatbots", message: "Can you build AI features and chatbots?", icon: "brain" },
   { id: "portfolio", label: "Case studies", message: "Show me your work", icon: "portfolio" },
-  { id: "contact", label: "Book a call", message: "I want to book a discovery call", icon: "contact" },
+  { id: "contact", label: "Contact Us", message: "I want to contact Veyra Labs", icon: "contact" },
 ];
 
 const WELCOME = `Hi! 👋 I'm **Veyra**, your Veyra Labs assistant.
@@ -38,7 +38,7 @@ I can help with:
 • **Pricing**  -  starting ranges in USD
 • **Project estimates**  -  multi-service quote + PDF download
 • **Case studies**  -  live projects you can visit
-• **Discovery calls**  -  book a free 30-min call
+• **Contact**  -  reach us at **${CONTACT_EMAIL}**
 
 Tap **Get estimate** below for a ballpark quote in under a minute.`;
 
@@ -53,7 +53,8 @@ function formatAboutVeyra(): string {
 We design, build and deploy intelligent products:
 
 • **SaaS platforms**  -  multi-tenant, auth, billing & admin ($8k-$25k+)
-• **E-commerce**  -  catalog, cart, checkout & admin ($1.5k-$2k)
+• **E-commerce**  -  catalog, cart, checkout & admin ($1k-$2k)
+• **Portfolio websites**  -  personal & creative brands ($500-$1k)
 • **Premium websites**  -  brand sites with motion & lead capture ($1.2k-$3.5k)
 • **AI & LLM**  -  chatbots, RAG, agents & copilots ($2.5k-$12k+)
 • **ML & analytics**  -  forecasting models & dashboards ($4k-$15k+)
@@ -65,7 +66,7 @@ We design, build and deploy intelligent products:
 
 **In production:** TrainIQ (enterprise LMS), RevOps AI (90%+ forecast accuracy), and live demos on this site.
 
-Ask about **pricing**, **our process**, or say **"book a call"** to talk to the team.`;
+Ask about **pricing**, **our process**, or say **"contact us"** to reach the team at **${CONTACT_EMAIL}**.`;
 }
 
 function formatVeyraStory(): string {
@@ -99,9 +100,9 @@ function formatWhyVeyra(): string {
 • **40%** reduction in manual audit overhead
 • **15+** production projects delivered
 
-Every build includes **30-day post-launch support** and starts with a **free discovery call**  -  no obligation.
+Every build includes **30-day post-launch support**. Reach us anytime at **${CONTACT_EMAIL}**.
 
-What next  -  **pricing**, **case studies**, or **book a call**?`;
+What next  -  **pricing**, **case studies**, or **contact us**?`;
 }
 
 function formatFaq(): string {
@@ -111,19 +112,19 @@ function formatFaq(): string {
 A boutique software & AI studio  -  we build SaaS, e-commerce, websites & AI features.
 
 **Do you work with startups?**
-Yes  -  from MVPs to enterprise. E-commerce from **$1,500**, SaaS from **$8,000**.
+Yes  -  from MVPs to enterprise. Portfolio sites from **$500**, e-commerce from **$1,000**, SaaS from **$8,000**.
 
 **Where are you based?**
-Remote-first, worldwide. We're headquartered in **Colombo, Sri Lanka**  -  async-friendly with video calls & sprint demos.
+Remote-first, worldwide. We're headquartered in **Colombo, Sri Lanka**  -  async-friendly with email, video calls & sprint demos.
 
 **How do I get a quote?**
-Tap **Get estimate** for an instant ballpark + PDF, or **book a free discovery call** for a fixed scope quote.
+Tap **Get estimate** for an instant ballpark + PDF, or **contact us** at **${CONTACT_EMAIL}** for a fixed scope quote.
 
 **What's included?**
 Every project: clean handoff docs, deployment, and **30-day post-launch support**.
 
 **Who am I talking to?**
-I'm **Veyra**, the site assistant. For a human conversation, say **"book a call"** or email **${CONTACT_EMAIL}**.
+I'm **Veyra**, the site assistant. For a human conversation, say **"contact us"** or email **${CONTACT_EMAIL}**.
 
 Ask anything else  -  **services**, **pricing**, **process**, or **case studies**.`;
 }
@@ -180,7 +181,7 @@ const INTENTS: Intent[] = [
     reply: () =>
       `I'm **Veyra**  -  the AI assistant for **Veyra Labs**, built to answer questions about our studio, services, pricing and projects.
 
-**Veyra Labs** is a boutique software & AI engineering team (remote-first, worldwide). For a **discovery call with a human**, say **"book a call"** or email **${CONTACT_EMAIL}**.`,
+**Veyra Labs** is a boutique software & AI engineering team (remote-first, worldwide). To speak with a human, say **"contact us"** or email **${CONTACT_EMAIL}**.`,
   },
   {
     patterns: [
@@ -235,26 +236,26 @@ const INTENTS: Intent[] = [
     reply: () =>
       `**Getting started with Veyra Labs**
 
-• **Startups & SMBs**  -  yes! E-commerce from **$1,500**, websites from **$1,200**, AI features from **$2,500**
+• **Startups & SMBs**  -  yes! Portfolio from **$500**, e-commerce from **$1,000**, websites from **$1,200**, AI features from **$2,500**
 • **Enterprise**  -  we've shipped multi-tenant SaaS & LMS platforms (e.g. TrainIQ)
-• **Minimum engagement**  -  typically from **$1,200** depending on scope
+• **Minimum engagement**  -  typically from **$500** depending on scope
 • **NDAs**  -  happy to sign before sharing sensitive details
-• **Payment**  -  milestone-based (deposit + sprint payments); exact terms on discovery call
+• **Payment**  -  milestone-based (deposit + sprint payments); exact terms when you contact us
 
-**Next step:** You can [click here to book a free discovery call](/contact) or tap **Get estimate** for a ballpark quote.`,
+**Next step:** [Contact Us](/contact) or email **${CONTACT_EMAIL}**  -  or tap **Get estimate** for a ballpark quote.`,
   },
   {
     patterns: [
       /price|pricing|cost|how much|budget|quote|rate|fee|afford|expensive|cheap|\$\d/i,
     ],
     reply: () =>
-      `Here are our **standard starting ranges** (USD, fixed quote after a free discovery call):\n\n${formatPricing()}\n\nYou can [click here to view our full pricing details](/pricing).\n\nEvery project includes sprint demos and **30-day post-launch support**.\n\nWant a tailored range? Tap **Get estimate** for an instant ballpark quote with PDF download.`,
+      `Here are our **standard starting ranges** (USD, fixed quote after you contact us):\n\n${formatPricing()}\n\nYou can [click here to view our full pricing details](/pricing).\n\nEvery project includes sprint demos and **30-day post-launch support**.\n\nWant a tailored range? Tap **Get estimate** for an instant ballpark quote with PDF download.`,
   },
   {
     patterns: [/e-?commerce|online store|shop|storefront|shopify|woocommerce|sell online/i],
     reply: () => {
       const tier = pricingTiers.find((t) => t.name.includes("E-Commerce"))!;
-      return `**E-Commerce Starter  -  ${tier.price}**\n\n${tier.description}\n\n**What's included:**\n${tier.features.map((f) => `• ${f}`).join("\n")}\n\nStarter stores ship in **3-6 weeks**. Need AI product discovery or a larger catalog? We scope that on the discovery call.\n\nYou can also [click here to view our e-commerce details](/pricing).`;
+      return `**E-Commerce Starter  -  ${tier.price}**\n\n${tier.description}\n\n**What's included:**\n${tier.features.map((f) => `• ${f}`).join("\n")}\n\nStarter stores ship in **3-6 weeks**. Need AI product discovery or a larger catalog? Contact us at **${CONTACT_EMAIL}** and we'll scope it.\n\nYou can also [click here to view our e-commerce details](/pricing).`;
     },
   },
   {
@@ -269,7 +270,7 @@ const INTENTS: Intent[] = [
     patterns: [/saas|multi-tenant|platform|subscription|b2b|enterprise app/i],
     reply: () => {
       const tier = pricingTiers.find((t) => t.name.includes("SaaS"))!;
-      return `**SaaS Platform  -  ${tier.price}**\n\n${tier.description}\n\nWe ship auth, RBAC, billing, admin dashboards and GCP deployment. Flagship example: **TrainIQ**  -  enterprise LMS with 4 AI modules (40% audit overhead reduction).\n\n**Timeline:** 8-16 weeks · **Discovery call is free.**\n\nYou can [click here to view all case studies](/work).`;
+      return `**SaaS Platform  -  ${tier.price}**\n\n${tier.description}\n\nWe ship auth, RBAC, billing, admin dashboards and GCP deployment. Flagship example: **TrainIQ**  -  enterprise LMS with 4 AI modules (40% audit overhead reduction).\n\n**Timeline:** 8-16 weeks · **Contact us for a free scope review.**\n\nYou can [click here to view all case studies](/work).`;
     },
   },
   {
@@ -344,10 +345,10 @@ const INTENTS: Intent[] = [
   },
   {
     patterns: [
-      /contact|email|call|book a|book discovery|meet|discover|reach out|talk to (the )?team|human|speak to|get started|hire (you|veyra)|work with you/i,
+      /contact|email|call|book a|book discovery|meet|discover|reach out|talk to (the )?team|human|speak to|get started|hire (you|veyra)|work with you|contact us/i,
     ],
     reply: () =>
-      `Let's connect! 🚀\n\n**Free discovery call**  -  no pitch, just clarity on scope, timeline and a fixed quote.\n\n📧 **${CONTACT_EMAIL}**\n\nOr use the **Contact** section on this page. I can also collect your details here  -  just say **"send my info"** or tap **Talk to the team** below.`,
+      `Let's connect! 🚀\n\n**Contact Us**  -  no pitch, just clarity on scope, timeline and a fixed quote.\n\n📧 **${CONTACT_EMAIL}**\n\nOr use the **Contact** section on this page. I can also collect your details here  -  just say **"send my info"** or tap **Contact Us** below.`,
   },
   {
     patterns: [/support|maintenance|after launch|post-?launch|warranty/i],
@@ -357,7 +358,7 @@ const INTENTS: Intent[] = [
   {
     patterns: [/where are you|where is veyra|your location|based in|office|remote.?first|serve clients|worldwide|sri lanka|timezone/i],
     reply:
-      "We're **remote-first** and serve clients worldwide. Communication via Slack, email and video calls  -  async-friendly with sprint demos every 1-2 weeks.",
+      "We're **remote-first** and serve clients worldwide. Communication via email, Slack and video calls  -  async-friendly with sprint demos every 1-2 weeks.\n\n📧 **${CONTACT_EMAIL}**",
   },
   {
     patterns: [/trainiq|collective rcm|lms|training/i],
@@ -367,7 +368,7 @@ const INTENTS: Intent[] = [
   {
     patterns: [/thank|thanks|cheers|awesome|great|perfect|cool/i],
     reply:
-      "You're welcome! If you have more questions, just ask  -  or book a free discovery call whenever you're ready. 🙌",
+      "You're welcome! If you have more questions, just ask  -  or contact us at **${CONTACT_EMAIL}** whenever you're ready. 🙌",
   },
   {
     patterns: [/bye|goodbye|see you|later/i],
@@ -375,7 +376,9 @@ const INTENTS: Intent[] = [
   },
 ];
 
-const OFF_TOPIC_REPLY = `I'm **Veyra**, the Veyra Labs assistant  -  I help with **who we are**, **our story**, **services**, **pricing**, **estimates**, **case studies**, and **booking a call**.
+const OFF_TOPIC_REPLY = `I'm **Veyra**, the Veyra Labs assistant  -  I help with **who we are**, **our story**, **services**, **pricing**, **estimates**, **case studies**, and **contact**.
+
+For anything else, email **${CONTACT_EMAIL}**.
 
 Try asking:
 • "What is Veyra Labs?"
@@ -383,11 +386,11 @@ Try asking:
 • "How much for an e-commerce store?"`;
 
 const FALLBACK =
-  "I can help with **about Veyra Labs**, **our story**, **services**, **pricing**, **estimates**, **case studies**, or **booking a call**. Try: \"What is Veyra?\" or \"What are your prices?\"";
+  "I can help with **about Veyra Labs**, **our story**, **services**, **pricing**, **estimates**, **case studies**, or **contact**. Try: \"What is Veyra?\" or \"What are your prices?\"";
 
 /** Keywords that indicate the user is asking about Veyra Labs / our work */
 const ON_TOPIC_SIGNALS =
-  /\b(veyra|verra|veira|vyra|about|story|mission|founder|team|faq|estimate|quote|pricing|price|cost|budget|website|e-?commerce|storefront|online store|shop|saas|platform|software|develop|build|hire|agency|studio|project|discovery|contact|service|deliver|trainiq|codex|kapruka|techforge|case stud|portfolio|chatbot|llm|ai feature|machine learning|data science|next\.?js|react|flask|python|gcp|docker|devops|timeline|process|sprint|support|maintenance|launch|pdf|package|tier|landing page|brand site|multi-tenant|rbac|stripe|deploy|how much|how long|book a call|get started|revops|collective rcm|why choose|who are you|what are you|startup|nda|remote)\b/i;
+  /\b(veyra|verra|veira|vyra|about|story|mission|founder|team|faq|estimate|quote|pricing|price|cost|budget|website|e-?commerce|storefront|online store|shop|saas|platform|software|develop|build|hire|agency|studio|project|discovery|contact|service|deliver|trainiq|codex|kapruka|techforge|case stud|portfolio|chatbot|llm|ai feature|machine learning|data science|next\.?js|react|flask|python|gcp|docker|devops|timeline|process|sprint|support|maintenance|launch|pdf|package|tier|landing page|brand site|multi-tenant|rbac|stripe|deploy|how much|how long|book a call|contact us|get started|revops|collective rcm|why choose|who are you|what are you|startup|nda|remote)\b/i;
 
 /** Clearly unrelated topics  -  declined even if phrasing is vague */
 const OFF_TOPIC_PATTERNS: RegExp[] = [

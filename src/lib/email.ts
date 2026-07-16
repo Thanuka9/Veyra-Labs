@@ -210,7 +210,7 @@ function buildEstimateHtml(estimate: ProjectEstimate): string {
                     <tr>
                       <td align="center">
                         <a href="https://veyralabs.com/#contact" style="display: inline-block; background: linear-gradient(to right, ${accentColor}, ${cyanColor}); color: ${textWhite}; padding: 12px 28px; font-size: 13px; font-weight: bold; text-decoration: none; border-radius: 8px; box-shadow: 0 4px 12px rgba(124,92,255,0.3); text-align: center;">
-                          Book a Free Discovery Call
+                          Contact Us
                         </a>
                       </td>
                     </tr>

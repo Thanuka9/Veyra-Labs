@@ -3,7 +3,7 @@ import Link from "next/link";
 import { BrandLogo } from "./BrandLogo";
 import { CookieSettingsButton } from "./CookieSettingsButton";
 import { Reveal } from "./Reveal";
-import { CONTACT_EMAIL, CONTACT_LINKEDIN, CONTACT_LOCATION, footerServiceLinks } from "@/lib/content";
+import { CONTACT_EMAIL, CONTACT_LOCATION, footerServiceLinks } from "@/lib/content";
 import { FOOTER_COMPANY_LINKS, contactHref } from "@/lib/nav-links";
 
 const company = FOOTER_COMPANY_LINKS;
@@ -30,7 +30,7 @@ export function Footer({ showCta = true }: { showCta?: boolean }) {
               href={contactHref(false)}
               className="group inline-flex shrink-0 items-center gap-2 rounded-xl bg-gradient-to-r from-violet to-cyan px-6 py-3.5 text-sm font-semibold text-white shadow-[0_0_32px_-8px_rgba(124,92,255,0.55)] transition-transform hover:scale-[1.03]"
             >
-              Book a free discovery call
+              Contact Us
               <ArrowRight size={16} className="transition-transform group-hover:translate-x-0.5" />
             </Link>
           </Reveal>
@@ -57,14 +57,6 @@ export function Footer({ showCta = true }: { showCta?: boolean }) {
                 <MapPin size={16} className="text-violet" />
                 {CONTACT_LOCATION}
               </p>
-              <a
-                href={CONTACT_LINKEDIN}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-sm font-medium text-muted transition-colors hover:text-cyan"
-              >
-                LinkedIn
-              </a>
             </div>
           </Reveal>
 
@@ -115,8 +107,8 @@ export function Footer({ showCta = true }: { showCta?: boolean }) {
               <h4 className="text-xs font-bold uppercase tracking-wider text-foreground">Starting rates</h4>
               <ul className="mt-4 space-y-3">
                  {[
-                  { tier: "Portfolio", price: "$800 - $1,500" },
-                  { tier: "E-Commerce", price: "$1,500 - $2,000" },
+                  { tier: "Portfolio", price: "$500 - $1,000" },
+                  { tier: "E-Commerce", price: "$1,000 - $2,000" },
                   { tier: "Premium Website", price: "$1,200 - $3,500" },
                   { tier: "AI & LLM", price: "$2,500 - $12,000" },
                   { tier: "SaaS Platform", price: "$8,000 - $25,000+" },

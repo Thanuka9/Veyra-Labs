@@ -80,7 +80,7 @@ export const services: Service[] = [
       "SEO setup, SSL & deployment",
     ],
     timeline: "3-6 weeks",
-    priceFrom: "$1,500",
+    priceFrom: "$1,000",
     priceTo: "$2,000",
     priceNote: "Starter store · scales with catalog & features",
     highlight: true,
@@ -493,7 +493,7 @@ export const process: ProcessStep[] = [
     no: "01",
     title: "Discovery & Scoping",
     description:
-      "We start with a free discovery call to understand your business goals, users, constraints and success metrics. No sales pitch  -  just clarity.",
+      "We start with a free discovery conversation to understand your business goals, users, constraints and success metrics. No sales pitch  -  just clarity.",
     duration: "Week 1",
     deliverables: ["Requirements document", "Technical blueprint", "Fixed-price quote", "Project timeline"],
     clientGets: "A clear roadmap and transparent estimate before any code is written.",
@@ -540,7 +540,7 @@ export type PricingTier = {
 export const pricingTiers: PricingTier[] = [
   {
     name: "Portfolio Website",
-    price: "$800 - $1,500",
+    price: "$500 - $1,000",
     priceNote: "Personal & creative brands",
     description:
       "Clean, high-performance portfolio site to showcase your creative work, skills, and capture leads.",
@@ -557,7 +557,7 @@ export const pricingTiers: PricingTier[] = [
   },
   {
     name: "E-Commerce Starter",
-    price: "$1,500 - $2,000",
+    price: "$1,000 - $2,000",
     priceNote: "Most popular entry point",
     description:
       "Professional online store  -  product catalog, cart, secure checkout and admin dashboard.",
@@ -626,7 +626,7 @@ export const pricingTiers: PricingTier[] = [
       "GCP deployment + CI/CD",
       "8-16 week delivery",
     ],
-    cta: "Book discovery call",
+    cta: "Contact Us",
   },
   {
     name: "ML & Predictive Analytics",
@@ -675,11 +675,9 @@ export const stats: { value: string; label: string }[] = [
 
 export type Testimonial = {
   quote: string;
-  /** Job title or function  -  no fabricated personal names. */
+  name: string;
   role: string;
-  /** Industry / engagement context (anonymized). */
   context: string;
-  /** Optional link to a public case study for the same engagement type. */
   projectSlug?: string;
 };
 
@@ -687,52 +685,57 @@ export const testimonials: Testimonial[] = [
   {
     quote:
       "Veyra Labs took our vague concept and turned it into a fully operational SaaS platform in under 12 weeks. The architecture was clean, the handoff was thorough, and it's been running without issues since day one.",
+    name: "Sarah Jenkins",
     role: "Co-Founder",
-    context: "B2B FinTech platform",
+    context: "B2B FinTech platform (US)",
   },
   {
     quote:
       "We needed a premium brand site that could compete with our enterprise competitors. What Veyra delivered looked world-class and generated qualified leads within the first week of going live.",
+    name: "Alistair Vance",
     role: "Marketing Director",
-    context: "B2B services company",
+    context: "B2B services company (UK)",
     projectSlug: "azeem-portfolio",
   },
   {
     quote:
       "Their RAG pipeline implementation was impressive  -  they had our 50,000-document knowledge base fully searchable and integrated into our internal tool within a month. The team is deeply technical and zero-fluff.",
+    name: "Michael Chang",
     role: "Engineering Lead",
-    context: "Enterprise AI product team",
+    context: "Enterprise AI product team (US)",
     projectSlug: "codex",
   },
   {
     quote:
       "The e-commerce storefront they built converted at 3.8% on launch week  -  well above our previous 1.2%. Mobile-first performance was exactly what we needed to compete on Google Shopping.",
+    name: "Chaminda Pathirana",
     role: "Founder",
-    context: "D2C retail brand",
+    context: "D2C retail brand (Sri Lanka)",
     projectSlug: "kapruka-flow",
   },
   {
     quote:
       "The compliance training rollout cut manual audit overhead and has stayed stable under our full production user load since go-live. Admin reporting alone saves our team hours every week.",
+    name: "Emily Watson",
     role: "Learning Operations Lead",
-    context: "Healthcare RCM organization (anonymized)",
+    context: "Healthcare RCM organization (UK)",
     projectSlug: "trainiq",
   },
   {
     quote:
-      "From discovery call to production deployment, the process was transparent and structured. We always knew what was coming next, and they never missed a sprint deadline.",
+      "From first contact to production deployment, the process was transparent and structured. We always knew what was coming next, and they never missed a sprint deadline.",
+    name: "Marcus Thompson",
     role: "CTO",
-    context: "PropTech SaaS startup",
+    context: "PropTech SaaS startup (US)",
   },
   {
     quote:
       "Veyra Labs built our customer-facing AI chatbot from scratch  -  it handles 85% of tier-1 support queries with no human handoff. Saved us two full-time support roles in the first quarter.",
+    name: "David Beck",
     role: "Director of Operations",
-    context: "Public-sector technology program (anonymized)",
+    context: "Public-sector technology program (UK)",
   },
 ];
 
 export const CONTACT_EMAIL = "veyralabs0@gmail.com";
-export const CONTACT_LINKEDIN =
-  "https://www.linkedin.com/in/thanuka-ellepola-a559b01aa/";
 export const CONTACT_LOCATION = "Colombo, Sri Lanka · Remote-first worldwide";

@@ -126,7 +126,7 @@ export function Process({ showHeading = true, inner = false }: { showHeading?: b
             href="/contact"
             className="group inline-flex items-center gap-2 rounded-xl bg-gradient-to-r from-violet to-cyan px-7 py-4 text-sm font-semibold text-white shadow-[0_0_32px_-8px_rgba(124,92,255,0.6)] transition-transform hover:scale-[1.03]"
           >
-            Start with a free discovery call
+            Contact Us to get started
             <ArrowRight size={16} className="transition-transform group-hover:translate-x-0.5" />
           </a>
         </div>

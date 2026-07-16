@@ -102,7 +102,7 @@ export function Pricing({ showHeading = true, inner = false }: { showHeading?: b
         </div>
 
         <p className="mx-auto mt-10 max-w-3xl text-center text-xs leading-relaxed text-muted">
-          All prices in USD · Custom scopes quoted after discovery call · Payment plans available for projects over $5,000
+          All prices in USD · Custom scopes quoted after you contact us · Payment plans available for projects over $5,000
         </p>
 
         {/* Add-ons Grid section (Centered, standard card style, big prices, no slideshow) */}

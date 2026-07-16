@@ -7,7 +7,6 @@ import {
   Brain,
   Briefcase,
   Calculator,
-  Calendar,
   ChevronDown,
   ChevronUp,
   DollarSign,
@@ -54,7 +53,7 @@ const QUICK_ICONS: Record<NonNullable<QuickReply["icon"]>, import("lucide-react"
   process: GitBranch,
   brain: Brain,
   portfolio: Sparkles,
-  contact: Calendar,
+  contact: Mail,
 };
 
 const QUICK_ICON_COLORS: Record<NonNullable<QuickReply["icon"]>, string> = {
@@ -218,7 +217,7 @@ export function VeyraChat() {
         buildVeyraInquiryEmail({
           name: lead.name.trim(),
           email: lead.email.trim(),
-          projectType: "Discovery call",
+          projectType: "Contact request",
           message: summary,
           source: "Veyra chatbot  -  veyralabs.com",
         })
@@ -296,7 +295,7 @@ export function VeyraChat() {
                 Veyra <Sparkles size={12} className="text-cyan" />
               </p>
               <p className="text-[11px] text-muted">
-                {estimateMode ? "Estimate builder" : leadMode ? "Discovery call form" : "Online · Ask anything"}
+                {estimateMode ? "Estimate builder" : leadMode ? "Contact form" : "Online · Ask anything"}
               </p>
             </div>
             <div className="flex items-center gap-0.5">
@@ -371,8 +370,8 @@ export function VeyraChat() {
                   <div className="veyra-chat-lead-slot chat-fade-in">
                     <form onSubmit={handleLeadSubmit} className="chat-lead-form">
                       <p className="mb-2 flex items-center gap-2 text-xs font-bold text-cyan">
-                        <Calendar size={14} />
-                        Book a discovery call
+                        <Mail size={14} />
+                        Contact Us
                       </p>
                       <div className="space-y-2">
                         <input

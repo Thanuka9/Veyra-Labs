@@ -96,15 +96,17 @@ export function Testimonials({
             )}
             aria-hidden
           >
-            {t.role.charAt(0)}
+            {t.name.charAt(0)}
           </div>
           <div className="min-w-0">
             <div className={cn("text-sm font-medium", isDark ? "text-foreground/80" : "text-gray-900")}>
-              {t.role}
+              {t.name}
             </div>
-            <div className={cn("text-xs", isDark ? "text-muted" : "text-gray-500")}>{t.context}</div>
+            <div className={cn("text-xs text-muted", isDark ? "text-muted" : "text-gray-500")}>
+              {t.role} · {t.context}
+            </div>
             <div className={cn("mt-1 text-[10px] font-medium uppercase tracking-wider", isDark ? "text-muted/60" : "text-gray-400")}>
-              Verified client · identity withheld
+              Verified client
             </div>
           </div>
         </div>
@@ -155,7 +157,7 @@ export function Testimonials({
                 </span>
               </>
             }
-            subtitle="Quotes from verified engagements  -  role and industry only, no names without permission."
+            subtitle="Quotes from verified clients serving global markets across the US, UK, and Sri Lanka."
             theme={theme}
           />
         )}

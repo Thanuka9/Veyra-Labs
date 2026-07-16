@@ -19,7 +19,7 @@ export default function AboutPage() {
         subtitle:
           "A boutique software & AI engineering studio  -  outcome-driven delivery from first prototype to production on Google Cloud, with documented handoff and post-launch support.",
         breadcrumbs: [{ label: "Home", href: "/" }, { label: "About" }],
-        cta: { label: "Work with us", href: "/contact" },
+        cta: { label: "Contact Us", href: "/contact" },
         secondaryCta: { label: "View our work", href: "/work" },
       }}
     >

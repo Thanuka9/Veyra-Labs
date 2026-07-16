@@ -2,8 +2,8 @@
 
 import Link from "next/link";
 import { useState } from "react";
-import { ArrowRight, Calendar, CheckCircle2, Loader2, Mail, MapPin } from "lucide-react";
-import { CONTACT_EMAIL, CONTACT_LINKEDIN, CONTACT_LOCATION, contactProjectTypes } from "@/lib/content";
+import { ArrowRight, CheckCircle2, Loader2, Mail, MapPin } from "lucide-react";
+import { CONTACT_EMAIL, CONTACT_LOCATION, contactProjectTypes } from "@/lib/content";
 import { buildVeyraInquiryEmail, sendContactEmail } from "@/lib/email";
 import { trackEvent } from "@/components/GoogleAnalytics";
 import { LucideIcon } from "./LucideIcon";
@@ -93,8 +93,8 @@ export function Contact({
               {showHeading && (
                 <>
                   <span className="inline-flex items-center gap-2 rounded-full border border-cyan/30 bg-cyan/10 px-3.5 py-1.5 text-xs font-semibold uppercase tracking-wider text-cyan">
-                    <Calendar size={13} />
-                    Free discovery call
+                    <Mail size={13} />
+                    Contact Us
                   </span>
                   <h2 className="mt-5 text-balance text-3xl font-bold tracking-tight sm:text-4xl lg:text-5xl">
                     Ready to build something{" "}
@@ -108,7 +108,7 @@ export function Contact({
               )}
 
               <div className={showHeading ? "mt-7 space-y-3" : "space-y-3"}>
-                <a
+                 <a
                   href={`mailto:${CONTACT_EMAIL}`}
                   className="flex items-center gap-2.5 text-sm font-medium text-foreground transition-colors hover:text-cyan"
                 >
@@ -119,14 +119,6 @@ export function Contact({
                   <LucideIcon icon={MapPin} size={16} className="text-violet" />
                   {CONTACT_LOCATION}
                 </p>
-                <a
-                  href={CONTACT_LINKEDIN}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-sm font-medium text-muted transition-colors hover:text-cyan"
-                >
-                  LinkedIn
-                </a>
               </div>
 
               <div className="mt-8 rounded-xl border border-border bg-surface/60 p-4">

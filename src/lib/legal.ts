@@ -43,7 +43,7 @@ export const privacySections: LegalSection[] = [
     title: "How we use your information",
     paragraphs: ["We use personal data to:"],
     bullets: [
-      "Respond to inquiries, discovery calls, and project estimate requests.",
+      "Respond to inquiries, contact requests, and project estimate requests.",
       "Send PDF estimates and follow-up communications you have requested.",
       "Operate, secure, and improve our website and chat experience.",
       "Analyse aggregated, anonymised traffic patterns when analytics cookies are enabled.",

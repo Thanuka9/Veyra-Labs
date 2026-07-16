@@ -1,6 +1,7 @@
 import Link from "next/link";
-import { ArrowRight, Calendar } from "lucide-react";
+import { ArrowRight, Mail } from "lucide-react";
 import { Reveal } from "./Reveal";
+import { CONTACT_EMAIL } from "@/lib/content";
 
 export function PageCta() {
   return (
@@ -16,7 +17,12 @@ export function PageCta() {
                 Ready to ship your next product?
               </h2>
               <p className="mt-3 text-sm leading-relaxed text-muted sm:text-base">
-                Book a free discovery call  -  we&apos;ll scope your project, share a fixed quote, and outline the first sprint.
+                Contact us to scope your project, get a fixed quote, and outline the first sprint.
+                Email{" "}
+                <a href={`mailto:${CONTACT_EMAIL}`} className="font-medium text-cyan hover:underline">
+                  {CONTACT_EMAIL}
+                </a>
+                .
               </p>
             </div>
             <div className="relative mt-6 flex shrink-0 flex-col gap-3 sm:mt-0">
@@ -24,8 +30,8 @@ export function PageCta() {
                 href="/contact"
                 className="group inline-flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-violet to-cyan px-6 py-3.5 text-sm font-semibold text-white shadow-[0_0_32px_-8px_rgba(124,92,255,0.6)] transition-all hover:scale-[1.02]"
               >
-                <Calendar size={16} />
-                Book a discovery call
+                <Mail size={16} />
+                Contact Us
                 <ArrowRight size={16} className="transition-transform group-hover:translate-x-0.5" />
               </Link>
               <Link

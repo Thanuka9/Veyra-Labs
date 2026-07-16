@@ -12,6 +12,7 @@ const staticRoutes = [
   { path: "/process", priority: 0.8, changeFrequency: "monthly" as const },
   { path: "/about", priority: 0.75, changeFrequency: "monthly" as const },
   { path: "/pricing", priority: 0.85, changeFrequency: "monthly" as const },
+  { path: "/contact", priority: 0.85, changeFrequency: "monthly" as const },
   { path: "/testimonials", priority: 0.7, changeFrequency: "monthly" as const },
   { path: "/privacy", priority: 0.4, changeFrequency: "yearly" as const },
   { path: "/cookies", priority: 0.35, changeFrequency: "yearly" as const },
@@ -28,12 +29,14 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority,
   }));
 
-  const caseStudies = projects.map((p) => ({
-    url: `${siteUrl}/case-studies/${p.slug}`,
-    lastModified: now,
-    changeFrequency: "monthly" as const,
-    priority: 0.65,
-  }));
+  const caseStudies = projects
+    .filter((p) => p.href?.startsWith("/case-studies"))
+    .map((p) => ({
+      url: `${siteUrl}/case-studies/${p.slug}`,
+      lastModified: now,
+      changeFrequency: "monthly" as const,
+      priority: 0.65,
+    }));
 
   return [...pages, ...caseStudies];
 }

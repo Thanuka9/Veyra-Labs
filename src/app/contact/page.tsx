@@ -3,9 +3,9 @@ import { InnerPageLayout } from "@/components/InnerPageLayout";
 import { Contact } from "@/components/Contact";
 
 export const metadata: Metadata = {
-  title: "Contact & Discovery Call",
+  title: "Contact Us",
   description:
-    "Ready to build something your clients will love? Book a free discovery call or send an inquiry to scope your AI, SaaS or custom software project.",
+    "Ready to build something your clients will love? Contact us to scope your AI, SaaS or custom software project — we respond within 24 hours.",
   alternates: { canonical: "/contact" },
 };
 

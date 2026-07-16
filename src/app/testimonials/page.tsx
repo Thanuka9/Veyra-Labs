@@ -17,12 +17,12 @@ export default function TestimonialsPage() {
         accent: "emerald",
         title: "Client testimonials",
         subtitle:
-          "Verified quotes from production engagements  -  role and industry only, no client names without written permission.",
+          "Verified feedback from production engagements across the US, UK and Sri Lanka.",
         breadcrumbs: [{ label: "Home", href: "/" }, { label: "Testimonials" }],
-        cta: { label: "Become our next success story", href: "/contact" },
+        cta: { label: "Contact Us", href: "/contact" },
       }}
     >
-      <Testimonials showHeading={false} inner />
+      <Testimonials showHeading={false} inner theme="dark" />
     </InnerPageLayout>
   );
 }

@@ -1,5 +1,5 @@
 export const ESTIMATE_DISCLAIMER =
-  "This is an automated ballpark estimate only  -  not a binding quote or contract. The final amount may differ based on your specific requirements, integrations, scope changes, and complexity identified during a free discovery call with Veyra Labs.";
+  "This is an automated ballpark estimate only  -  not a binding quote or contract. The final amount may differ based on your specific requirements, integrations, scope changes, and complexity identified when you contact Veyra Labs.";
 
 export type ProjectTypeId =
   | "ecommerce"
@@ -66,16 +66,16 @@ export const PROJECT_TYPES: ProjectType[] = [
     label: "E-Commerce Store",
     icon: "cart",
     description: "Catalog, cart, checkout & admin dashboard",
-    baseMin: 1500,
+    baseMin: 1000,
     baseMax: 2000,
     timeline: "3-6 weeks",
   },
   {
     id: "website",
-    label: "Premium Website",
+    label: "Website & Portfolio",
     icon: "globe",
-    description: "Brand, portfolio or marketing site with lead capture",
-    baseMin: 1200,
+    description: "Portfolio from $500, premium brand site up to $3,500",
+    baseMin: 500,
     baseMax: 3500,
     timeline: "2-4 weeks",
   },
@@ -146,7 +146,7 @@ export const PROJECT_TYPES: ProjectType[] = [
     id: "custom",
     label: "Custom / Mixed Scope",
     icon: "sparkles",
-    description: "Multiple deliverables  -  scoped on discovery call",
+    description: "Multiple deliverables  -  scoped when you contact us",
     baseMin: 2000,
     baseMax: 20000,
     timeline: "Varies",
