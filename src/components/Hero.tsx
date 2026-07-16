@@ -165,8 +165,8 @@ export function Hero() {
       {/* Local hero accent */}
       <div className="pointer-events-none absolute inset-0 -z-10">
         <div className="absolute left-1/2 top-0 h-[560px] w-[min(1000px,100%)] -translate-x-1/2 rounded-full bg-[radial-gradient(closest-side,rgba(124,92,255,0.15),transparent)] blur-3xl" />
-        <div className="absolute left-1/2 top-0 h-[800px] w-[800px] -translate-x-1/2 -translate-y-1/3 rounded-full border border-violet/5 animate-spin-slow" />
-        <div className="absolute left-1/2 top-0 h-[600px] w-[600px] -translate-x-1/2 -translate-y-1/4 rounded-full border border-cyan/5 animate-spin-slow [animation-direction:reverse] [animation-duration:20s]" />
+        <div className="absolute left-1/2 top-0 h-[800px] w-[800px] -translate-x-1/2 -translate-y-1/3 rounded-full border border-violet/5" />
+        <div className="absolute left-1/2 top-0 h-[600px] w-[600px] -translate-x-1/2 -translate-y-1/4 rounded-full border border-cyan/5" />
       </div>
 
       <div className="container-page">

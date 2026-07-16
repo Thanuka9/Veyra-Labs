@@ -130,11 +130,11 @@ input, textarea, select { cursor: auto; }
   background: linear-gradient(135deg, #7c5cff 0%, #5b6dff 45%, #22d3ee 100%);
   color: #fff;
   cursor: pointer;
+  /* Static glow — animating box-shadow forces a repaint every frame */
   box-shadow:
     0 0 0 1px rgba(124, 92, 255, 0.5),
     0 0 28px rgba(124, 92, 255, 0.55),
     0 0 48px rgba(34, 211, 238, 0.25);
-  animation: chat-glow 2.4s ease-in-out infinite;
   transition: transform 0.2s ease;
 }
 
@@ -613,21 +613,6 @@ input, textarea, select { cursor: auto; }
   animation: chat-fade-in 0.28s ease-out forwards;
 }
 
-@keyframes chat-glow {
-  0%, 100% {
-    box-shadow:
-      0 0 0 1px rgba(124, 92, 255, 0.5),
-      0 0 24px rgba(124, 92, 255, 0.5),
-      0 0 40px rgba(34, 211, 238, 0.2);
-  }
-  50% {
-    box-shadow:
-      0 0 0 1px rgba(255, 255, 255, 0.35),
-      0 0 36px rgba(124, 92, 255, 0.75),
-      0 0 56px rgba(34, 211, 238, 0.4);
-  }
-}
-
 @keyframes chat-ring {
   0%, 100% {
     transform: scale(1);
@@ -683,7 +668,6 @@ input, textarea, select { cursor: auto; }
   .reveal-on-scroll {
     opacity: 0;
     transform: translateY(20px);
-    will-change: transform, opacity;
     transition:
       transform 0.52s cubic-bezier(0.16, 1, 0.3, 1),
       opacity 0.52s cubic-bezier(0.16, 1, 0.3, 1);
@@ -1101,21 +1085,22 @@ input, textarea, select { cursor: auto; }
       linear-gradient(180deg, #060812 0%, #05060c 40%, #04050a 100%);
   }
 
+  /* Softness baked into the gradient falloff instead of filter: blur()
+     (blurred layers this large force expensive per-frame GPU re-compositing) */
   .site-orb {
-    filter: blur(80px);
     will-change: transform;
   }
 
   .site-orb-violet {
-    background: radial-gradient(circle, rgba(124, 92, 255, 0.35) 0%, transparent 70%);
+    background: radial-gradient(circle, rgba(124, 92, 255, 0.28) 0%, rgba(124, 92, 255, 0.1) 40%, transparent 70%);
   }
 
   .site-orb-cyan {
-    background: radial-gradient(circle, rgba(34, 211, 238, 0.28) 0%, transparent 70%);
+    background: radial-gradient(circle, rgba(34, 211, 238, 0.22) 0%, rgba(34, 211, 238, 0.08) 40%, transparent 70%);
   }
 
   .site-orb-indigo {
-    background: radial-gradient(circle, rgba(91, 109, 255, 0.3) 0%, transparent 70%);
+    background: radial-gradient(circle, rgba(91, 109, 255, 0.24) 0%, rgba(91, 109, 255, 0.09) 40%, transparent 70%);
   }
 
   .site-grid {
@@ -1148,7 +1133,6 @@ input, textarea, select { cursor: auto; }
       transparent 300deg,
       rgba(124, 92, 255, 0.07) 360deg
     );
-    filter: blur(60px);
     opacity: 0.9;
     will-change: transform;
   }
@@ -1156,11 +1140,10 @@ input, textarea, select { cursor: auto; }
   .site-cursor-glow {
     background: radial-gradient(
       circle closest-side,
-      rgba(124, 92, 255, 0.24) 0%,
-      rgba(34, 211, 238, 0.12) 40%,
-      transparent 70%
+      rgba(124, 92, 255, 0.18) 0%,
+      rgba(34, 211, 238, 0.09) 40%,
+      transparent 72%
     );
-    filter: blur(60px);
     will-change: transform, opacity;
   }
 
@@ -1312,13 +1295,12 @@ input, textarea, select { cursor: auto; }
       radial-gradient(ellipse 70% 55% at 80% 25%, rgba(199, 210, 254, 0.4), transparent 50%),
       radial-gradient(ellipse 65% 50% at 55% 75%, rgba(167, 243, 208, 0.28), transparent 55%),
       linear-gradient(135deg, #0a0c16 0%, #0d1220 50%, #0a1018 100%);
-    animation: hero-mesh-shift 18s ease-in-out infinite alternate;
   }
 
+  /* Soft edges baked into the gradient — no filter: blur() repaint cost */
   .hero-bg-blob {
     position: absolute;
     border-radius: 9999px;
-    filter: blur(72px);
     opacity: 0.55;
     will-change: transform;
   }
@@ -1328,7 +1310,7 @@ input, textarea, select { cursor: auto; }
     height: min(55vw, 520px);
     left: -8%;
     top: 8%;
-    background: rgba(186, 230, 253, 0.45);
+    background: radial-gradient(circle, rgba(186, 230, 253, 0.4) 0%, rgba(186, 230, 253, 0.12) 45%, transparent 72%);
     animation: hero-blob-1 22s ease-in-out infinite;
   }
 
@@ -1337,7 +1319,7 @@ input, textarea, select { cursor: auto; }
     height: min(48vw, 460px);
     right: -6%;
     top: 18%;
-    background: rgba(199, 210, 254, 0.5);
+    background: radial-gradient(circle, rgba(199, 210, 254, 0.45) 0%, rgba(199, 210, 254, 0.14) 45%, transparent 72%);
     animation: hero-blob-2 26s ease-in-out infinite;
   }
 
@@ -1346,7 +1328,7 @@ input, textarea, select { cursor: auto; }
     height: min(42vw, 400px);
     left: 30%;
     bottom: -5%;
-    background: rgba(167, 243, 208, 0.35);
+    background: radial-gradient(circle, rgba(167, 243, 208, 0.3) 0%, rgba(167, 243, 208, 0.1) 45%, transparent 72%);
     animation: hero-blob-3 24s ease-in-out infinite;
   }
 
@@ -1614,15 +1596,6 @@ input, textarea, select { cursor: auto; }
   animation: beam-sweep 14s ease-in-out infinite;
 }
 
-@keyframes hero-mesh-shift {
-  0% {
-    filter: hue-rotate(0deg) brightness(1);
-  }
-  100% {
-    filter: hue-rotate(18deg) brightness(1.08);
-  }
-}
-
 @keyframes hero-blob-1 {
   0%, 100% {
     transform: translate(0, 0) scale(1);
@@ -1753,6 +1726,21 @@ input, textarea, select { cursor: auto; }
 
 .cookie-consent-btn-primary:hover {
   opacity: 0.92;
+}
+
+/* Respect OS-level reduced-motion: stop all decorative animation & smooth scroll */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+
+  html {
+    scroll-behavior: auto !important;
+  }
 }
 
 .cookie-consent-btn-secondary {

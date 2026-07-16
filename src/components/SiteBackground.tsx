@@ -63,8 +63,15 @@ function ParticleField() {
     };
 
     let frameCount = 0;
+    let lastDraw = 0;
+    const FRAME_BUDGET = 1000 / 30; // cap at 30fps — imperceptible for slow drift, halves paint cost
 
-    const draw = () => {
+    const draw = (now: number) => {
+      if (now - lastDraw < FRAME_BUDGET) {
+        rafRef.current = requestAnimationFrame(draw);
+        return;
+      }
+      lastDraw = now;
       frameCount++;
       const { w, h } = sizeRef.current;
       ctx.clearRect(0, 0, w, h);
@@ -185,6 +192,7 @@ function CursorGlow() {
   const current = useRef({ x: 0, y: 0 });
   const rafRef = useRef(0);
   const activeRef = useRef(false);
+  const runningRef = useRef(false);
 
   const tick = useCallback(() => {
     const el = glowRef.current;
@@ -196,6 +204,14 @@ function CursorGlow() {
     el.style.transform = `translate3d(${current.current.x - 280}px, ${current.current.y - 280}px, 0)`;
     el.style.opacity = activeRef.current ? "1" : "0";
 
+    // Self-terminate once the glow has settled on the cursor — no idle rAF loop
+    const dx = Math.abs(target.current.x - current.current.x);
+    const dy = Math.abs(target.current.y - current.current.y);
+    if (dx < 0.5 && dy < 0.5) {
+      runningRef.current = false;
+      return;
+    }
+
     rafRef.current = requestAnimationFrame(tick);
   }, []);
 
@@ -205,6 +221,12 @@ function CursorGlow() {
 
     let initialized = false;
 
+    const startLoop = () => {
+      if (runningRef.current) return;
+      runningRef.current = true;
+      rafRef.current = requestAnimationFrame(tick);
+    };
+
     const onMove = (e: PointerEvent) => {
       target.current = { x: e.clientX, y: e.clientY };
       if (!initialized) {
@@ -212,17 +234,19 @@ function CursorGlow() {
         initialized = true;
       }
       activeRef.current = true;
+      startLoop();
     };
     const onLeave = () => {
       activeRef.current = false;
+      startLoop();
     };
 
     window.addEventListener("pointermove", onMove, { passive: true });
     window.addEventListener("pointerleave", onLeave);
-    rafRef.current = requestAnimationFrame(tick);
 
     return () => {
       cancelAnimationFrame(rafRef.current);
+      runningRef.current = false;
       window.removeEventListener("pointermove", onMove);
       window.removeEventListener("pointerleave", onLeave);
     };
@@ -245,8 +269,8 @@ export function SiteBackground() {
     <div className="site-bg" aria-hidden>
       <div className="site-bg-base absolute inset-0" />
 
-      {/* Rotating conic mesh */}
-      <div className="site-mesh animate-mesh-rotate absolute left-1/2 top-1/2 h-[140vmax] w-[140vmax] -translate-x-1/2 -translate-y-1/2" />
+      {/* Static conic mesh — rotating a 140vmax layer costs GPU every frame for an imperceptible effect */}
+      <div className="site-mesh absolute left-1/2 top-1/2 h-[140vmax] w-[140vmax] -translate-x-1/2 -translate-y-1/2" />
 
       {/* Aurora orbs */}
       <div className="site-orb site-orb-violet animate-aurora-1 absolute -left-[15%] top-[8%] h-[55vh] w-[55vh] rounded-full opacity-70" />
