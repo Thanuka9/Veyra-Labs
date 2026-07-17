@@ -1,7 +1,31 @@
 import emailjs from "@emailjs/browser";
+import { CONTACT_EMAIL } from "./content";
 import { ESTIMATE_DISCLAIMER, formatRange, type ProjectEstimate } from "./estimate";
 import { getEstimatePdfBase64 } from "./estimate-pdf";
 
+/**
+ * Payload mapped to EmailJS template variables used by both:
+ *   - NEXT_PUBLIC_EMAILJS_INTERNAL_TEMPLATE_ID   (template_neuqpqj)
+ *   - NEXT_PUBLIC_EMAILJS_CONFIRMATION_TEMPLATE_ID (template_69hvz1j)
+ *
+ * Template dashboard setup (required for correct delivery):
+ *
+ * Internal (to Veyra):
+ *   To Email:    {{to_email}}     OR hardcode veyralabs0@gmail.com
+ *   Reply-To:    {{reply_to}}     (= visitor email)
+ *   Subject:     {{subject}}
+ *   Body:        use {{name}}, {{email}}, {{message}}, {{{html_message}}}
+ *   Attachment:  Variable Attachment, parameter name = estimate_pdf (optional)
+ *
+ * Confirmation (to visitor):
+ *   To Email:    {{to_email}}     (= visitor email)
+ *   Reply-To:    {{reply_to}}     (= CONTACT_EMAIL)
+ *   Subject:     {{subject}}
+ *   Body:        use {{name}}, {{message}}, {{{html_message}}}
+ *   Attachment:  same estimate_pdf variable if you want the PDF on confirmations
+ *
+ * Public key only — never put the EmailJS Private Key in NEXT_PUBLIC_* / frontend / GitHub.
+ */
 export type ContactEmailPayload = {
   name: string;
   email: string;
@@ -9,12 +33,11 @@ export type ContactEmailPayload = {
   message: string;
   html_message?: string;
   estimate_pdf?: string;
+  company?: string;
+  project_type?: string;
+  source?: string;
 };
 
-/**
- * EmailJS browser SDK — public key only.
- * Never put the EmailJS Private Key in NEXT_PUBLIC_* vars, GitHub, or frontend code.
- */
 const SERVICE_ID = process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID ?? "";
 const INTERNAL_TEMPLATE_ID =
   process.env.NEXT_PUBLIC_EMAILJS_INTERNAL_TEMPLATE_ID ??
@@ -24,6 +47,9 @@ const CONFIRMATION_TEMPLATE_ID =
   process.env.NEXT_PUBLIC_EMAILJS_CONFIRMATION_TEMPLATE_ID ?? "";
 const PUBLIC_KEY = process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY ?? "";
 
+/** EmailJS free tier rate limit is 1 request/second */
+const SEND_GAP_MS = 1100;
+
 let emailJsReady = false;
 
 function ensureEmailJsInit(): void {
@@ -32,51 +58,151 @@ function ensureEmailJsInit(): void {
   emailJsReady = true;
 }
 
-function templateParams(payload: ContactEmailPayload) {
-  return {
-    name: payload.name,
-    email: payload.email,
-    to_email: payload.email,
-    reply_to: payload.email,
+function sleep(ms: number): Promise<void> {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
+function nowStamp(): string {
+  return new Date().toLocaleString("en-US", {
+    dateStyle: "medium",
+    timeStyle: "short",
+  });
+}
+
+/**
+ * Flat param object matching both EmailJS templates.
+ * Extra keys are harmless if a template doesn't use them.
+ */
+function buildTemplateParams(
+  payload: ContactEmailPayload,
+  role: "internal" | "confirmation"
+): Record<string, string> {
+  const visitorEmail = payload.email.trim();
+  const visitorName = payload.name.trim() || "Website visitor";
+
+  const toEmail = role === "internal" ? CONTACT_EMAIL : visitorEmail;
+  const replyTo = role === "internal" ? visitorEmail : CONTACT_EMAIL;
+  const fromName = role === "internal" ? visitorName : "Veyra Labs";
+
+  const params: Record<string, string> = {
+    // Core identity
+    name: visitorName,
+    email: visitorEmail,
+    from_name: fromName,
+    to_name: role === "internal" ? "Veyra Labs" : visitorName,
+    to_email: toEmail,
+    reply_to: replyTo,
+
+    // Content
     subject: payload.subject,
     title: payload.subject,
     message: payload.message,
     html_message: payload.html_message ?? payload.message,
-    estimate_pdf: payload.estimate_pdf,
+
+    // Metadata (optional in templates)
+    company: payload.company?.trim() || "—",
+    project_type: payload.project_type?.trim() || "General inquiry",
+    source: payload.source?.trim() || "veyralabs.com",
+    time: nowStamp(),
   };
+
+  // Variable Attachment param — only include when we have a PDF (EmailJS ignores unused vars)
+  if (payload.estimate_pdf) {
+    params.estimate_pdf = payload.estimate_pdf;
+  }
+
+  return params;
 }
 
 export function isEmailConfigured(): boolean {
   return Boolean(SERVICE_ID && INTERNAL_TEMPLATE_ID && PUBLIC_KEY);
 }
 
-async function sendWithTemplate(templateId: string, payload: ContactEmailPayload): Promise<void> {
-  const result = await emailjs.send(SERVICE_ID, templateId, templateParams(payload));
+export function hasConfirmationTemplate(): boolean {
+  return Boolean(CONFIRMATION_TEMPLATE_ID);
+}
+
+async function sendWithTemplate(
+  templateId: string,
+  params: Record<string, string>
+): Promise<void> {
+  const result = await emailjs.send(SERVICE_ID, templateId, params);
   if (result.status !== 200) {
-    throw new Error(`Email failed with status ${result.status}`);
+    throw new Error(`EmailJS failed with status ${result.status}: ${result.text}`);
   }
 }
 
+function buildConfirmationCopy(payload: ContactEmailPayload): ContactEmailPayload {
+  const firstName = payload.name.trim().split(/\s+/)[0] || "there";
+  const isEstimate = Boolean(payload.estimate_pdf) || /estimate/i.test(payload.subject);
+
+  const message = isEstimate
+    ? [
+        `Hi ${firstName},`,
+        "",
+        "Thanks for requesting a project estimate from Veyra Labs.",
+        "",
+        "We've received your selections and sent a copy to our team. This is a ballpark range only — not a binding quote. We'll follow up within 24 hours to refine scope, timeline, and a fixed price.",
+        "",
+        `If you have anything to add in the meantime, reply to this email or write to ${CONTACT_EMAIL}.`,
+        "",
+        "— Veyra Labs",
+        "https://veyralabs.com",
+      ].join("\n")
+    : [
+        `Hi ${firstName},`,
+        "",
+        "Thanks for contacting Veyra Labs — we've received your message.",
+        "",
+        "Our team will review your inquiry and respond within 24 hours with next steps.",
+        "",
+        `Need to add detail? Reply to this email or write to ${CONTACT_EMAIL}.`,
+        "",
+        "— Veyra Labs",
+        "https://veyralabs.com",
+      ].join("\n");
+
+  return {
+    ...payload,
+    subject: isEstimate
+      ? `We received your Veyra Labs estimate request`
+      : `We received your message — Veyra Labs`,
+    message,
+    html_message: undefined, // confirmation templates usually use plain {{message}}
+  };
+}
+
 /**
- * Sends the internal notification to Veyra Labs, then (when configured)
- * a confirmation email to the visitor via the confirmation template.
+ * 1) Internal notification → Veyra Labs (template_neuqpqj)
+ * 2) Confirmation → visitor (template_69hvz1j), after rate-limit gap
  */
 export async function sendContactEmail(payload: ContactEmailPayload): Promise<void> {
   if (!isEmailConfigured()) {
-    throw new Error("Email service is not configured.");
+    throw new Error(
+      "Email service is not configured. Set NEXT_PUBLIC_EMAILJS_SERVICE_ID, NEXT_PUBLIC_EMAILJS_INTERNAL_TEMPLATE_ID, and NEXT_PUBLIC_EMAILJS_PUBLIC_KEY."
+    );
   }
 
   ensureEmailJsInit();
 
-  await sendWithTemplate(INTERNAL_TEMPLATE_ID, payload);
+  await sendWithTemplate(
+    INTERNAL_TEMPLATE_ID,
+    buildTemplateParams(payload, "internal")
+  );
 
-  if (CONFIRMATION_TEMPLATE_ID) {
-    try {
-      await sendWithTemplate(CONFIRMATION_TEMPLATE_ID, payload);
-    } catch (err) {
-      // Internal mail already landed — don't fail the whole flow if confirmation bounces
-      console.error("Confirmation email failed:", err);
-    }
+  if (!CONFIRMATION_TEMPLATE_ID) return;
+
+  await sleep(SEND_GAP_MS);
+
+  const confirmation = buildConfirmationCopy(payload);
+  try {
+    await sendWithTemplate(
+      CONFIRMATION_TEMPLATE_ID,
+      buildTemplateParams(confirmation, "confirmation")
+    );
+  } catch (err) {
+    // Internal mail already delivered — don't fail the UX if confirmation fails
+    console.error("Confirmation email (template_69hvz1j) failed:", err);
   }
 }
 
@@ -99,7 +225,10 @@ export function buildVeyraInquiryEmail(params: {
   return {
     name: params.name,
     email: params.email,
-    subject: `Veyra Labs  -  ${params.projectType} inquiry from ${params.name}`,
+    company: params.company,
+    project_type: params.projectType,
+    source: params.source,
+    subject: `Veyra Labs — ${params.projectType} inquiry from ${params.name}`,
     message: lines.join("\n"),
   };
 }
@@ -237,7 +366,7 @@ function buildEstimateHtml(estimate: ProjectEstimate): string {
                   <table width="100%" border="0" cellspacing="0" cellpadding="0" style="margin-top: 10px;">
                     <tr>
                       <td align="center">
-                        <a href="https://veyralabs.com/#contact" style="display: inline-block; background: linear-gradient(to right, ${accentColor}, ${cyanColor}); color: ${textWhite}; padding: 12px 28px; font-size: 13px; font-weight: bold; text-decoration: none; border-radius: 8px; box-shadow: 0 4px 12px rgba(124,92,255,0.3); text-align: center;">
+                        <a href="https://veyralabs.com/contact" style="display: inline-block; background: linear-gradient(to right, ${accentColor}, ${cyanColor}); color: ${textWhite}; padding: 12px 28px; font-size: 13px; font-weight: bold; text-decoration: none; border-radius: 8px; box-shadow: 0 4px 12px rgba(124,92,255,0.3); text-align: center;">
                           Contact Us
                         </a>
                       </td>
@@ -269,7 +398,7 @@ export function buildEstimateEmail(estimate: ProjectEstimate, pdfBase64?: string
   const clientEmail = estimate.clientEmail?.trim() || "no-reply@veyralabs.com";
 
   const lines = [
-    "=== VEYRA LABS  -  CHAT ESTIMATE REQUEST ===",
+    "=== VEYRA LABS — CHAT ESTIMATE REQUEST ===",
     "",
     `Estimate ID: ${estimate.id}`,
     `Date: ${new Date(estimate.createdAt).toLocaleString("en-US", { dateStyle: "medium", timeStyle: "short" })}`,
@@ -305,7 +434,9 @@ export function buildEstimateEmail(estimate: ProjectEstimate, pdfBase64?: string
   return {
     name: clientName,
     email: clientEmail,
-    subject: `[Estimate ${estimate.id}] ${estimate.projectLabel}  -  ${formatRange(estimate.totalMin, estimate.totalMax)}`,
+    project_type: estimate.projectLabel,
+    source: "Veyra chatbot estimate wizard — veyralabs.com",
+    subject: `[Estimate ${estimate.id}] ${estimate.projectLabel} — ${formatRange(estimate.totalMin, estimate.totalMax)}`,
     message: lines.join("\n"),
     html_message: buildEstimateHtml(estimate),
     estimate_pdf: pdfBase64,

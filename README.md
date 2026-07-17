@@ -62,6 +62,20 @@ NEXT_PUBLIC_EMAILJS_PUBLIC_KEY=your_new_public_key
 
 Use **only** the EmailJS Public Key in this project. Never add the Private Key to GitHub, Vercel client variables, or any `NEXT_PUBLIC_...` / frontend code.
 
+**EmailJS template fields (must match the code):**
+
+| Variable | Internal (`template_neuqpqj`) | Confirmation (`template_69hvz1j`) |
+| --- | --- | --- |
+| To Email | `{{to_email}}` (studio) or hardcode inbox | `{{to_email}}` (visitor) |
+| Reply-To | `{{reply_to}}` (visitor) | `{{reply_to}}` (studio) |
+| Subject | `{{subject}}` | `{{subject}}` |
+| Body | `{{name}}`, `{{email}}`, `{{message}}`, `{{{html_message}}}` | `{{name}}`, `{{message}}` |
+| Attachment (optional) | Variable Attachment → param `estimate_pdf` | same if you want PDF on confirmations |
+
+Also available: `{{company}}`, `{{project_type}}`, `{{source}}`, `{{time}}`, `{{from_name}}`, `{{to_name}}`.
+
+Set the same four env vars in **Vercel → Project → Settings → Environment Variables**, then redeploy.
+
 ### 3. Running Locally
 
 Start the Next.js development server:

@@ -222,7 +222,7 @@ export function VeyraChat() {
           source: "Veyra chatbot  -  veyralabs.com",
         })
       );
-      trackEvent("submit", "chat_lead", "discovery_call");
+      trackEvent("submit", "chat_lead", "contact");
       setMessages((prev) => [
         ...prev,
         createMessage(
