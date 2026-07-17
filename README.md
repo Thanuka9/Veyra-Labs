@@ -54,10 +54,13 @@ npm install
 Create a `.env.local` file in the root directory and add your EmailJS public credentials if you wish to enable active outbound estimates:
 
 ```env
-NEXT_PUBLIC_EMAILJS_SERVICE_ID=your_service_id
-NEXT_PUBLIC_EMAILJS_TEMPLATE_ID=your_template_id
-NEXT_PUBLIC_EMAILJS_PUBLIC_KEY=your_public_key
+NEXT_PUBLIC_EMAILJS_SERVICE_ID=service_your_service_id
+NEXT_PUBLIC_EMAILJS_INTERNAL_TEMPLATE_ID=template_neuqpqj
+NEXT_PUBLIC_EMAILJS_CONFIRMATION_TEMPLATE_ID=template_69hvz1j
+NEXT_PUBLIC_EMAILJS_PUBLIC_KEY=your_new_public_key
 ```
+
+Use **only** the EmailJS Public Key in this project. Never add the Private Key to GitHub, Vercel client variables, or any `NEXT_PUBLIC_...` / frontend code.
 
 ### 3. Running Locally
 

@@ -11,12 +11,18 @@ export type ContactEmailPayload = {
   estimate_pdf?: string;
 };
 
-const SERVICE_ID =
-  process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID ?? "service_3q31q6h";
-const TEMPLATE_ID =
-  process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID ?? "template_oxg4tlo";
-const PUBLIC_KEY =
-  process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY ?? "mqtA7O0dh4Q6-V-Ur";
+/**
+ * EmailJS browser SDK — public key only.
+ * Never put the EmailJS Private Key in NEXT_PUBLIC_* vars, GitHub, or frontend code.
+ */
+const SERVICE_ID = process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID ?? "";
+const INTERNAL_TEMPLATE_ID =
+  process.env.NEXT_PUBLIC_EMAILJS_INTERNAL_TEMPLATE_ID ??
+  process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID ??
+  "";
+const CONFIRMATION_TEMPLATE_ID =
+  process.env.NEXT_PUBLIC_EMAILJS_CONFIRMATION_TEMPLATE_ID ?? "";
+const PUBLIC_KEY = process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY ?? "";
 
 let emailJsReady = false;
 
@@ -26,10 +32,35 @@ function ensureEmailJsInit(): void {
   emailJsReady = true;
 }
 
-export function isEmailConfigured(): boolean {
-  return Boolean(SERVICE_ID && TEMPLATE_ID && PUBLIC_KEY);
+function templateParams(payload: ContactEmailPayload) {
+  return {
+    name: payload.name,
+    email: payload.email,
+    to_email: payload.email,
+    reply_to: payload.email,
+    subject: payload.subject,
+    title: payload.subject,
+    message: payload.message,
+    html_message: payload.html_message ?? payload.message,
+    estimate_pdf: payload.estimate_pdf,
+  };
 }
 
+export function isEmailConfigured(): boolean {
+  return Boolean(SERVICE_ID && INTERNAL_TEMPLATE_ID && PUBLIC_KEY);
+}
+
+async function sendWithTemplate(templateId: string, payload: ContactEmailPayload): Promise<void> {
+  const result = await emailjs.send(SERVICE_ID, templateId, templateParams(payload));
+  if (result.status !== 200) {
+    throw new Error(`Email failed with status ${result.status}`);
+  }
+}
+
+/**
+ * Sends the internal notification to Veyra Labs, then (when configured)
+ * a confirmation email to the visitor via the confirmation template.
+ */
 export async function sendContactEmail(payload: ContactEmailPayload): Promise<void> {
   if (!isEmailConfigured()) {
     throw new Error("Email service is not configured.");
@@ -37,18 +68,15 @@ export async function sendContactEmail(payload: ContactEmailPayload): Promise<vo
 
   ensureEmailJsInit();
 
-  const result = await emailjs.send(SERVICE_ID, TEMPLATE_ID, {
-    name: payload.name,
-    email: payload.email,
-    subject: payload.subject,
-    title: payload.subject,
-    message: payload.message,
-    html_message: payload.html_message,
-    estimate_pdf: payload.estimate_pdf,
-  });
+  await sendWithTemplate(INTERNAL_TEMPLATE_ID, payload);
 
-  if (result.status !== 200) {
-    throw new Error(`Email failed with status ${result.status}`);
+  if (CONFIRMATION_TEMPLATE_ID) {
+    try {
+      await sendWithTemplate(CONFIRMATION_TEMPLATE_ID, payload);
+    } catch (err) {
+      // Internal mail already landed — don't fail the whole flow if confirmation bounces
+      console.error("Confirmation email failed:", err);
+    }
   }
 }
 
