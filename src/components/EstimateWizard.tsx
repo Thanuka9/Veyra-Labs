@@ -40,6 +40,7 @@ import {
   getScopeGroupedByType,
   previewEstimateTotals,
   PROJECT_TYPES,
+  SCOPE_OPTIONS,
   type ProjectEstimate,
   type ProjectTypeId,
 } from "@/lib/estimate";
@@ -198,7 +199,20 @@ export function EstimateWizard({
   }
 
   function toggleScope(id: string) {
-    setSelectedScope((prev) => (prev.includes(id) ? prev.filter((s) => s !== id) : [...prev, id]));
+    const opt = SCOPE_OPTIONS.find((o) => o.id === id);
+    setSelectedScope((prev) => {
+      if (prev.includes(id)) return prev.filter((s) => s !== id);
+      let next = [...prev, id];
+      if (opt?.exclusiveGroup) {
+        const rivals = new Set(
+          SCOPE_OPTIONS.filter(
+            (o) => o.exclusiveGroup === opt.exclusiveGroup && o.id !== id
+          ).map((o) => o.id)
+        );
+        next = next.filter((s) => !rivals.has(s));
+      }
+      return next;
+    });
   }
 
   function goNext(from: Step) {
