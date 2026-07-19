@@ -518,9 +518,9 @@ export function EstimateResultCard({
         <div className="flex items-center gap-2 rounded-lg border border-emerald-500/30 bg-emerald-500/10 px-3 py-2">
           <Check size={14} className="shrink-0 text-emerald-400" />
           <p className="text-[10px] font-medium text-emerald-300">
-            Estimate emailed with PDF attached
+            Estimate emailed
             {estimate.clientEmail ? ` — confirmation sent to ${estimate.clientEmail}` : ""}.
-            We&apos;ll respond within 24 hours.
+            Download the PDF below for your records. We&apos;ll respond within 24 hours.
           </p>
         </div>
       )}

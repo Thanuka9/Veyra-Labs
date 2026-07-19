@@ -1,28 +1,19 @@
 import emailjs from "@emailjs/browser";
 import { CONTACT_EMAIL } from "./content";
 import { ESTIMATE_DISCLAIMER, formatRange, type ProjectEstimate } from "./estimate";
-import { getEstimatePdfDataUrl } from "./estimate-pdf";
 
 /**
  * EmailJS — public key only. Never put the Private Key in NEXT_PUBLIC_* / frontend / GitHub.
  *
- * Templates:
- *   Customer confirmation → template_69hvz1j (NEXT_PUBLIC_EMAILJS_CONFIRMATION_TEMPLATE_ID)
- *     To Email:  {{to_email}}
- *     From Name: Veyra Labs  (or fixed)
- *     Reply-To:  {{reply_to}}   → must be studio inbox (CONTACT_EMAIL)
- *     Subject:   {{subject}}
- *     Attachment: Variable → param estimate_pdf · Filename {{estimate_filename}} · type PDF
+ * No Attachments tab on either template — leave empty. PDF download stays on-site only.
  *
- *   Internal lead → template_neuqpqj (NEXT_PUBLIC_EMAILJS_INTERNAL_TEMPLATE_ID)
- *     To Email:  veyralabs0@gmail.com  (fixed) OR {{to_email}}
- *     From Name: {{from_name}}
- *     Reply-To:  {{reply_to}}   → customer email
- *     Subject:   {{subject}}
- *     Body link: mailto:{{reply_to}} shows {{reply_to}} (customer address)
- *     Attachment: same estimate_pdf setup
+ * Customer template — template_69hvz1j
+ *   Subject: {{subject}} · To: {{to_email}} · From Name: Veyra Labs · Reply To: {{reply_to}}
  *
- * Contact/inquiry emails NEVER send estimate_pdf (empty attachment vars break Variable Attachments).
+ * Internal template — template_neuqpqj
+ *   Subject: {{subject}} · To: veyralabs0@gmail.com · From Name: Veyra Website · Reply To: {{reply_to}}
+ *
+ * Use {{#is_estimate}} / {{#is_inquiry}} blocks in HTML for conditional notices.
  */
 
 export type ContactEmailPayload = {
@@ -36,6 +27,12 @@ export type ContactEmailPayload = {
   source?: string;
 };
 
+/** Template params for EmailJS — `subject` must be exactly this key (maps to {{subject}}). */
+type EmailJsParams = {
+  subject: string;
+  [key: string]: string | boolean | number;
+};
+
 const SERVICE_ID = process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID ?? "";
 const INTERNAL_TEMPLATE_ID =
   process.env.NEXT_PUBLIC_EMAILJS_INTERNAL_TEMPLATE_ID ??
@@ -45,7 +42,7 @@ const CUSTOMER_TEMPLATE_ID =
   process.env.NEXT_PUBLIC_EMAILJS_CONFIRMATION_TEMPLATE_ID ?? "";
 const PUBLIC_KEY = process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY ?? "";
 
-/** EmailJS free tier: 1 request/second */
+/** EmailJS free tier: ~1 request/second */
 const SEND_GAP_MS = 1100;
 
 let emailJsReady = false;
@@ -56,15 +53,23 @@ function ensureEmailJsInit(): void {
   emailJsReady = true;
 }
 
-function sleep(ms: number): Promise<void> {
-  return new Promise((resolve) => setTimeout(resolve, ms));
+function wait(milliseconds: number): Promise<void> {
+  return new Promise((resolve) => {
+    setTimeout(resolve, milliseconds);
+  });
 }
 
-function nowStamp(): string {
-  return new Date().toLocaleString("en-US", {
-    dateStyle: "medium",
-    timeStyle: "short",
-  });
+function assertSubject(params: EmailJsParams, label: string): void {
+  const subject = typeof params.subject === "string" ? params.subject.trim() : "";
+  if (!subject) {
+    throw new Error(`${label} email subject is missing.`);
+  }
+  // Guard against accidental legacy field names
+  if ("customer_subject" in params || "internal_subject" in params) {
+    throw new Error(
+      `${label} payload must use subject — not customer_subject / internal_subject.`
+    );
+  }
 }
 
 export function isEmailConfigured(): boolean {
@@ -75,22 +80,71 @@ export function hasCustomerTemplate(): boolean {
   return Boolean(CUSTOMER_TEMPLATE_ID);
 }
 
-async function sendWithTemplate(
-  templateId: string,
-  params: Record<string, string>
-): Promise<void> {
-  const result = await emailjs.send(SERVICE_ID, templateId, params, {
-    publicKey: PUBLIC_KEY,
-  });
-  if (result.status !== 200) {
-    throw new Error(`EmailJS failed with status ${result.status}: ${result.text}`);
+/**
+ * Customer template first, then internal — sequential to respect rate limit.
+ * Both payloads must include `subject` (EmailJS Subject field = {{subject}}).
+ */
+async function sendVeyraEmails(
+  customerParams: EmailJsParams,
+  internalParams: EmailJsParams
+): Promise<{ customerResult: unknown; internalResult: unknown }> {
+  assertSubject(customerParams, "Customer");
+  assertSubject(internalParams, "Internal");
+
+  ensureEmailJsInit();
+
+  if (!CUSTOMER_TEMPLATE_ID) {
+    console.log("Internal EmailJS payload:", internalParams);
+    const internalResult = await emailjs.send(
+      SERVICE_ID,
+      INTERNAL_TEMPLATE_ID,
+      internalParams,
+      { publicKey: PUBLIC_KEY }
+    );
+    if (internalResult.status !== 200) {
+      throw new Error(
+        `EmailJS failed with status ${internalResult.status}: ${internalResult.text}`
+      );
+    }
+    return { customerResult: null, internalResult };
   }
+
+  console.log("Customer EmailJS payload:", customerParams);
+  console.log("Customer email params subject:", customerParams.subject);
+
+  const customerResult = await emailjs.send(
+    SERVICE_ID,
+    CUSTOMER_TEMPLATE_ID,
+    customerParams,
+    { publicKey: PUBLIC_KEY }
+  );
+  if (customerResult.status !== 200) {
+    throw new Error(
+      `EmailJS failed with status ${customerResult.status}: ${customerResult.text}`
+    );
+  }
+
+  await wait(SEND_GAP_MS);
+
+  console.log("Internal EmailJS payload:", internalParams);
+  console.log("Internal email params subject:", internalParams.subject);
+
+  const internalResult = await emailjs.send(
+    SERVICE_ID,
+    INTERNAL_TEMPLATE_ID,
+    internalParams,
+    { publicKey: PUBLIC_KEY }
+  );
+  if (internalResult.status !== 200) {
+    throw new Error(
+      `EmailJS failed with status ${internalResult.status}: ${internalResult.text}`
+    );
+  }
+
+  return { customerResult, internalResult };
 }
 
-/**
- * Contact / lead inquiry — NO estimate_pdf (avoids broken Variable Attachment on empty param).
- * Sends internal first, then customer confirmation when configured.
- */
+/** Contact / lead inquiry — attachment-free. */
 export async function sendContactEmail(payload: ContactEmailPayload): Promise<void> {
   if (!isEmailConfigured()) {
     throw new Error(
@@ -102,69 +156,45 @@ export async function sendContactEmail(payload: ContactEmailPayload): Promise<vo
   const customerEmail = payload.email.trim();
   if (!customerEmail) throw new Error("Customer email is required.");
 
-  ensureEmailJsInit();
+  const company = payload.company?.trim() || "";
+  const service = payload.project_type?.trim() || "";
+  const message = payload.message?.trim() || "";
 
-  const company = payload.company?.trim() || "Not provided";
-  const service = payload.project_type?.trim() || "General inquiry";
-  const shared = {
+  const customerInquiryParams: EmailJsParams = {
+    is_inquiry: true,
+    is_estimate: false,
+
     name: customerName,
-    from_name: customerName,
-    company,
-    service,
-    project_type: service,
-    request_type: "Inquiry",
-    message: payload.message,
-    html_message: payload.html_message ?? payload.message,
-    source: payload.source?.trim() || "veyralabs.com",
-    time: nowStamp(),
-  };
-
-  // Internal → Veyra (reply goes to customer)
-  const internalParams: Record<string, string> = {
-    ...shared,
-    to_email: CONTACT_EMAIL,
-    reply_to: customerEmail,
-    customer_email: customerEmail,
-    email: customerEmail,
-    subject: payload.subject || `New inquiry — ${customerName} | Veyra Labs`,
-    title: payload.subject || `New inquiry — ${customerName} | Veyra Labs`,
-  };
-
-  await sendWithTemplate(INTERNAL_TEMPLATE_ID, internalParams);
-
-  if (!CUSTOMER_TEMPLATE_ID) return;
-
-  await sleep(SEND_GAP_MS);
-
-  // Customer confirmation → visitor (reply goes to Veyra — never the visitor themselves)
-  const firstName = customerName.split(/\s+/)[0] || "there";
-  const customerParams: Record<string, string> = {
-    ...shared,
     to_email: customerEmail,
     reply_to: CONTACT_EMAIL,
-    email: customerEmail,
-    from_name: "Veyra Labs",
-    subject: "We received your message — Veyra Labs",
-    title: "We received your message — Veyra Labs",
-    message: [
-      `Hi ${firstName},`,
-      "",
-      "Thanks for contacting Veyra Labs — we've received your message.",
-      "",
-      "Our team will review your inquiry and respond within 24 hours with next steps.",
-      "",
-      `Need to add detail? Reply to this email or write to ${CONTACT_EMAIL}.`,
-      "",
-      "— Veyra Labs",
-      "https://veyralabs.com",
-    ].join("\n"),
+
+    subject: "We Received Your Veyra Labs Inquiry",
+
+    company,
+    service,
+
+    message_heading: "YOUR MESSAGE",
+    message,
   };
 
-  try {
-    await sendWithTemplate(CUSTOMER_TEMPLATE_ID, customerParams);
-  } catch (err) {
-    console.error("Customer confirmation email failed:", err);
-  }
+  const internalInquiryParams: EmailJsParams = {
+    is_inquiry: true,
+    is_estimate: false,
+
+    name: customerName,
+    customer_email: customerEmail,
+    reply_to: customerEmail,
+
+    subject: `New Inquiry — ${customerName} | Veyra Labs`,
+
+    company,
+    service,
+
+    message_heading: "PROJECT DETAILS",
+    message,
+  };
+
+  await sendVeyraEmails(customerInquiryParams, internalInquiryParams);
 }
 
 export function buildVeyraInquiryEmail(params: {
@@ -175,22 +205,14 @@ export function buildVeyraInquiryEmail(params: {
   message: string;
   source?: string;
 }): ContactEmailPayload {
-  const lines = [
-    params.company ? `Company: ${params.company}` : null,
-    `Project type: ${params.projectType}`,
-    params.source ? `Source: ${params.source}` : null,
-    "",
-    params.message,
-  ].filter(Boolean);
-
   return {
     name: params.name,
     email: params.email,
     company: params.company,
     project_type: params.projectType,
     source: params.source,
-    subject: `Veyra Labs — ${params.projectType} inquiry from ${params.name}`,
-    message: lines.join("\n"),
+    subject: `New Inquiry — ${params.name} | Veyra Labs`,
+    message: params.message,
   };
 }
 
@@ -239,36 +261,8 @@ function buildEstimateSummary(estimate: ProjectEstimate): string {
     .join("\n");
 }
 
-function buildCustomerEstimateMessage(estimate: ProjectEstimate): string {
-  const firstName = (estimate.clientName?.trim() || "there").split(/\s+/)[0];
-  const companyLine = estimate.clientCompany?.trim()
-    ? ` (${estimate.clientCompany.trim()})`
-    : "";
-  const range = formatRange(estimate.totalMin, estimate.totalMax);
-
-  return [
-    `Hi ${firstName},`,
-    "",
-    `Thanks for requesting a project estimate from Veyra Labs${companyLine}.`,
-    "",
-    `Estimate ID: ${estimate.id}`,
-    `Services: ${estimate.projectLabel}`,
-    `Ballpark range: ${range}`,
-    `Timeline: ${estimate.timeline}`,
-    "",
-    "Your estimate PDF is attached to this email. This is an indicative range only — not a binding quote. Our team has received a copy and will follow up within 24 hours.",
-    "",
-    `If you have anything to add, reply to this email or write to ${CONTACT_EMAIL}.`,
-    "",
-    "— Veyra Labs",
-    "https://veyralabs.com",
-  ].join("\n");
-}
-
 /**
- * Estimate flow — generates a real Base64 PDF data URL and sends TWO separate
- * EmailJS payloads (customer + internal) with different recipients / reply-to / subjects.
- * Never reuse contact-form params for estimates.
+ * Estimate flow — summary in email body only. PDF is downloadable on the result screen.
  */
 export async function sendEstimateEmail(estimate: ProjectEstimate): Promise<void> {
   if (!isEmailConfigured()) {
@@ -283,94 +277,55 @@ export async function sendEstimateEmail(estimate: ProjectEstimate): Promise<void
     throw new Error("Customer name and email are required.");
   }
 
-  const estimatePdf = await getEstimatePdfDataUrl(estimate);
-  if (!estimatePdf.startsWith("data:application/pdf;base64,")) {
-    throw new Error("The estimate PDF is not in the correct Base64 format.");
-  }
-
-  ensureEmailJsInit();
-
-  const company = estimate.clientCompany?.trim() || "Not provided";
-  const service = estimate.projectLabel;
+  const companyName = estimate.clientCompany?.trim() || "";
+  const selectedServices = estimate.projectLabel || "";
+  const selectedScope = estimate.selectedScope.join(", ") || "";
+  const selectedTimeline = estimate.timeline || "";
   const estimateId = estimate.id;
+  const formattedEstimateTotal = formatRange(estimate.totalMin, estimate.totalMax);
   const estimateSummary = buildEstimateSummary(estimate);
-  const filename = `veyra-labs-estimate-${estimateId}.pdf`;
-  const range = formatRange(estimate.totalMin, estimate.totalMax);
 
-  // Customer template (template_69hvz1j) — To: customer, Reply-To: Veyra
-  const customerParams: Record<string, string> = {
+  const customerEstimateParams: EmailJsParams = {
+    is_inquiry: false,
+    is_estimate: true,
+
+    name: customerName,
     to_email: customerEmail,
-    name: customerName,
-    from_name: "Veyra Labs",
     reply_to: CONTACT_EMAIL,
-    email: customerEmail,
+
     subject: `Your Veyra Labs Estimate — ${estimateId}`,
-    title: `Your Veyra Labs Estimate — ${estimateId}`,
-    request_type: "Estimate",
-    company,
-    service,
-    project_type: service,
-    message: buildCustomerEstimateMessage(estimate),
-    estimate_id: estimateId,
-    estimate_range: range,
-    estimate_pdf: estimatePdf,
-    estimate_filename: filename,
-    time: nowStamp(),
-  };
 
-  // Internal template (template_neuqpqj) — To: Veyra (fixed in dashboard), Reply-To: customer
-  const internalParams: Record<string, string> = {
-    to_email: CONTACT_EMAIL,
-    name: customerName,
-    from_name: customerName,
-    reply_to: customerEmail,
-    customer_email: customerEmail,
-    email: customerEmail,
-    subject: `New Estimate Request — ${customerName} | ${estimateId}`,
-    title: `New Estimate Request — ${customerName} | ${estimateId}`,
-    request_type: "Estimate",
-    company,
-    service,
-    project_type: service,
+    company: companyName,
+    service: selectedServices,
+    scope: selectedScope,
+    timeline: selectedTimeline,
+    estimate_total: formattedEstimateTotal,
+    estimate_id: estimateId,
+
+    message_heading: "ESTIMATE DETAILS",
     message: estimateSummary,
-    estimate_id: estimateId,
-    estimate_range: range,
-    estimate_pdf: estimatePdf,
-    estimate_filename: filename,
-    time: nowStamp(),
   };
 
-  // Sequential sends respect EmailJS 1 req/sec free-tier limit
-  let customerOk = !CUSTOMER_TEMPLATE_ID;
-  let internalOk = false;
+  const internalEstimateParams: EmailJsParams = {
+    is_inquiry: false,
+    is_estimate: true,
 
-  if (CUSTOMER_TEMPLATE_ID) {
-    try {
-      await sendWithTemplate(CUSTOMER_TEMPLATE_ID, customerParams);
-      customerOk = true;
-    } catch (err) {
-      console.error("Customer estimate email failed:", err);
-    }
-    await sleep(SEND_GAP_MS);
-  }
+    name: customerName,
+    customer_email: customerEmail,
+    reply_to: customerEmail,
 
-  try {
-    await sendWithTemplate(INTERNAL_TEMPLATE_ID, internalParams);
-    internalOk = true;
-  } catch (err) {
-    console.error("Internal estimate email failed:", err);
-  }
+    subject: `New Estimate Request — ${customerName} | ${estimateId}`,
 
-  if (!customerOk && !internalOk) {
-    throw new Error(
-      "Estimate emails failed. Check the EmailJS request history and that estimate_pdf is configured as a Variable Attachment on both templates."
-    );
-  }
+    company: companyName,
+    service: selectedServices,
+    scope: selectedScope,
+    timeline: selectedTimeline,
+    estimate_total: formattedEstimateTotal,
+    estimate_id: estimateId,
 
-  if (!customerOk || !internalOk) {
-    console.error(
-      "One estimate email failed; the other may have been delivered. Check EmailJS history.",
-      { customerOk, internalOk }
-    );
-  }
+    message_heading: "ESTIMATE DETAILS",
+    message: estimateSummary,
+  };
+
+  await sendVeyraEmails(customerEstimateParams, internalEstimateParams);
 }

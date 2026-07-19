@@ -187,7 +187,7 @@ export function VeyraChat() {
     setSavedEstimates((prev) => ({ ...prev, [estimate.id]: estimate }));
     setEstimateEmailSent((prev) => ({ ...prev, [estimate.id]: emailSent }));
     const emailLine = emailSent
-      ? "We've emailed our team  -  **reply within 24 hours**."
+      ? "We've emailed the estimate summary  -  **reply within 24 hours**. Download your PDF below."
       : "Download your PDF below.";
     setMessages((prev) => [
       ...prev,

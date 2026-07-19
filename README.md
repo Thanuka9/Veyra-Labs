@@ -67,15 +67,14 @@ Use **only** the EmailJS Public Key in this project. Never add the Private Key t
 | Field | Internal `template_neuqpqj` | Customer `template_69hvz1j` |
 | --- | --- | --- |
 | **To Email** | Fixed `veyralabs0@gmail.com` | `{{to_email}}` (customer) |
-| **From Name** | `{{from_name}}` | `Veyra Labs` |
+| **From Name** | `Veyra Website` | `Veyra Labs` |
 | **Reply-To** | `{{reply_to}}` (customer) | `{{reply_to}}` (= studio — not the customer) |
 | **Subject** | `{{subject}}` | `{{subject}}` |
-| **Body** | `{{message}}`, show customer via `mailto:{{reply_to}}` | `{{name}}`, `{{message}}`; use `{{to_email}}` if showing their address |
-| **Attachment** (estimates) | Variable → `estimate_pdf`, Filename `{{estimate_filename}}`, type `PDF` | same |
+| **Attachments** | Leave empty | Leave empty |
 
-Estimates send a real `data:application/pdf;base64,...` data URL. Contact inquiries **never** pass `estimate_pdf`.
+Emails are attachment-free. Estimate summary is in `{{message}}`; PDF download stays on the estimate result screen.
 
-Also available: `{{company}}`, `{{service}}`, `{{request_type}}`, `{{estimate_id}}`, `{{customer_email}}`, `{{time}}`.
+Also available: `{{company}}`, `{{service}}`, `{{scope}}`, `{{timeline}}`, `{{estimate_total}}`, `{{estimate_id}}`, `{{message_heading}}`, `{{customer_email}}`, `{{#is_estimate}}`, `{{#is_inquiry}}`.
 
 Set the same four env vars in **Vercel → Project → Settings → Environment Variables**, then redeploy.
 
