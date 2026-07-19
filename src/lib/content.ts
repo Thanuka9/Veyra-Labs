@@ -534,8 +534,15 @@ export type PricingTier = {
   description: string;
   features: string[];
   cta: string;
-  /** Maps to /quote?type=… for the estimate wizard */
-  quoteType?: string;
+  /** Maps to /quote?type=… — must match ProjectTypeId in estimate.ts */
+  quoteType?:
+    | "portfolio"
+    | "ecommerce"
+    | "website"
+    | "ai"
+    | "saas"
+    | "ml"
+    | "data";
   highlight?: boolean;
 };
 

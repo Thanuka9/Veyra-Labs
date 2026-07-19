@@ -295,6 +295,13 @@ export function getScopeForTypes(typeIds: ProjectTypeId[]): ScopeOption[] {
   return result;
 }
 
+/** Included-in-base options (no extra cost) — pre-checked for a focused service quote. */
+export function getIncludedScopeIds(typeIds: ProjectTypeId[]): string[] {
+  return getScopeForTypes(typeIds)
+    .filter((o) => o.min === 0 && o.max === 0)
+    .map((o) => o.id);
+}
+
 export function getScopeGroupedByType(typeIds: ProjectTypeId[]): { typeId: ProjectTypeId; label: string; options: ScopeOption[] }[] {
   return typeIds
     .map((typeId) => {

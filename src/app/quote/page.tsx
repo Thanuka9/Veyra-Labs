@@ -6,7 +6,7 @@ import { QuoteWizard } from "@/components/QuoteWizard";
 export const metadata: Metadata = {
   title: "Get a Quote",
   description:
-    "Generate a tracked Veyra Labs project estimate — choose services, scope and timeline for an instant ballpark quote with a unique estimate ID.",
+    "Generate a tracked Veyra Labs project estimate — choose a service from Pricing, complete your quote, then download or print the PDF.",
   alternates: { canonical: "/quote" },
 };
 
@@ -15,17 +15,18 @@ export default function QuotePage() {
     <InnerPageLayout
       showCta={false}
       hero={{
-        eyebrow: "Project estimate",
+        eyebrow: "Instant ballpark",
         accent: "cyan",
-        title: "Get a quote",
+        title: "Your project quote",
         subtitle:
-          "Build a ballpark estimate in about a minute. Every quote gets a unique ID we track on our side — then download your PDF or wait for our follow-up within 24 hours.",
+          "Picked from Pricing? We’ll start with that service. Finish the short form, get a tracked quote ID, then download or print your PDF.",
         breadcrumbs: [
           { label: "Home", href: "/" },
           { label: "Pricing", href: "/pricing" },
           { label: "Quote" },
         ],
-        cta: { label: "Prefer to talk first?", href: "/contact" },
+        cta: { label: "Back to pricing", href: "/pricing" },
+        secondaryCta: { label: "Contact Us", href: "/contact" },
       }}
     >
       <Suspense
