@@ -839,19 +839,22 @@ export function EstimateResultCard({
 
       <DisclaimerBanner />
 
-      <div className="grid gap-2 sm:grid-cols-2">
+      <div className="grid grid-cols-2 gap-2">
         <button
           type="button"
           onClick={onDownload}
           disabled={downloading}
-          className="flex w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-violet to-cyan py-3 text-sm font-semibold text-white shadow-[0_0_24px_-8px_rgba(124,92,255,0.5)] transition-transform hover:scale-[1.01] disabled:opacity-60 sm:col-span-2"
+          className={cn(
+            "flex w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-violet to-cyan py-3 text-xs font-semibold text-white shadow-[0_0_24px_-8px_rgba(124,92,255,0.5)] transition-transform hover:scale-[1.01] disabled:opacity-60 sm:text-sm",
+            !onPrint && "col-span-2"
+          )}
         >
           {downloading ? (
             <Loader2 size={16} className="animate-spin" />
           ) : (
             <LucideIcon icon={Download} size={16} className="text-white" />
           )}
-          Download PDF quote
+          Download PDF
         </button>
 
         {onPrint && (
@@ -859,7 +862,7 @@ export function EstimateResultCard({
             type="button"
             onClick={onPrint}
             disabled={downloading}
-            className="flex w-full items-center justify-center gap-2 rounded-xl border border-border bg-surface-2 py-2.5 text-xs font-semibold text-foreground transition-colors hover:border-violet/40 disabled:opacity-60"
+            className="flex w-full items-center justify-center gap-2 rounded-xl border border-border bg-surface-2 py-3 text-xs font-semibold text-foreground transition-colors hover:border-violet/40 disabled:opacity-60 sm:text-sm"
           >
             <Printer size={14} />
             Print quote
@@ -871,10 +874,7 @@ export function EstimateResultCard({
             type="button"
             onClick={onResendEmail}
             disabled={resending}
-            className={cn(
-              "flex w-full items-center justify-center gap-2 rounded-xl border border-border bg-surface-2 py-2.5 text-xs font-semibold text-foreground transition-colors hover:border-violet/40 disabled:opacity-60",
-              !onPrint && "sm:col-span-2"
-            )}
+            className="col-span-2 flex w-full items-center justify-center gap-2 rounded-xl border border-border bg-surface-2 py-2.5 text-xs font-semibold text-foreground transition-colors hover:border-violet/40 disabled:opacity-60"
           >
             {resending ? <Loader2 size={14} className="animate-spin" /> : <Mail size={14} />}
             {resending ? "Sending…" : "Email this quote"}
