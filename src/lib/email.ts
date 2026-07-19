@@ -1,6 +1,6 @@
 import emailjs from "@emailjs/browser";
 import { CONTACT_EMAIL } from "./content";
-import { ESTIMATE_DISCLAIMER, formatRange, type ProjectEstimate } from "./estimate";
+import { formatRange, type ProjectEstimate } from "./estimate";
 
 /**
  * EmailJS — public key only. Never put the Private Key in NEXT_PUBLIC_* / frontend / GitHub.
@@ -13,7 +13,8 @@ import { ESTIMATE_DISCLAIMER, formatRange, type ProjectEstimate } from "./estima
  * Internal template — template_neuqpqj
  *   Subject: {{subject}} · To: veyralabs0@gmail.com · From Name: Veyra Website · Reply To: {{reply_to}}
  *
- * Use {{#is_estimate}} / {{#is_inquiry}} blocks in HTML for conditional notices.
+ * Estimate templates use structured fields + {{{line_items_html}}} (triple braces for HTML rows).
+ * Inquiry templates still use {{message}} / {{message_heading}}.
  */
 
 export type ContactEmailPayload = {
@@ -70,6 +71,38 @@ function assertSubject(params: EmailJsParams, label: string): void {
       `${label} payload must use subject — not customer_subject / internal_subject.`
     );
   }
+}
+
+function escapeHtml(value = ""): string {
+  return String(value)
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&#039;");
+}
+
+function formatLineItemPrice(min: number, max: number): string {
+  if (min === 0 && max === 0) return "Included";
+  if (min === max) return formatRange(min, min);
+  return formatRange(min, max);
+}
+
+function buildLineItemsHtml(estimate: ProjectEstimate): string {
+  return estimate.lineItems
+    .map(
+      (item) => `
+      <tr>
+        <td style="padding:12px 0; border-bottom:1px solid #e2e8f0; color:#334155; font-size:14px; line-height:22px;">
+          ${escapeHtml(item.label)}
+        </td>
+        <td align="right" style="padding:12px 0 12px 18px; border-bottom:1px solid #e2e8f0; color:#0f172a; font-size:14px; line-height:22px; font-weight:600; white-space:nowrap;">
+          ${escapeHtml(formatLineItemPrice(item.min, item.max))}
+        </td>
+      </tr>
+    `
+    )
+    .join("");
 }
 
 export function isEmailConfigured(): boolean {
@@ -216,53 +249,9 @@ export function buildVeyraInquiryEmail(params: {
   };
 }
 
-function buildEstimateSummary(estimate: ProjectEstimate): string {
-  const clientName = estimate.clientName?.trim() || "Website visitor";
-  const clientEmail = estimate.clientEmail?.trim() || "—";
-  const clientCompany = estimate.clientCompany?.trim();
-  const range = formatRange(estimate.totalMin, estimate.totalMax);
-
-  return [
-    "=== VEYRA LABS — PROJECT ESTIMATE ===",
-    "",
-    `Estimate ID: ${estimate.id}`,
-    `Date: ${new Date(estimate.createdAt).toLocaleString("en-US", { dateStyle: "medium", timeStyle: "short" })}`,
-    "",
-    "CLIENT",
-    `  Name: ${clientName}`,
-    `  Email: ${clientEmail}`,
-    clientCompany ? `  Company: ${clientCompany}` : null,
-    "",
-    `Services: ${estimate.projectLabel}`,
-    `Timeline: ${estimate.timeline} (${estimate.timelineNote})`,
-    "",
-    "LINE ITEMS:",
-    ...estimate.lineItems.map((item) => {
-      const price =
-        item.min === 0 && item.max === 0
-          ? "Included"
-          : item.min === item.max
-            ? formatRange(item.min, item.min)
-            : formatRange(item.min, item.max);
-      return `  • ${item.label}: ${price}`;
-    }),
-    "",
-    `ESTIMATED TOTAL: ${range}`,
-    "",
-    estimate.selectedScope.length
-      ? `Scope add-ons: ${estimate.selectedScope.join(", ")}`
-      : "Scope add-ons: (none selected)",
-    estimate.notes?.trim() ? `\nClient notes:\n${estimate.notes.trim()}` : null,
-    "",
-    "---",
-    ESTIMATE_DISCLAIMER,
-  ]
-    .filter(Boolean)
-    .join("\n");
-}
-
 /**
- * Estimate flow — summary in email body only. PDF is downloadable on the result screen.
+ * Estimate flow — structured fields + HTML line-item rows (no giant message blob).
+ * PDF remains download-only on the result screen.
  */
 export async function sendEstimateEmail(estimate: ProjectEstimate): Promise<void> {
   if (!isEmailConfigured()) {
@@ -277,54 +266,72 @@ export async function sendEstimateEmail(estimate: ProjectEstimate): Promise<void
     throw new Error("Customer name and email are required.");
   }
 
-  const companyName = estimate.clientCompany?.trim() || "";
-  const selectedServices = estimate.projectLabel || "";
-  const selectedScope = estimate.selectedScope.join(", ") || "";
-  const selectedTimeline = estimate.timeline || "";
   const estimateId = estimate.id;
-  const formattedEstimateTotal = formatRange(estimate.totalMin, estimate.totalMax);
-  const estimateSummary = buildEstimateSummary(estimate);
+  const formattedDate = new Date(estimate.createdAt).toLocaleDateString("en-US", {
+    dateStyle: "medium",
+  });
+  const companyName = estimate.clientCompany?.trim() || "Not provided";
+  const selectedServices = estimate.projectLabel || "Not provided";
+  const selectedTimeline = estimate.timeline || "Not provided";
+  const selectedTimelineOption = estimate.timelineNote || "";
+  const selectedScope =
+    estimate.selectedScope.length > 0
+      ? estimate.selectedScope.join(", ")
+      : "No additional scope selected";
+  const formattedEstimateTotal =
+    formatRange(estimate.totalMin, estimate.totalMax) || "To be confirmed";
+  const clientNotes =
+    estimate.notes?.trim() || "No additional notes were provided.";
+  const lineItemsHtml = buildLineItemsHtml(estimate);
 
   const customerEstimateParams: EmailJsParams = {
-    is_inquiry: false,
     is_estimate: true,
+    is_inquiry: false,
+
+    subject: `Your Veyra Labs Estimate — ${estimateId}`,
 
     name: customerName,
     to_email: customerEmail,
     reply_to: CONTACT_EMAIL,
 
-    subject: `Your Veyra Labs Estimate — ${estimateId}`,
+    estimate_id: estimateId,
+    estimate_date: formattedDate,
 
     company: companyName,
     service: selectedServices,
-    scope: selectedScope,
     timeline: selectedTimeline,
+    timeline_option: selectedTimelineOption,
+    scope: selectedScope,
     estimate_total: formattedEstimateTotal,
-    estimate_id: estimateId,
 
-    message_heading: "ESTIMATE DETAILS",
-    message: estimateSummary,
+    line_items_html: lineItemsHtml,
+
+    client_notes: clientNotes,
   };
 
   const internalEstimateParams: EmailJsParams = {
-    is_inquiry: false,
     is_estimate: true,
+    is_inquiry: false,
+
+    subject: `New Estimate Request — ${customerName} | ${estimateId}`,
 
     name: customerName,
     customer_email: customerEmail,
     reply_to: customerEmail,
 
-    subject: `New Estimate Request — ${customerName} | ${estimateId}`,
+    estimate_id: estimateId,
+    estimate_date: formattedDate,
 
     company: companyName,
     service: selectedServices,
-    scope: selectedScope,
     timeline: selectedTimeline,
+    timeline_option: selectedTimelineOption,
+    scope: selectedScope,
     estimate_total: formattedEstimateTotal,
-    estimate_id: estimateId,
 
-    message_heading: "ESTIMATE DETAILS",
-    message: estimateSummary,
+    line_items_html: lineItemsHtml,
+
+    client_notes: clientNotes,
   };
 
   await sendVeyraEmails(customerEstimateParams, internalEstimateParams);

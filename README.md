@@ -72,9 +72,9 @@ Use **only** the EmailJS Public Key in this project. Never add the Private Key t
 | **Subject** | `{{subject}}` | `{{subject}}` |
 | **Attachments** | Leave empty | Leave empty |
 
-Emails are attachment-free. Estimate summary is in `{{message}}`; PDF download stays on the estimate result screen.
+Emails are attachment-free. Estimates use structured fields (`company`, `service`, `timeline`, `scope`, `estimate_total`, `line_items_html`, `client_notes`); PDF download stays on the estimate result screen.
 
-Also available: `{{company}}`, `{{service}}`, `{{scope}}`, `{{timeline}}`, `{{estimate_total}}`, `{{estimate_id}}`, `{{message_heading}}`, `{{customer_email}}`, `{{#is_estimate}}`, `{{#is_inquiry}}`.
+Also available: `{{estimate_id}}`, `{{estimate_date}}`, `{{timeline_option}}`, `{{customer_email}}`, `{{{line_items_html}}}` (triple braces), `{{#is_estimate}}`, `{{#is_inquiry}}`. Inquiries still use `{{message}}` / `{{message_heading}}`.
 
 Set the same four env vars in **Vercel → Project → Settings → Environment Variables**, then redeploy.
 
