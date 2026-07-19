@@ -56,7 +56,7 @@ export function QuoteWizard() {
           <p className="mt-2 max-w-xl text-sm leading-relaxed text-muted">
             {focusService
               ? `This quote is for ${focusService.label} only. You can add optional add-ons and specifications — the price updates live. Then download or print your PDF. Every quote gets a tracked ID.`
-              : "Choose services, set scope and timeline, then download or print your estimate PDF. Every quote gets a tracked ID on our side."}
+              : "Choose services, set scope and timeline, then download or print your quote PDF. Every quote gets a tracked ID on our side."}
           </p>
           {focusService && (
             <p className="mt-3 inline-flex rounded-full border border-violet/40 bg-violet/10 px-3 py-1 text-[11px] font-semibold text-violet">

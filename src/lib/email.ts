@@ -288,7 +288,7 @@ export async function sendEstimateEmail(estimate: ProjectEstimate): Promise<void
     is_estimate: true,
     is_inquiry: false,
 
-    subject: `Your Veyra Labs Estimate — ${estimateId}`,
+    subject: `Your Veyra Labs Quote — ${estimateId}`,
 
     name: customerName,
     to_email: customerEmail,
@@ -313,7 +313,7 @@ export async function sendEstimateEmail(estimate: ProjectEstimate): Promise<void
     is_estimate: true,
     is_inquiry: false,
 
-    subject: `New Estimate Request — ${customerName} | ${estimateId}`,
+    subject: `New Quote Request — ${customerName} | ${estimateId}`,
 
     name: customerName,
     customer_email: customerEmail,

@@ -4,15 +4,35 @@ import { CONTACT_EMAIL } from "./content";
 import { ESTIMATE_DISCLAIMER, formatRange, formatUsd, type ProjectEstimate } from "./estimate";
 
 const TAGLINE = "Software & AI Engineering Studio";
+const SITE = "veyralabs.com";
+
+const C = {
+  ink: [22, 26, 38] as const,
+  muted: [100, 108, 128] as const,
+  soft: [140, 148, 168] as const,
+  line: [228, 232, 242] as const,
+  wash: [248, 249, 253] as const,
+  violet: [124, 92, 255] as const,
+  header: [10, 12, 22] as const,
+  white: [255, 255, 255] as const,
+};
+
+function priceLabel(min: number, max: number): string {
+  if (min === 0 && max === 0) return "Included";
+  if (min === max) return formatUsd(min);
+  return formatRange(min, max);
+}
 
 export async function buildEstimatePdfDoc(estimate: ProjectEstimate, skipImages = false): Promise<jsPDF> {
   const doc = new jsPDF({ unit: "mm", format: "a4" });
   const pageW = doc.internal.pageSize.getWidth();
-  const margin = 16;
+  const pageH = doc.internal.pageSize.getHeight();
+  const margin = 18;
   const contentW = pageW - margin * 2;
-  let y = margin;
+  const colGap = 10;
+  const colW = (contentW - colGap) / 2;
+  let y = 0;
 
-  // One brand mark only — lockup already includes the V + wordmark (no separate icon)
   let lockupData: string | null = null;
   let iconData: string | null = null;
   if (!skipImages) {
@@ -23,233 +43,315 @@ export async function buildEstimatePdfDoc(estimate: ProjectEstimate, skipImages 
     }
   }
 
-  // Compact dark header
-  const headerH = 34;
-  doc.setFillColor(10, 12, 22);
-  doc.rect(0, 0, pageW, headerH, "F");
+  const dateStr = new Date(estimate.createdAt).toLocaleDateString("en-US", {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  });
 
-  // Accent line under header
-  doc.setFillColor(124, 92, 255);
-  doc.rect(0, headerH, pageW, 0.6, "F");
-
-  if (lockupData && !skipImages) {
-    // Single lockup — ~48mm wide, vertically centered in header
-    doc.addImage(lockupData, "PNG", margin, 8, 48, 11);
-    doc.setFontSize(7.5);
-    doc.setFont("helvetica", "normal");
-    doc.setTextColor(140, 150, 170);
-    doc.text(TAGLINE, margin, 26);
-  } else {
-    doc.setTextColor(255, 255, 255);
-    doc.setFontSize(16);
-    doc.setFont("helvetica", "bold");
-    doc.text("Veyra Labs", margin, 14);
-    doc.setFontSize(8);
-    doc.setFont("helvetica", "normal");
-    doc.setTextColor(160, 170, 190);
-    doc.text(TAGLINE, margin, 21);
+  function ensureSpace(needed: number) {
+    if (y + needed <= pageH - 28) return;
+    doc.addPage();
+    drawPageChrome();
+    y = margin + 8;
   }
 
-  doc.setTextColor(167, 139, 250);
-  doc.setFontSize(8);
-  doc.setFont("helvetica", "bold");
-  doc.text("PROJECT ESTIMATE", pageW - margin, 11, { align: "right" });
-  doc.setFont("helvetica", "normal");
-  doc.setTextColor(200, 210, 230);
-  doc.setFontSize(8);
-  doc.text(estimate.id, pageW - margin, 17, { align: "right" });
-  doc.setTextColor(150, 160, 180);
-  doc.text(
-    new Date(estimate.createdAt).toLocaleDateString("en-US", {
-      year: "numeric",
-      month: "long",
-      day: "numeric",
-    }),
-    pageW - margin,
-    23,
-    { align: "right" }
-  );
+  function drawPageChrome() {
+    // Top accent bar on every page
+    doc.setFillColor(...C.violet);
+    doc.rect(0, 0, pageW, 1.2, "F");
+  }
 
-  y = headerH + 10;
+  // ── Header ──────────────────────────────────────────────
+  const headerH = 36;
+  doc.setFillColor(...C.header);
+  doc.rect(0, 0, pageW, headerH, "F");
+  doc.setFillColor(...C.violet);
+  doc.rect(0, headerH, pageW, 1.1, "F");
 
-  // Prepared for
-  if (estimate.clientName || estimate.clientEmail || estimate.clientCompany) {
-    doc.setTextColor(100, 105, 120);
+  if (lockupData && !skipImages) {
+    doc.addImage(lockupData, "PNG", margin, 9, 52, 12);
+    doc.setFont("helvetica", "normal");
+    doc.setFontSize(7.5);
+    doc.setTextColor(...C.soft);
+    doc.text(TAGLINE, margin, 28);
+  } else {
+    doc.setTextColor(...C.white);
+    doc.setFont("helvetica", "bold");
+    doc.setFontSize(17);
+    doc.text("Veyra Labs", margin, 15);
+    doc.setFont("helvetica", "normal");
     doc.setFontSize(8);
-    doc.setFont("helvetica", "bold");
-    doc.text("PREPARED FOR", margin, y);
-    y += 5;
-    doc.setFont("helvetica", "bold");
-    doc.setFontSize(11);
-    doc.setTextColor(30, 35, 50);
+    doc.setTextColor(...C.soft);
+    doc.text(TAGLINE, margin, 22);
+  }
+
+  doc.setFont("helvetica", "bold");
+  doc.setFontSize(9);
+  doc.setTextColor(196, 181, 253);
+  doc.text("PROJECT QUOTE", pageW - margin, 12, { align: "right" });
+  doc.setFont("helvetica", "normal");
+  doc.setFontSize(9);
+  doc.setTextColor(...C.white);
+  doc.text(estimate.id, pageW - margin, 19, { align: "right" });
+  doc.setFontSize(8);
+  doc.setTextColor(...C.soft);
+  doc.text(dateStr, pageW - margin, 25.5, { align: "right" });
+
+  y = headerH + 14;
+
+  // ── Two-column meta ─────────────────────────────────────
+  const hasClient = Boolean(estimate.clientName || estimate.clientEmail || estimate.clientCompany);
+  const leftX = margin;
+  const rightX = margin + colW + colGap;
+
+  doc.setFont("helvetica", "bold");
+  doc.setFontSize(7.5);
+  doc.setTextColor(...C.muted);
+  if (hasClient) doc.text("PREPARED FOR", leftX, y);
+  doc.text("QUOTE DETAILS", rightX, y);
+  y += 6;
+
+  const metaStartY = y;
+  let leftY = y;
+  let rightY = y;
+
+  if (hasClient) {
     if (estimate.clientName) {
-      doc.text(estimate.clientName, margin, y);
-      y += 5;
+      doc.setFont("helvetica", "bold");
+      doc.setFontSize(12);
+      doc.setTextColor(...C.ink);
+      doc.text(estimate.clientName, leftX, leftY);
+      leftY += 5.5;
     }
     if (estimate.clientCompany?.trim()) {
       doc.setFont("helvetica", "normal");
-      doc.setFontSize(9);
-      doc.setTextColor(70, 75, 95);
-      doc.text(estimate.clientCompany.trim(), margin, y);
-      y += 5;
+      doc.setFontSize(9.5);
+      doc.setTextColor(...C.muted);
+      doc.text(estimate.clientCompany.trim(), leftX, leftY);
+      leftY += 5;
     }
     if (estimate.clientEmail) {
       doc.setFont("helvetica", "normal");
       doc.setFontSize(9);
-      doc.setTextColor(70, 75, 95);
-      doc.text(estimate.clientEmail, margin, y);
-      y += 5;
+      doc.setTextColor(...C.muted);
+      doc.text(estimate.clientEmail, leftX, leftY);
+      leftY += 5;
     }
-    y += 4;
   }
 
-  // Project summary card
-  doc.setTextColor(30, 35, 50);
-  doc.setFontSize(11);
+  const detailRows: [string, string][] = [
+    ["Reference", estimate.id],
+    ["Date", dateStr],
+    ["Timeline", estimate.timeline],
+  ];
+  for (const [k, v] of detailRows) {
+    doc.setFont("helvetica", "bold");
+    doc.setFontSize(8);
+    doc.setTextColor(...C.soft);
+    doc.text(k, rightX, rightY);
+    doc.setFont("helvetica", "normal");
+    doc.setFontSize(9);
+    doc.setTextColor(...C.ink);
+    const lines = doc.splitTextToSize(v, colW - 2);
+    doc.text(lines, rightX, rightY + 4.2);
+    rightY += 4.2 + lines.length * 4 + 2.5;
+  }
+
+  y = Math.max(leftY, rightY, metaStartY) + 6;
+
+  // Divider
+  doc.setDrawColor(...C.line);
+  doc.setLineWidth(0.35);
+  doc.line(margin, y, pageW - margin, y);
+  y += 9;
+
+  // ── Project title ───────────────────────────────────────
   doc.setFont("helvetica", "bold");
-  const labelLines = doc.splitTextToSize(estimate.projectLabel, contentW - 12);
-  const labelBlockH = Math.max(labelLines.length * 5, 5);
-  const summaryH = 18 + labelBlockH;
+  doc.setFontSize(7.5);
+  doc.setTextColor(...C.muted);
+  doc.text("PROJECT", margin, y);
+  y += 6;
 
-  doc.setFillColor(246, 247, 252);
-  doc.roundedRect(margin, y, contentW, summaryH, 2.5, 2.5, "F");
-  doc.setDrawColor(124, 92, 255);
-  doc.setLineWidth(0.4);
-  doc.line(margin, y + 1, margin, y + summaryH - 1);
-  doc.setLineWidth(0.2);
+  doc.setFont("helvetica", "bold");
+  doc.setFontSize(13);
+  doc.setTextColor(...C.ink);
+  const titleLines = doc.splitTextToSize(estimate.projectLabel, contentW);
+  doc.text(titleLines, margin, y);
+  y += titleLines.length * 5.5 + 2;
 
-  doc.text(labelLines, margin + 6, y + 8);
   doc.setFont("helvetica", "normal");
-  doc.setFontSize(8.5);
-  doc.setTextColor(90, 95, 115);
-  doc.text(`Timeline: ${estimate.timeline}`, margin + 6, y + 8 + labelBlockH + 3);
-  doc.setTextColor(120, 125, 145);
-  doc.text(estimate.timelineNote, margin + 6, y + 8 + labelBlockH + 8);
-  y += summaryH + 8;
+  doc.setFontSize(9);
+  doc.setTextColor(...C.muted);
+  doc.text(estimate.timelineNote, margin, y);
+  y += 10;
+
+  // ── Line items table ────────────────────────────────────
+  ensureSpace(28);
+
+  const priceColW = 42;
+  const itemColW = contentW - priceColW;
 
   // Table header
-  doc.setFillColor(248, 249, 253);
-  doc.rect(margin, y, contentW, 7, "F");
-  doc.setFontSize(7.5);
+  doc.setFillColor(...C.wash);
+  doc.roundedRect(margin, y, contentW, 8, 1.5, 1.5, "F");
   doc.setFont("helvetica", "bold");
-  doc.setTextColor(90, 95, 115);
-  doc.text("ITEM", margin + 3, y + 4.8);
-  doc.text("ESTIMATE (USD)", pageW - margin - 3, y + 4.8, { align: "right" });
-  y += 7;
-
-  doc.setFont("helvetica", "normal");
-  doc.setFontSize(9);
-  doc.setTextColor(40, 45, 60);
+  doc.setFontSize(7.5);
+  doc.setTextColor(...C.muted);
+  doc.text("DESCRIPTION", margin + 4, y + 5.3);
+  doc.text("AMOUNT (USD)", pageW - margin - 4, y + 5.3, { align: "right" });
+  y += 10;
 
   for (const item of estimate.lineItems) {
-    if (y > 248) {
-      doc.addPage();
-      y = margin;
-    }
-    const rowH = 8;
-    doc.setDrawColor(232, 235, 245);
-    doc.line(margin, y + rowH, margin + contentW, y + rowH);
-    const label = doc.splitTextToSize(item.label, contentW - 45);
-    doc.text(label, margin + 3, y + 5.5);
-    const price =
-      item.min === 0 && item.max === 0
-        ? "Included"
-        : item.min === item.max
-          ? formatUsd(item.min)
-          : formatRange(item.min, item.max);
-    doc.setFont("helvetica", "bold");
-    doc.text(price, pageW - margin - 3, y + 5.5, { align: "right" });
+    const labelLines = doc.splitTextToSize(item.label, itemColW - 6);
+    const rowH = Math.max(9, labelLines.length * 4.2 + 4);
+    ensureSpace(rowH + 2);
+
     doc.setFont("helvetica", "normal");
-    y += Math.max(rowH, label.length * 4 + 2);
+    doc.setFontSize(9.5);
+    doc.setTextColor(...C.ink);
+    doc.text(labelLines, margin + 4, y + 4.5);
+
+    doc.setFont("helvetica", "bold");
+    doc.setFontSize(9.5);
+    doc.setTextColor(...C.ink);
+    doc.text(priceLabel(item.min, item.max), pageW - margin - 4, y + 4.5, { align: "right" });
+
+    y += rowH;
+    doc.setDrawColor(...C.line);
+    doc.setLineWidth(0.25);
+    doc.line(margin, y, pageW - margin, y);
+    y += 1.5;
   }
 
-  y += 5;
+  y += 6;
 
-  // Total bar
-  if (y > 250) {
-    doc.addPage();
-    y = margin;
-  }
-  doc.setFillColor(124, 92, 255);
-  doc.roundedRect(margin, y, contentW, 14, 2.5, 2.5, "F");
-  doc.setTextColor(255, 255, 255);
-  doc.setFontSize(9);
+  // ── Total ───────────────────────────────────────────────
+  ensureSpace(26);
+  doc.setFillColor(...C.header);
+  doc.roundedRect(margin, y, contentW, 18, 2.5, 2.5, "F");
+  doc.setFillColor(...C.violet);
+  doc.rect(margin, y, 2.2, 18, "F");
+
   doc.setFont("helvetica", "bold");
-  doc.text("Estimated total range", margin + 5, y + 8.5);
-  doc.setFontSize(12);
-  doc.text(formatRange(estimate.totalMin, estimate.totalMax), pageW - margin - 5, y + 9, {
+  doc.setFontSize(8);
+  doc.setTextColor(196, 181, 253);
+  doc.text("QUOTE TOTAL (USD)", margin + 8, y + 7);
+  doc.setFontSize(14);
+  doc.setTextColor(...C.white);
+  doc.text(formatRange(estimate.totalMin, estimate.totalMax), pageW - margin - 6, y + 11.5, {
     align: "right",
   });
-  y += 20;
-
-  doc.setFontSize(7.5);
   doc.setFont("helvetica", "normal");
-  doc.setTextColor(100, 105, 120);
-  doc.text("Includes sprint demos and 30-day post-launch support.", margin, y);
-  y += 7;
+  doc.setFontSize(7.5);
+  doc.setTextColor(...C.soft);
+  doc.text("Includes sprint demos and 30-day post-launch support", margin + 8, y + 13.5);
+  y += 24;
 
-  // Disclaimer
-  const disclaimerLines = doc.splitTextToSize(ESTIMATE_DISCLAIMER, contentW - 8);
-  const discH = 10 + disclaimerLines.length * 3.4;
-  if (y + discH > 268) {
-    doc.addPage();
-    y = margin;
+  // ── Notes ───────────────────────────────────────────────
+  if (estimate.notes?.trim()) {
+    ensureSpace(22);
+    doc.setFont("helvetica", "bold");
+    doc.setFontSize(7.5);
+    doc.setTextColor(...C.muted);
+    doc.text("PROJECT NOTES", margin, y);
+    y += 5;
+    doc.setFont("helvetica", "normal");
+    doc.setFontSize(9);
+    doc.setTextColor(...C.ink);
+    const noteLines = doc.splitTextToSize(estimate.notes.trim(), contentW);
+    ensureSpace(noteLines.length * 4.2 + 6);
+    doc.text(noteLines, margin, y);
+    y += noteLines.length * 4.2 + 8;
   }
-  doc.setFillColor(255, 250, 235);
-  doc.setDrawColor(230, 190, 100);
+
+  // ── Disclaimer ──────────────────────────────────────────
+  const discBody = doc.splitTextToSize(ESTIMATE_DISCLAIMER, contentW - 10);
+  const discH = 9 + discBody.length * 3.5;
+  ensureSpace(discH + 4);
+  doc.setFillColor(252, 250, 245);
+  doc.setDrawColor(230, 210, 160);
   doc.setLineWidth(0.3);
   doc.roundedRect(margin, y, contentW, discH, 2, 2, "FD");
-  doc.setFontSize(7.5);
   doc.setFont("helvetica", "bold");
-  doc.setTextColor(150, 100, 20);
-  doc.text("IMPORTANT  —  BALLPARK ONLY", margin + 4, y + 5.5);
+  doc.setFontSize(7.5);
+  doc.setTextColor(140, 105, 30);
+  doc.text("BALLPARK ONLY — NOT A BINDING CONTRACT", margin + 4, y + 5);
   doc.setFont("helvetica", "normal");
   doc.setFontSize(7);
-  doc.setTextColor(90, 70, 35);
-  doc.text(disclaimerLines, margin + 4, y + 10.5);
-  y += discH + 6;
+  doc.setTextColor(110, 90, 45);
+  doc.text(discBody, margin + 4, y + 9.5);
+  y += discH + 8;
 
-  if (estimate.notes?.trim()) {
-    if (y > 255) {
-      doc.addPage();
-      y = margin;
-    }
-    doc.setFontSize(8);
-    doc.setFont("helvetica", "bold");
-    doc.setTextColor(60, 65, 80);
-    doc.text("Project notes", margin, y);
-    y += 4.5;
-    doc.setFont("helvetica", "normal");
-    doc.setTextColor(80, 85, 100);
-    const noteLines = doc.splitTextToSize(estimate.notes, contentW);
-    doc.text(noteLines, margin, y);
-  }
-
-  // Footer — single small icon + contact line (no second wordmark)
-  const footerY = 278;
-  doc.setDrawColor(225, 228, 238);
-  doc.setLineWidth(0.2);
-  doc.line(margin, footerY, pageW - margin, footerY);
-
-  const footerTextX = margin + (iconData && !skipImages ? 9 : 0);
-  if (iconData && !skipImages) {
-    doc.addImage(iconData, "PNG", margin, footerY + 2.5, 6, 6);
-  }
-
-  doc.setFontSize(7.5);
-  doc.setTextColor(110, 115, 130);
-  doc.text("For a fixed-scope quote, contact us — no obligation.", footerTextX, footerY + 5);
-  doc.setTextColor(124, 92, 255);
-  doc.setFont("helvetica", "bold");
-  doc.text(CONTACT_EMAIL, footerTextX, footerY + 9.5);
+  // ── CTA strip ───────────────────────────────────────────
+  ensureSpace(16);
   doc.setFont("helvetica", "normal");
-  doc.setTextColor(130, 135, 150);
-  doc.text("veyralabs.com", pageW - margin, footerY + 9.5, { align: "right" });
+  doc.setFontSize(8.5);
+  doc.setTextColor(...C.muted);
+  doc.text("Ready for a fixed-scope quote? Contact us — no obligation.", margin, y);
+  y += 5;
+  doc.setFont("helvetica", "bold");
+  doc.setFontSize(9);
+  doc.setTextColor(...C.violet);
+  doc.text(CONTACT_EMAIL, margin, y);
+  doc.setFont("helvetica", "normal");
+  doc.setTextColor(...C.muted);
+  doc.text(SITE, pageW - margin, y, { align: "right" });
+
+  // ── Footer on all pages ─────────────────────────────────
+  const pageCount = doc.getNumberOfPages();
+  for (let i = 1; i <= pageCount; i++) {
+    doc.setPage(i);
+    const footerY = pageH - 12;
+    doc.setDrawColor(...C.line);
+    doc.setLineWidth(0.25);
+    doc.line(margin, footerY, pageW - margin, footerY);
+
+    if (iconData && !skipImages) {
+      doc.addImage(iconData, "PNG", margin, footerY + 2, 5, 5);
+    }
+    doc.setFont("helvetica", "normal");
+    doc.setFontSize(7);
+    doc.setTextColor(...C.soft);
+    doc.text("Veyra Labs  ·  Confidential project quote", margin + (iconData && !skipImages ? 7 : 0), footerY + 5.5);
+    doc.text(`Page ${i} of ${pageCount}`, pageW - margin, footerY + 5.5, { align: "right" });
+  }
 
   return doc;
 }
 
 export async function downloadEstimatePdf(estimate: ProjectEstimate): Promise<void> {
   const doc = await buildEstimatePdfDoc(estimate, false);
-  doc.save(`veyra-labs-estimate-${estimate.id}.pdf`);
+  doc.save(`veyra-labs-quote-${estimate.id}.pdf`);
+}
+
+/** Opens the designed PDF in a new tab and triggers the browser print dialog. */
+export async function printEstimatePdf(estimate: ProjectEstimate): Promise<void> {
+  const doc = await buildEstimatePdfDoc(estimate, false);
+  const blobUrl = doc.output("bloburl");
+  const win = window.open(blobUrl, "_blank");
+  if (!win) {
+    // Popup blocked — fall back to download
+    doc.save(`veyra-labs-quote-${estimate.id}.pdf`);
+    return;
+  }
+  // Give the PDF viewer a moment to load, then print
+  win.addEventListener("load", () => {
+    try {
+      win.focus();
+      win.print();
+    } catch {
+      // Viewer may not fire load the same way; try anyway
+      win.print();
+    }
+  });
+  // Some browsers don't fire load on blob PDFs — retry shortly
+  setTimeout(() => {
+    try {
+      win.focus();
+      win.print();
+    } catch {
+      /* ignore */
+    }
+  }, 600);
 }

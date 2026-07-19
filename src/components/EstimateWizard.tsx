@@ -44,7 +44,7 @@ import {
   type ProjectEstimate,
   type ProjectTypeId,
 } from "@/lib/estimate";
-import { downloadEstimatePdf } from "@/lib/estimate-pdf";
+import { downloadEstimatePdf, printEstimatePdf } from "@/lib/estimate-pdf";
 import { sendEstimateEmail, isEmailConfigured } from "@/lib/email";
 import {
   createTrackedEstimateClient,
@@ -294,6 +294,16 @@ export function EstimateWizard({
     setDownloading(true);
     try {
       await downloadEstimatePdf(estimate);
+    } finally {
+      setDownloading(false);
+    }
+  }
+
+  async function handlePrint() {
+    if (!estimate) return;
+    setDownloading(true);
+    try {
+      await printEstimatePdf(estimate);
     } finally {
       setDownloading(false);
     }
@@ -657,7 +667,7 @@ export function EstimateWizard({
             >
               <p className="text-xs font-semibold text-foreground">Your details</p>
               <p className="mb-3 mt-1 text-[10px] text-muted">
-                We&apos;ll email this estimate to our team and send you a confirmation. Required to deliver your quote.
+                We&apos;ll email this quote to our team and send you a confirmation. Required to deliver your quote.
               </p>
               <div className="space-y-2">
                 <input
@@ -699,7 +709,7 @@ export function EstimateWizard({
                 onBack={() => goBack("details")}
                 onNext={handleGenerate}
                 nextDisabled={!clientName.trim() || !clientEmail.trim() || generating}
-                nextLabel={generating ? "Sending…" : "Generate & send estimate"}
+                nextLabel={generating ? "Sending…" : "Generate & send quote"}
                 nextLoading={generating}
               />
             </motion.div>
@@ -720,7 +730,7 @@ export function EstimateWizard({
                 resending={resending}
                 pageMode={pageMode}
                 onDownload={handleDownload}
-                onPrint={() => window.print()}
+                onPrint={handlePrint}
                 onResendEmail={handleResendEmail}
               />
             </motion.div>
@@ -768,7 +778,7 @@ export function EstimateResultCard({
         <div className="flex items-center gap-2 rounded-lg border border-emerald-500/30 bg-emerald-500/10 px-3 py-2 print:hidden">
           <Check size={14} className="shrink-0 text-emerald-400" />
           <p className="text-[10px] font-medium text-emerald-300">
-            Estimate emailed
+            Quote emailed
             {estimate.clientEmail ? ` — confirmation sent to ${estimate.clientEmail}` : ""}.
             Download or print the PDF below for your records. We&apos;ll respond within 24 hours.
           </p>
