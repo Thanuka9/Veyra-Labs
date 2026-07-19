@@ -4,7 +4,6 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import type { LucideIcon as LucideIconType } from "lucide-react";
 import {
-  AlertTriangle,
   ArrowLeft,
   ArrowRight,
   BarChart3,
@@ -764,63 +763,88 @@ export function EstimateResultCard({
   compact?: boolean;
   pageMode?: boolean;
 }) {
+  const issued = new Date(estimate.createdAt).toLocaleDateString("en-US", {
+    year: "numeric",
+    month: "short",
+    day: "numeric",
+  });
+
   return (
-    <div className="space-y-3 print:space-y-4" id="veyra-quote-result">
-      <div className="flex items-center justify-between gap-2 border-b border-border/60 pb-2">
-        <div className="flex items-center gap-2">
+    <div className="space-y-4" id="veyra-quote-result">
+      <div className="flex items-start justify-between gap-3 border-b border-border/50 pb-3">
+        <div className="flex items-center gap-2.5">
           <BrandLogo variant={pageMode ? "lockup" : "icon"} className={pageMode ? "h-8 w-auto" : "h-6 w-auto"} />
           {!pageMode && <span className="text-[11px] font-bold text-foreground">Veyra Labs</span>}
         </div>
-        <span className="font-mono text-[10px] text-muted">{estimate.id}</span>
+        <div className="text-right">
+          <p className="font-mono text-[10px] font-medium tracking-wide text-foreground">{estimate.id}</p>
+          <p className="mt-0.5 text-[10px] text-muted">Issued {issued}</p>
+        </div>
       </div>
 
       {emailSent && (
-        <div className="flex items-center gap-2 rounded-lg border border-emerald-500/30 bg-emerald-500/10 px-3 py-2 print:hidden">
-          <Check size={14} className="shrink-0 text-emerald-400" />
-          <p className="text-[10px] font-medium text-emerald-300">
-            Quote emailed
-            {estimate.clientEmail ? ` — confirmation sent to ${estimate.clientEmail}` : ""}.
-            Download or print the PDF below for your records. We&apos;ll respond within 24 hours.
+        <div className="flex items-start gap-2 rounded-lg border border-emerald-500/25 bg-emerald-500/10 px-3 py-2.5">
+          <Check size={14} className="mt-0.5 shrink-0 text-emerald-400" />
+          <p className="text-[11px] leading-relaxed text-emerald-200/95">
+            Quote sent
+            {estimate.clientEmail ? ` to ${estimate.clientEmail}` : ""}. Download the PDF for your records — we
+            typically reply within 24 hours.
           </p>
         </div>
       )}
 
       {emailError && (
-        <div className="rounded-lg border border-amber-500/30 bg-amber-500/10 px-3 py-2 text-[10px] text-amber-200 print:hidden">
+        <div className="rounded-lg border border-amber-500/30 bg-amber-500/10 px-3 py-2 text-[11px] text-amber-200">
           {emailError}
         </div>
       )}
 
-      <div className="rounded-xl border border-cyan/30 bg-cyan/5 p-3">
-        <p className="text-[10px] font-semibold uppercase tracking-wider text-cyan">Quote ready</p>
-        <p className="mt-1 text-lg font-bold text-gradient-soft">
-          {formatRange(estimate.totalMin, estimate.totalMax)}
-        </p>
-        <p className="mt-0.5 text-[11px] font-medium text-foreground">{estimate.projectLabel}</p>
-        <p className="mt-0.5 text-[10px] text-muted">{estimate.timeline} · {estimate.timelineNote}</p>
+      <div className="rounded-xl border border-border/80 bg-surface-2/40 p-4">
+        <div className="flex flex-wrap items-end justify-between gap-3">
+          <div>
+            <p className="text-[10px] font-semibold uppercase tracking-[0.14em] text-muted">Quote ready</p>
+            <p className="mt-1.5 text-[11px] font-medium leading-snug text-foreground">{estimate.projectLabel}</p>
+            <p className="mt-1 text-[10px] text-muted">
+              {estimate.timeline}
+              {estimate.timelineNote ? ` · ${estimate.timelineNote}` : ""}
+            </p>
+          </div>
+          <p className="text-xl font-bold tracking-tight text-gradient-soft sm:text-2xl">
+            {formatRange(estimate.totalMin, estimate.totalMax)}
+          </p>
+        </div>
       </div>
 
       {!compact && (
-        <ul className="max-h-36 space-y-1 overflow-y-auto rounded-lg border border-border bg-surface-2/50 p-2.5 print:max-h-none">
-          {estimate.lineItems.map((item) => (
-            <li key={item.label} className="flex justify-between gap-2 text-[10px]">
-              <span className="text-muted">{item.label}</span>
-              <span className="shrink-0 font-semibold text-foreground">
-                {item.min === 0 && item.max === 0 ? "Included" : formatRange(item.min, item.max)}
-              </span>
-            </li>
-          ))}
-        </ul>
+        <div className="overflow-hidden rounded-xl border border-border/70">
+          <div className="flex items-center justify-between border-b border-border/60 bg-surface-2/50 px-3 py-2">
+            <span className="text-[10px] font-semibold uppercase tracking-wider text-muted">Scope</span>
+            <span className="text-[10px] font-semibold uppercase tracking-wider text-muted">Amount (USD)</span>
+          </div>
+          <ul className="max-h-44 divide-y divide-border/50 overflow-y-auto">
+            {estimate.lineItems.map((item, i) => (
+              <li key={`${item.label}-${i}`} className="flex items-start justify-between gap-3 px-3 py-2 text-[11px]">
+                <span className="leading-snug text-muted">
+                  <span className="mr-2 font-mono text-[9px] text-muted/70">{String(i + 1).padStart(2, "0")}</span>
+                  {item.label}
+                </span>
+                <span className="shrink-0 font-semibold text-foreground">
+                  {item.min === 0 && item.max === 0 ? "Included" : formatRange(item.min, item.max)}
+                </span>
+              </li>
+            ))}
+          </ul>
+        </div>
       )}
 
       <DisclaimerBanner />
 
-      <div className="grid gap-2 print:hidden sm:grid-cols-2">
+      <div className="grid gap-2 sm:grid-cols-2">
         <button
           type="button"
           onClick={onDownload}
           disabled={downloading}
-          className="flex w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-violet to-cyan py-2.5 text-sm font-semibold text-white shadow-[0_0_24px_-8px_rgba(124,92,255,0.5)] transition-transform hover:scale-[1.01] disabled:opacity-60 sm:col-span-2"
+          className="flex w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-violet to-cyan py-3 text-sm font-semibold text-white shadow-[0_0_24px_-8px_rgba(124,92,255,0.5)] transition-transform hover:scale-[1.01] disabled:opacity-60 sm:col-span-2"
         >
           {downloading ? (
             <Loader2 size={16} className="animate-spin" />
@@ -834,7 +858,8 @@ export function EstimateResultCard({
           <button
             type="button"
             onClick={onPrint}
-            className="flex w-full items-center justify-center gap-2 rounded-xl border border-border bg-surface-2 py-2.5 text-xs font-semibold text-foreground transition-colors hover:border-violet/40"
+            disabled={downloading}
+            className="flex w-full items-center justify-center gap-2 rounded-xl border border-border bg-surface-2 py-2.5 text-xs font-semibold text-foreground transition-colors hover:border-violet/40 disabled:opacity-60"
           >
             <Printer size={14} />
             Print quote
@@ -864,12 +889,12 @@ function DisclaimerBanner({ className }: { className?: string }) {
   return (
     <div
       className={cn(
-        "flex gap-2 rounded-lg border border-amber-500/30 bg-amber-500/10 px-2.5 py-2",
+        "rounded-lg border border-border/70 bg-surface-2/40 px-3 py-2.5",
         className
       )}
     >
-      <AlertTriangle size={14} className="mt-0.5 shrink-0 text-amber-400" />
-      <p className="text-[10px] leading-relaxed text-amber-200/90">{ESTIMATE_DISCLAIMER}</p>
+      <p className="text-[10px] font-semibold uppercase tracking-wider text-muted">Terms</p>
+      <p className="mt-1 text-[10px] leading-relaxed text-muted/90">{ESTIMATE_DISCLAIMER}</p>
     </div>
   );
 }

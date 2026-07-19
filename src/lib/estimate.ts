@@ -1,5 +1,5 @@
 export const ESTIMATE_DISCLAIMER =
-  "This is an automated ballpark quote only — not a binding contract. The final amount may differ based on your specific requirements, integrations, scope changes, and complexity identified when you contact Veyra Labs.";
+  "This is an automated ballpark quote for planning purposes only. It is not a binding contract or fixed proposal. Final pricing may change based on detailed requirements, integrations, scope changes, and complexity confirmed with Veyra Labs.";
 
 export type ProjectTypeId =
   | "portfolio"
