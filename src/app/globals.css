@@ -1350,10 +1350,15 @@ input, textarea, select { cursor: auto; }
     transition: opacity 0.35s ease;
   }
 
-  /* Tech marquee */
+  /* Tech marquee — GPU-friendly infinite scroll */
   .marquee-row {
-    mask-image: linear-gradient(to right, transparent 0%, #000 8%, #000 92%, transparent 100%);
-    -webkit-mask-image: linear-gradient(to right, transparent 0%, #000 8%, #000 92%, transparent 100%);
+    mask-image: linear-gradient(to right, transparent 0%, #000 6%, #000 94%, transparent 100%);
+    -webkit-mask-image: linear-gradient(to right, transparent 0%, #000 6%, #000 94%, transparent 100%);
+  }
+
+  .marquee-track {
+    will-change: transform;
+    backface-visibility: hidden;
   }
 
   .marquee-item {
@@ -1411,16 +1416,20 @@ input, textarea, select { cursor: auto; }
 
 @keyframes marquee {
   0% {
-    transform: translateX(0);
+    transform: translate3d(0, 0, 0);
   }
   100% {
-    transform: translateX(-100%);
+    transform: translate3d(-50%, 0, 0);
   }
 }
 
 @keyframes marquee-reverse {
-  0% { transform: translateX(-100%); }
-  100% { transform: translateX(0); }
+  0% {
+    transform: translate3d(-50%, 0, 0);
+  }
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
 }
 
 @keyframes gradient-shift {
@@ -1728,7 +1737,8 @@ input, textarea, select { cursor: auto; }
   opacity: 0.92;
 }
 
-/* Respect OS-level reduced-motion: stop all decorative animation & smooth scroll */
+/* Respect OS-level reduced-motion for decorative UI.
+   TechMarquee swaps to a static chip cloud when this preference is on. */
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
