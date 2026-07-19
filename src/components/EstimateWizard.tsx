@@ -335,7 +335,7 @@ export function EstimateWizard({
       )}
     >
       {/* Header  -  compact when embedded in chat (panel header already shows brand) */}
-      <div className={cn("border-b border-violet/20 bg-surface-2/50", embedded ? "px-3 py-2.5" : "px-4 py-3", pageMode && "px-5 py-4")}>
+      <div className={cn("border-b border-violet/20 bg-surface-2/50 print:hidden", embedded ? "px-3 py-2.5" : "px-4 py-3", pageMode && "px-5 py-4")}>
         <div className="flex items-center justify-between gap-2">
           <div className="flex min-w-0 items-center gap-3">
             {pageMode ? (
@@ -865,7 +865,7 @@ export function EstimateResultCard({
             className="flex w-full items-center justify-center gap-2 rounded-xl border border-border bg-surface-2 py-3 text-xs font-semibold text-foreground transition-colors hover:border-violet/40 disabled:opacity-60 sm:text-sm"
           >
             <Printer size={14} />
-            Print quote
+            Print PDF
           </button>
         )}
 

@@ -44,7 +44,7 @@ export function QuoteWizard() {
 
   return (
     <div className="mx-auto max-w-3xl px-4 pb-20 sm:px-6">
-      <div className="mb-8 flex flex-col items-start gap-4 border-b border-border/60 pb-8">
+      <div className="mb-8 flex flex-col items-start gap-4 border-b border-border/60 pb-8 print:hidden">
         <BrandLogo variant="lockup" className="h-10 w-auto sm:h-12" priority />
         <div>
           <p className="text-xs font-semibold uppercase tracking-wider text-cyan">

@@ -6,7 +6,7 @@ import { VeyraChat } from "./VeyraChat";
 /** Fixed bottom-right dock  -  chat on the right, cookie consent beside it (never overlapping). */
 export function VeyraWidgetDock() {
   return (
-    <div className="veyra-widget-dock">
+    <div className="veyra-widget-dock print:hidden">
       <VeyraChat />
       <CookieConsent />
     </div>

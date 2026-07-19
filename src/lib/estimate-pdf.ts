@@ -393,48 +393,25 @@ export async function downloadEstimatePdf(estimate: ProjectEstimate): Promise<vo
   doc.save(`veyra-labs-quote-${estimate.id}.pdf`);
 }
 
-/** Print the designed PDF (not the webpage) via a hidden iframe. */
+/**
+ * Print the designed quote PDF only — never the webpage.
+ * Opens the PDF in a new tab with auto-print. If the popup is blocked, downloads the PDF instead.
+ */
 export async function printEstimatePdf(estimate: ProjectEstimate): Promise<void> {
   const doc = await buildEstimatePdfDoc(estimate, false);
+  doc.autoPrint();
+
   const blob = doc.output("blob");
   const url = URL.createObjectURL(blob);
 
-  const iframe = document.createElement("iframe");
-  iframe.setAttribute("title", "Print quote");
-  Object.assign(iframe.style, {
-    position: "fixed",
-    right: "0",
-    bottom: "0",
-    width: "0",
-    height: "0",
-    border: "0",
-    opacity: "0",
-    pointerEvents: "none",
-  });
-  iframe.src = url;
-  document.body.appendChild(iframe);
-
-  const cleanup = () => {
-    try {
-      document.body.removeChild(iframe);
-    } catch {
-      /* already removed */
-    }
+  // Must open a real tab — hidden iframes often print the parent page instead of the PDF
+  const win = window.open(url, "_blank");
+  if (!win) {
     URL.revokeObjectURL(url);
-  };
+    doc.save(`veyra-labs-quote-${estimate.id}.pdf`);
+    return;
+  }
 
-  const triggerPrint = () => {
-    try {
-      iframe.contentWindow?.focus();
-      iframe.contentWindow?.print();
-    } catch {
-      // Fallback: open PDF in a new tab
-      window.open(url, "_blank");
-    }
-    window.setTimeout(cleanup, 1500);
-  };
-
-  iframe.onload = () => window.setTimeout(triggerPrint, 250);
-  // Safety if onload never fires for blob PDFs
-  window.setTimeout(triggerPrint, 800);
+  // Revoke after the viewer has time to load the blob
+  window.setTimeout(() => URL.revokeObjectURL(url), 60_000);
 }

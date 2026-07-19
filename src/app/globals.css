@@ -1776,3 +1776,29 @@ input, textarea, select { cursor: auto; }
   border-color: rgba(124, 92, 255, 0.4);
   color: var(--foreground);
 }
+
+/* Quote page: if someone uses Ctrl+P, never dump the full marketing page.
+   Prefer the Print PDF button (opens the designed quote PDF). */
+@media print {
+  .site-bg,
+  header,
+  footer,
+  nav,
+  [data-cookie-consent],
+  .veyra-chat-root,
+  .veyra-chat-launcher,
+  #veyra-chat,
+  [data-print-hide] {
+    display: none !important;
+  }
+
+  body {
+    background: #fff !important;
+    color: #111827 !important;
+  }
+
+  #veyra-quote-result {
+    break-inside: avoid;
+  }
+}
+

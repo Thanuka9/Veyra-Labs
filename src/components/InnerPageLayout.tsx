@@ -14,13 +14,23 @@ export function InnerPageLayout({
 }) {
   return (
     <>
-      <Navbar />
+      <div className="print:hidden">
+        <Navbar />
+      </div>
       <main id="main-content" className="relative z-[1] flex-1">
-        <PageHero {...hero} />
+        <div className="print:hidden">
+          <PageHero {...hero} />
+        </div>
         {children}
-        {showCta && <PageCta />}
+        {showCta && (
+          <div className="print:hidden">
+            <PageCta />
+          </div>
+        )}
       </main>
-      <Footer showCta={showCta} />
+      <div className="print:hidden">
+        <Footer showCta={showCta} />
+      </div>
     </>
   );
 }
