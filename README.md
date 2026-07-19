@@ -64,15 +64,18 @@ Use **only** the EmailJS Public Key in this project. Never add the Private Key t
 
 **EmailJS template fields (must match the code):**
 
-| Variable | Internal (`template_neuqpqj`) | Confirmation (`template_69hvz1j`) |
+| Field | Internal `template_neuqpqj` | Customer `template_69hvz1j` |
 | --- | --- | --- |
-| To Email | `{{to_email}}` (studio) or hardcode inbox | `{{to_email}}` (visitor) |
-| Reply-To | `{{reply_to}}` (visitor) | `{{reply_to}}` (studio) |
-| Subject | `{{subject}}` | `{{subject}}` |
-| Body | `{{name}}`, `{{email}}`, `{{message}}`, `{{{html_message}}}` | `{{name}}`, `{{message}}` |
-| Attachment (optional) | Variable Attachment → param `estimate_pdf`, Filename `{{estimate_filename}}`, Content type `PDF` | same for confirmation PDFs |
+| **To Email** | Fixed `veyralabs0@gmail.com` | `{{to_email}}` (customer) |
+| **From Name** | `{{from_name}}` | `Veyra Labs` |
+| **Reply-To** | `{{reply_to}}` (customer) | `{{reply_to}}` (= studio — not the customer) |
+| **Subject** | `{{subject}}` | `{{subject}}` |
+| **Body** | `{{message}}`, show customer via `mailto:{{reply_to}}` | `{{name}}`, `{{message}}`; use `{{to_email}}` if showing their address |
+| **Attachment** (estimates) | Variable → `estimate_pdf`, Filename `{{estimate_filename}}`, type `PDF` | same |
 
-Also available: `{{company}}`, `{{project_type}}`, `{{source}}`, `{{time}}`, `{{from_name}}`, `{{to_name}}`.
+Estimates send a real `data:application/pdf;base64,...` data URL. Contact inquiries **never** pass `estimate_pdf`.
+
+Also available: `{{company}}`, `{{service}}`, `{{request_type}}`, `{{estimate_id}}`, `{{customer_email}}`, `{{time}}`.
 
 Set the same four env vars in **Vercel → Project → Settings → Environment Variables**, then redeploy.
 
