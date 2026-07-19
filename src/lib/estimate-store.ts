@@ -75,8 +75,9 @@ export async function createTrackedEstimate(
     });
 
     try {
-      await db`
-        INSERT INTO estimates (
+      // Explicit ::jsonb casts — Neon params are text unless cast (causes 500 otherwise).
+      await db.query(
+        `INSERT INTO estimates (
           id,
           created_at,
           source,
@@ -97,27 +98,48 @@ export async function createTrackedEstimate(
           user_agent,
           referer
         ) VALUES (
-          ${estimate.id},
-          ${estimate.createdAt},
-          ${input.source},
-          ${estimate.clientName ?? null},
-          ${estimate.clientEmail ?? null},
-          ${estimate.clientCompany ?? null},
-          ${estimate.projectLabel},
-          ${JSON.stringify(estimate.projectTypeIds)},
-          ${JSON.stringify(estimate.selectedScope)},
-          ${estimate.timeline},
-          ${estimate.timelineNote},
-          ${estimate.totalMin},
-          ${estimate.totalMax},
-          ${JSON.stringify(estimate.lineItems)},
-          ${estimate.notes ?? null},
-          ${false},
-          ${JSON.stringify(estimate)},
-          ${input.userAgent ?? null},
-          ${input.referer ?? null}
-        )
-      `;
+          $1,
+          $2::timestamptz,
+          $3,
+          $4,
+          $5,
+          $6,
+          $7,
+          $8::jsonb,
+          $9::jsonb,
+          $10,
+          $11,
+          $12,
+          $13,
+          $14::jsonb,
+          $15,
+          $16,
+          $17::jsonb,
+          $18,
+          $19
+        )`,
+        [
+          estimate.id,
+          estimate.createdAt,
+          input.source,
+          estimate.clientName ?? null,
+          estimate.clientEmail ?? null,
+          estimate.clientCompany ?? null,
+          estimate.projectLabel,
+          JSON.stringify(estimate.projectTypeIds),
+          JSON.stringify(estimate.selectedScope),
+          estimate.timeline,
+          estimate.timelineNote,
+          estimate.totalMin,
+          estimate.totalMax,
+          JSON.stringify(estimate.lineItems),
+          estimate.notes ?? null,
+          false,
+          JSON.stringify(estimate),
+          input.userAgent ?? null,
+          input.referer ?? null,
+        ]
+      );
 
       return { estimate, tracked: true };
     } catch (err) {

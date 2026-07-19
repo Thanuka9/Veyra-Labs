@@ -92,8 +92,12 @@ export async function POST(request: Request) {
     return NextResponse.json({ estimate, tracked }, { status: 201 });
   } catch (err) {
     console.error("Failed to create tracked estimate:", err);
+    const detail = err instanceof Error ? err.message : String(err);
     return NextResponse.json(
-      { error: "Could not save estimate. Please try again or contact us directly." },
+      {
+        error: `Could not save estimate. ${detail.includes("DATABASE_URL") || detail.includes("does not exist") || detail.includes("relation") ? detail : "Please try again or contact us directly."}`,
+        detail,
+      },
       { status: 500 }
     );
   }

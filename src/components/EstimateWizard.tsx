@@ -677,6 +677,11 @@ export function EstimateWizard({
                 />
               </div>
               <DisclaimerBanner className="mt-3" />
+              {emailError && (
+                <div className="mt-3 rounded-lg border border-rose-500/40 bg-rose-500/10 px-3 py-2 text-[11px] leading-relaxed text-rose-200">
+                  {emailError}
+                </div>
+              )}
               <WizardNav
                 onBack={() => goBack("details")}
                 onNext={handleGenerate}

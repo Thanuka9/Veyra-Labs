@@ -29,10 +29,13 @@ export async function createTrackedEstimateClient(
   const data = (await res.json().catch(() => ({}))) as {
     estimate?: ProjectEstimate;
     error?: string;
+    detail?: string;
   };
 
   if (!res.ok || !data.estimate?.id) {
-    throw new Error(data.error || "Could not save your estimate. Please try again.");
+    throw new Error(
+      data.error || data.detail || "Could not save your estimate. Please try again."
+    );
   }
 
   return data.estimate;
