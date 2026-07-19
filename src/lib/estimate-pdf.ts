@@ -254,16 +254,72 @@ export async function downloadEstimatePdf(estimate: ProjectEstimate): Promise<vo
   doc.save(`veyra-labs-estimate-${estimate.id}.pdf`);
 }
 
-export async function getEstimatePdfBase64(estimate: ProjectEstimate): Promise<string> {
-  let doc = await buildEstimatePdfDoc(estimate, false);
-  let base64 = doc.output("datauristring");
+/** Convert a Blob to a Base64 data URL via FileReader (EmailJS-compatible). */
+export function blobToDataURL(blob: Blob): Promise<string> {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      if (typeof reader.result !== "string") {
+        reject(new Error("Could not convert PDF to Base64."));
+        return;
+      }
+      resolve(reader.result);
+    };
+    reader.onerror = () => {
+      reject(new Error("Failed to read the generated PDF."));
+    };
+    reader.readAsDataURL(blob);
+  });
+}
 
-  // EmailJS free plan ~50KB limit for variable payload
-  if (base64.length > 65000) {
-    console.warn(`PDF base64 size (${base64.length} chars) exceeds EmailJS free limit. Generating compact version...`);
-    doc = await buildEstimatePdfDoc(estimate, true);
-    base64 = doc.output("datauristring");
+/**
+ * Normalize to the exact format EmailJS expects:
+ * data:application/pdf;base64,JVBERi0x...
+ * (jsPDF sometimes inserts `;filename=generated.pdf` which we strip)
+ */
+export function normalizePdfDataUrl(dataUrl: string): string {
+  const match = dataUrl.match(/^data:application\/pdf[^,]*,([\s\S]+)$/i);
+  if (!match) {
+    throw new Error("The estimate PDF is not in the correct Base64 format.");
+  }
+  return `data:application/pdf;base64,${match[1]}`;
+}
+
+/**
+ * Build an EmailJS-ready PDF data URL from a project estimate.
+ * Falls back to a compact (no-images) PDF if the payload would exceed ~50KB.
+ */
+export async function getEstimatePdfDataUrl(estimate: ProjectEstimate): Promise<string> {
+  let doc = await buildEstimatePdfDoc(estimate, false);
+  let blob = doc.output("blob");
+
+  if (!(blob instanceof Blob) || blob.size === 0) {
+    throw new Error("The estimate PDF was not generated correctly.");
   }
 
-  return base64;
+  let dataUrl = normalizePdfDataUrl(await blobToDataURL(blob));
+
+  // EmailJS free plan variable payload limit ~50KB
+  if (dataUrl.length > 65000) {
+    console.warn(
+      `PDF data URL (${dataUrl.length} chars) exceeds EmailJS free limit. Generating compact version...`
+    );
+    doc = await buildEstimatePdfDoc(estimate, true);
+    blob = doc.output("blob");
+    if (!(blob instanceof Blob) || blob.size === 0) {
+      throw new Error("The compact estimate PDF was not generated correctly.");
+    }
+    dataUrl = normalizePdfDataUrl(await blobToDataURL(blob));
+  }
+
+  if (!dataUrl.startsWith("data:application/pdf;base64,")) {
+    throw new Error("The estimate PDF is not in the correct Base64 format.");
+  }
+
+  return dataUrl;
+}
+
+/** @deprecated Prefer getEstimatePdfDataUrl — kept for any legacy callers */
+export async function getEstimatePdfBase64(estimate: ProjectEstimate): Promise<string> {
+  return getEstimatePdfDataUrl(estimate);
 }
