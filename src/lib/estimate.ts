@@ -349,6 +349,9 @@ export function buildEstimate(input: {
   clientEmail?: string;
   clientCompany?: string;
   notes?: string;
+  /** Server-assigned ID when tracked via /api/estimates */
+  id?: string;
+  createdAt?: string;
 }): ProjectEstimate {
   const projects = input.projectTypeIds
     .map((id) => PROJECT_TYPES.find((p) => p.id === id))
@@ -389,8 +392,8 @@ export function buildEstimate(input: {
     projects.length === 1 ? projects[0].label : projects.map((p) => p.label).join(" + ");
 
   return {
-    id: generateEstimateId(),
-    createdAt: new Date().toISOString(),
+    id: input.id ?? generateEstimateId(),
+    createdAt: input.createdAt ?? new Date().toISOString(),
     projectTypeIds: input.projectTypeIds,
     projectLabel,
     lineItems,

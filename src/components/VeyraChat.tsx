@@ -318,7 +318,12 @@ export function VeyraChat() {
             {estimateMode && !typing ? (
               /* Full-screen estimate  -  no chat overlap */
               <div className="veyra-chat-estimate-only">
-                <EstimateWizard embedded onComplete={handleEstimateComplete} onCancel={exitEstimateMode} />
+                <EstimateWizard
+                  embedded
+                  source="chat"
+                  onComplete={handleEstimateComplete}
+                  onCancel={exitEstimateMode}
+                />
               </div>
             ) : (
               <>

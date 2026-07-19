@@ -51,14 +51,23 @@ npm install
 
 ### 2. Environment Variables
 
-Create a `.env.local` file in the root directory and add your EmailJS public credentials if you wish to enable active outbound estimates:
+Create a `.env.local` file in the `web` directory:
 
 ```env
+# Required — tracks every estimate / quote ID in Postgres (Neon)
+DATABASE_URL=postgresql://USER:PASSWORD@HOST/DB?sslmode=require
+
 NEXT_PUBLIC_EMAILJS_SERVICE_ID=service_your_service_id
 NEXT_PUBLIC_EMAILJS_INTERNAL_TEMPLATE_ID=template_neuqpqj
 NEXT_PUBLIC_EMAILJS_CONFIRMATION_TEMPLATE_ID=template_69hvz1j
 NEXT_PUBLIC_EMAILJS_PUBLIC_KEY=your_new_public_key
 ```
+
+1. Create a free Neon DB at [neon.tech](https://neon.tech)
+2. Run `sql/estimates.sql` in the Neon SQL editor
+3. Paste `DATABASE_URL` into `.env.local` and Vercel env vars
+
+Without `DATABASE_URL`, quote generation returns an error — IDs must be tracked server-side.
 
 Use **only** the EmailJS Public Key in this project. Never add the Private Key to GitHub, Vercel client variables, or any `NEXT_PUBLIC_...` / frontend code.
 
@@ -76,7 +85,9 @@ Emails are attachment-free. Estimates use structured fields (`company`, `service
 
 Also available: `{{estimate_id}}`, `{{estimate_date}}`, `{{timeline_option}}`, `{{customer_email}}`, `{{{line_items_html}}}` (triple braces), `{{#is_estimate}}`, `{{#is_inquiry}}`. Inquiries still use `{{message}}` / `{{message_heading}}`.
 
-Set the same four env vars in **Vercel → Project → Settings → Environment Variables**, then redeploy.
+Set `DATABASE_URL` and the EmailJS env vars in **Vercel → Project → Settings → Environment Variables**, then redeploy.
+
+**Quote page:** `/quote` (also linked from Pricing CTAs). Every submission hits `POST /api/estimates`, which assigns a unique `VL-YYYYMMDD-XXXX` ID and stores the full estimate in Postgres before EmailJS runs.
 
 ### 3. Running Locally
 

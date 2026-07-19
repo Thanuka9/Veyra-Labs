@@ -345,7 +345,7 @@ const INTENTS: Intent[] = [
       /price|pricing|cost|how much|budget|quote|rate|fee|afford|expensive|cheap|\$\d/i,
     ],
     reply: () =>
-      `Here are our **standard starting ranges** (USD, fixed quote after you contact us):\n\n${formatPricing()}\n\n**Add-ons** (standalone or bundled):\n${formatAddons()}\n\nYou can [click here to view our full pricing details](/pricing).\n\nEvery project includes sprint demos and **30-day post-launch support**.\n\nWant a tailored range? Tap **Get estimate** for an instant ballpark quote with PDF download.`,
+      `Here are our **standard starting ranges** (USD, fixed quote after you contact us):\n\n${formatPricing()}\n\n**Add-ons** (standalone or bundled):\n${formatAddons()}\n\nYou can [click here to view our full pricing details](/pricing).\n\nEvery project includes sprint demos and **30-day post-launch support**.\n\nWant a tailored range? [Get a quote](/quote) for an instant ballpark with a tracked estimate ID, or tap **Get estimate** in chat.`,
   },
   {
     patterns: [/service|what do you (do|build|offer)|capabilit|special/i],

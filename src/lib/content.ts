@@ -534,6 +534,8 @@ export type PricingTier = {
   description: string;
   features: string[];
   cta: string;
+  /** Maps to /quote?type=… for the estimate wizard */
+  quoteType?: string;
   highlight?: boolean;
 };
 
@@ -554,6 +556,7 @@ export const pricingTiers: PricingTier[] = [
       "1-3 week delivery",
     ],
     cta: "Get portfolio quote",
+    quoteType: "portfolio",
   },
   {
     name: "E-Commerce Starter",
@@ -572,6 +575,7 @@ export const pricingTiers: PricingTier[] = [
       "3-6 week delivery",
     ],
     cta: "Get e-commerce quote",
+    quoteType: "ecommerce",
     highlight: true,
   },
   {
@@ -591,6 +595,7 @@ export const pricingTiers: PricingTier[] = [
       "2-4 week delivery",
     ],
     cta: "Get website quote",
+    quoteType: "website",
   },
   {
     name: "AI & LLM Feature",
@@ -608,7 +613,8 @@ export const pricingTiers: PricingTier[] = [
       "Local or cloud LLM",
       "4-10 week delivery",
     ],
-    cta: "Discuss AI scope",
+    cta: "Get AI quote",
+    quoteType: "ai",
   },
   {
     name: "SaaS Platform",
@@ -626,7 +632,8 @@ export const pricingTiers: PricingTier[] = [
       "GCP deployment + CI/CD",
       "8-16 week delivery",
     ],
-    cta: "Contact Us",
+    cta: "Get SaaS quote",
+    quoteType: "saas",
   },
   {
     name: "ML & Predictive Analytics",
@@ -644,7 +651,8 @@ export const pricingTiers: PricingTier[] = [
       "Healthcare & ops experience",
       "6-12 week delivery",
     ],
-    cta: "Discuss ML scope",
+    cta: "Get ML quote",
+    quoteType: "ml",
   },
   {
     name: "Data Science & Engineering",
@@ -662,7 +670,8 @@ export const pricingTiers: PricingTier[] = [
       "NLP & sentiment (optional)",
       "4-8 week delivery",
     ],
-    cta: "Discuss data scope",
+    cta: "Get data quote",
+    quoteType: "data",
   },
 ];
 

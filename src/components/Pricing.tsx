@@ -81,7 +81,7 @@ export function Pricing({ showHeading = true, inner = false }: { showHeading?: b
                     </ul>
 
                     <a
-                      href="/contact"
+                      href={tier.quoteType ? `/quote?type=${tier.quoteType}` : "/quote"}
                       className={`group/cta mt-6 relative inline-flex items-center justify-center gap-2 overflow-hidden rounded-xl px-4 py-3 text-sm font-semibold transition-all hover:scale-[1.02] ${
                         tier.highlight
                           ? "bg-gradient-to-r from-violet to-cyan text-white shadow-[0_0_24px_-8px_rgba(124,92,255,0.5)] hover:shadow-[0_0_40px_-8px_rgba(124,92,255,0.7)]"
@@ -102,7 +102,11 @@ export function Pricing({ showHeading = true, inner = false }: { showHeading?: b
         </div>
 
         <p className="mx-auto mt-10 max-w-3xl text-center text-xs leading-relaxed text-muted">
-          All prices in USD · Custom scopes quoted after you contact us · Payment plans available for projects over $5,000
+          All prices in USD · Instant ballpark via{" "}
+          <a href="/quote" className="font-semibold text-cyan underline-offset-2 hover:underline">
+            Get a quote
+          </a>{" "}
+          · Fixed scope after you contact us · Payment plans available for projects over $5,000
         </p>
 
         {/* Add-ons Grid section (Centered, standard card style, big prices, no slideshow) */}
@@ -152,10 +156,10 @@ export function Pricing({ showHeading = true, inner = false }: { showHeading?: b
                         </ul>
 
                         <a
-                          href="/contact"
+                          href={`/quote?type=${s.id}`}
                           className="group/cta mt-6 relative inline-flex items-center justify-center gap-2 overflow-hidden rounded-xl border border-border bg-surface-2 px-4 py-3 text-sm font-semibold text-foreground transition-all hover:border-violet/40 hover:bg-violet/5 hover:scale-[1.02]"
                         >
-                          Request add-on
+                          Get add-on quote
                           <ArrowRight size={14} className="transition-transform group-hover/cta:translate-x-0.5" />
                         </a>
                       </div>

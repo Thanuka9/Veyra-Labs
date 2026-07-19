@@ -82,6 +82,7 @@ export function Footer({ showCta = true }: { showCta?: boolean }) {
                   { label: "Testimonials", href: "/testimonials" },
                   { label: "Work & Case Studies", href: "/work" },
                   { label: "Pricing & Estimates", href: "/pricing" },
+                  { label: "Get a Quote", href: "/quote" },
                 ].map((l) => (
                   <li key={l.href}>
                     <Link href={l.href} className="text-sm text-muted transition-colors hover:text-cyan">

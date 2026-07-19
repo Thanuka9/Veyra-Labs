@@ -33,7 +33,6 @@ import {
   ADDON_PROJECT_TYPES,
   CORE_PROJECT_TYPES,
   TIMELINE_OPTIONS,
-  buildEstimate,
   formatRange,
   getScopeForTypes,
   getScopeGroupedByType,
@@ -43,6 +42,11 @@ import {
 } from "@/lib/estimate";
 import { downloadEstimatePdf } from "@/lib/estimate-pdf";
 import { sendEstimateEmail, isEmailConfigured } from "@/lib/email";
+import {
+  createTrackedEstimateClient,
+  markEstimateEmailSentClient,
+  type EstimateSource,
+} from "@/lib/estimate-client";
 import { CONTACT_EMAIL } from "@/lib/content";
 import { BrandLogo } from "./BrandLogo";
 import { LucideIcon } from "./LucideIcon";
@@ -72,11 +76,26 @@ type EstimateWizardProps = {
   onCancel: () => void;
   /** Fills the chat estimate pane instead of inline in messages */
   embedded?: boolean;
+  /** Full-page quote experience */
+  pageMode?: boolean;
+  /** Pre-select services (e.g. from /quote?type=ecommerce) */
+  initialTypes?: ProjectTypeId[];
+  /** Where this estimate was started — stored with the ID in the database */
+  source?: EstimateSource;
 };
 
-export function EstimateWizard({ onComplete, onCancel, embedded }: EstimateWizardProps) {
+export function EstimateWizard({
+  onComplete,
+  onCancel,
+  embedded,
+  pageMode,
+  initialTypes,
+  source = "chat",
+}: EstimateWizardProps) {
   const [step, setStep] = useState<Step>("services");
-  const [selectedTypes, setSelectedTypes] = useState<ProjectTypeId[]>([]);
+  const [selectedTypes, setSelectedTypes] = useState<ProjectTypeId[]>(
+    () => initialTypes?.filter(Boolean) ?? []
+  );
   const [selectedScope, setSelectedScope] = useState<string[]>([]);
   const [timelineId, setTimelineId] = useState<"standard" | "rush">("standard");
   const [clientName, setClientName] = useState("");
@@ -130,37 +149,54 @@ export function EstimateWizard({ onComplete, onCancel, embedded }: EstimateWizar
 
   async function handleGenerate() {
     if (selectedTypes.length === 0 || generating) return;
+    if (!clientName.trim() || !clientEmail.trim()) {
+      setEmailError("Name and email are required so we can save and track your quote ID.");
+      return;
+    }
+
     setGenerating(true);
     setEmailError(null);
 
-    const result = buildEstimate({
-      projectTypeIds: selectedTypes,
-      selectedScopeIds: selectedScope,
-      timelineId,
-      clientName: clientName.trim(),
-      clientEmail: clientEmail.trim(),
-      clientCompany: clientCompany.trim() || undefined,
-      notes: notes.trim() || undefined,
-    });
+    try {
+      // Server assigns & persists the estimate ID (source of truth)
+      const result = await createTrackedEstimateClient({
+        projectTypeIds: selectedTypes,
+        selectedScopeIds: selectedScope,
+        timelineId,
+        clientName: clientName.trim(),
+        clientEmail: clientEmail.trim(),
+        clientCompany: clientCompany.trim() || undefined,
+        notes: notes.trim() || undefined,
+        source,
+      });
 
-    let sent = false;
-    if (isEmailConfigured() && clientName.trim() && clientEmail.trim()) {
-      try {
-        await sendEstimateEmail(result);
-        sent = true;
-        setEmailSent(true);
-      } catch {
-        setEmailError("We couldn't email the team  -  download the PDF or try again below.");
-        setEmailSent(false);
+      let sent = false;
+      if (isEmailConfigured()) {
+        try {
+          await sendEstimateEmail(result);
+          sent = true;
+          setEmailSent(true);
+          await markEstimateEmailSentClient(result.id, true);
+        } catch {
+          setEmailError("We couldn't email the team  -  download the PDF or try again below.");
+          setEmailSent(false);
+        }
+      } else {
+        setEmailError("Email isn't configured on this environment  -  download your PDF below.");
       }
-    } else if (!isEmailConfigured()) {
-      setEmailError("Email isn't configured on this environment  -  download your PDF below.");
-    }
 
-    setEstimate(result);
-    setStep("result");
-    onComplete(result, sent);
-    setGenerating(false);
+      setEstimate(result);
+      setStep("result");
+      onComplete(result, sent);
+    } catch (err) {
+      const message =
+        err instanceof Error
+          ? err.message
+          : "Could not save your estimate. Please try again.";
+      setEmailError(message);
+    } finally {
+      setGenerating(false);
+    }
   }
 
   async function handleDownload() {
@@ -180,6 +216,7 @@ export function EstimateWizard({ onComplete, onCancel, embedded }: EstimateWizar
     try {
       await sendEstimateEmail(estimate);
       setEmailSent(true);
+      await markEstimateEmailSentClient(estimate.id, true);
     } catch {
       setEmailError(`Send failed  -  please email ${CONTACT_EMAIL} with your estimate ID.`);
     } finally {
@@ -193,7 +230,8 @@ export function EstimateWizard({ onComplete, onCancel, embedded }: EstimateWizar
       animate={{ opacity: 1, y: 0 }}
       className={cn(
         "overflow-hidden rounded-xl border border-violet/30 bg-gradient-to-b from-violet/10 to-surface shadow-[0_0_32px_-12px_rgba(124,92,255,0.35)]",
-        embedded && "flex h-full min-h-0 flex-col rounded-none border-0 shadow-none"
+        embedded && "flex h-full min-h-0 flex-col rounded-none border-0 shadow-none",
+        pageMode && "rounded-2xl border-border shadow-[0_24px_60px_-28px_rgba(15,23,42,0.45)]"
       )}
     >
       {/* Header  -  compact when embedded in chat (panel header already shows brand) */}

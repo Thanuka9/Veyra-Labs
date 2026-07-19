@@ -19,8 +19,8 @@ export default function PricingPage() {
         subtitle:
           "Starting rates by engagement type  -  every project scoped with a fixed quote, sprint demos and 30-day post-launch support.",
         breadcrumbs: [{ label: "Home", href: "/" }, { label: "Pricing" }],
-        cta: { label: "Contact Us", href: "/contact" },
-        secondaryCta: { label: "Compare services", href: "/services" },
+        cta: { label: "Get a quote", href: "/quote" },
+        secondaryCta: { label: "Contact Us", href: "/contact" },
       }}
     >
       <Pricing showHeading={false} inner />
