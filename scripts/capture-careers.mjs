@@ -2,7 +2,7 @@ import { chromium } from "playwright";
 import { mkdir } from "fs/promises";
 import path from "path";
 
-const BASE = "https://thanukaellepola.careers/en";
+const BASE = "https://thanukaellepola.com/en";
 const OUT = path.join(process.cwd(), "public", "projects");
 
 const shots = [

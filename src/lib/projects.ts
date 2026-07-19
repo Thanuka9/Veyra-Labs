@@ -41,8 +41,8 @@ export const projects: Project[] = [
     image: "/projects/thanuka-careers-hero-wide.png",
     imageFit: "contain",
     imagePosition: "center center",
-    href: "https://thanukaellepola.careers/en",
-    linkLabel: "Visit live site → thanukaellepola.careers",
+    href: "https://thanukaellepola.com/en",
+    linkLabel: "Visit live site → thanukaellepola.com",
     featured: true,
     spotlight: true,
     metrics: [

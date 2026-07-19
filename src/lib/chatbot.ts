@@ -300,7 +300,7 @@ const INTENTS: Intent[] = [
     reply: () => {
       const portTier = pricingTiers.find((t) => t.name.includes("Portfolio Website"))!;
       const premTier = pricingTiers.find((t) => t.name.includes("Premium Website"))!;
-      return `**Portfolio Website  -  ${portTier.price}**\n\n${portTier.description}\n\n**Premium Website  -  ${premTier.price}**\n\n${premTier.description}\n\nSee our live example: [thanukaellepola.careers](https://thanukaellepola.careers/en)  -  built by Veyra Labs.\n\nYou can [click here to view pricing details](/pricing) or [click here to view our work portfolio](/work).`;
+      return `**Portfolio Website  -  ${portTier.price}**\n\n${portTier.description}\n\n**Premium Website  -  ${premTier.price}**\n\n${premTier.description}\n\nSee our live example: [thanukaellepola.com](https://thanukaellepola.com/en)  -  built by Veyra Labs.\n\nYou can [click here to view pricing details](/pricing) or [click here to view our work portfolio](/work).`;
     },
   },
   {
@@ -372,7 +372,7 @@ const INTENTS: Intent[] = [
       /case stud|portfolio|your work|projects you|show me (your|the) (work|projects|portfolio)|live demo|flagship|examples of (your )?work|what have you built|client work/i,
     ],
     reply:
-      "**Live projects you can visit today:**\n\n• [thanukaellepola.careers](https://thanukaellepola.careers/en)  -  Premium brand website\n• [CodeX](https://codex-705252260340.us-west1.run.app/)  -  Architecture AI\n• [TechForge AI](https://careerforge-ai-3-0-1030331335046.us-west1.run.app/)  -  Career platform\n\n**Enterprise:** TrainIQ (LMS + 4 AI modules), Kapruka Flow (AI commerce), RevOps AI (90%+ forecast accuracy).\n\nScroll to **Case Studies** on this page for screenshots.",
+      "**Live projects you can visit today:**\n\n• [thanukaellepola.com](https://thanukaellepola.com/en)  -  Premium brand website\n• [CodeX](https://codex-705252260340.us-west1.run.app/)  -  Architecture AI\n• [TechForge AI](https://careerforge-ai-3-0-1030331335046.us-west1.run.app/)  -  Career platform\n\n**Enterprise:** TrainIQ (LMS + 4 AI modules), Kapruka Flow (AI commerce), RevOps AI (90%+ forecast accuracy).\n\nScroll to **Case Studies** on this page for screenshots.",
   },
   {
     patterns: [

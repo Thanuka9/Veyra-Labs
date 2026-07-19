@@ -103,12 +103,12 @@ export function BrandStory({ inner = false }: { inner?: boolean }) {
                   From enterprise training platforms like TrainIQ to conversion-focused brand sites
                   like{" "}
                   <a
-                    href="https://thanukaellepola.careers/en"
+                    href="https://thanukaellepola.com/en"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="font-medium text-cyan/80 transition-colors hover:text-cyan hover:underline"
                   >
-                    thanukaellepola.careers
+                    thanukaellepola.com
                   </a>
                   , we optimise for clarity, performance and long-term maintainability  -  the things
                   clients feel six months after launch, not just on day one.
