@@ -73,7 +73,7 @@ export async function buildEstimatePdfDoc(estimate: ProjectEstimate, skipImages 
   y = headerH + 10;
 
   // Prepared for
-  if (estimate.clientName || estimate.clientEmail) {
+  if (estimate.clientName || estimate.clientEmail || estimate.clientCompany) {
     doc.setTextColor(100, 105, 120);
     doc.setFontSize(8);
     doc.setFont("helvetica", "bold");
@@ -84,6 +84,13 @@ export async function buildEstimatePdfDoc(estimate: ProjectEstimate, skipImages 
     doc.setTextColor(30, 35, 50);
     if (estimate.clientName) {
       doc.text(estimate.clientName, margin, y);
+      y += 5;
+    }
+    if (estimate.clientCompany?.trim()) {
+      doc.setFont("helvetica", "normal");
+      doc.setFontSize(9);
+      doc.setTextColor(70, 75, 95);
+      doc.text(estimate.clientCompany.trim(), margin, y);
       y += 5;
     }
     if (estimate.clientEmail) {

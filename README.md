@@ -70,7 +70,7 @@ Use **only** the EmailJS Public Key in this project. Never add the Private Key t
 | Reply-To | `{{reply_to}}` (visitor) | `{{reply_to}}` (studio) |
 | Subject | `{{subject}}` | `{{subject}}` |
 | Body | `{{name}}`, `{{email}}`, `{{message}}`, `{{{html_message}}}` | `{{name}}`, `{{message}}` |
-| Attachment (optional) | Variable Attachment → param `estimate_pdf` | same if you want PDF on confirmations |
+| Attachment (optional) | Variable Attachment → param `estimate_pdf`, Filename `{{estimate_filename}}`, Content type `PDF` | same for confirmation PDFs |
 
 Also available: `{{company}}`, `{{project_type}}`, `{{source}}`, `{{time}}`, `{{from_name}}`, `{{to_name}}`.
 

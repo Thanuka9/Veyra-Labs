@@ -63,6 +63,7 @@ export type ProjectEstimate = {
   selectedScope: string[];
   clientName?: string;
   clientEmail?: string;
+  clientCompany?: string;
   notes?: string;
 };
 
@@ -346,6 +347,7 @@ export function buildEstimate(input: {
   timelineId: "standard" | "rush";
   clientName?: string;
   clientEmail?: string;
+  clientCompany?: string;
   notes?: string;
 }): ProjectEstimate {
   const projects = input.projectTypeIds
@@ -399,6 +401,7 @@ export function buildEstimate(input: {
     selectedScope: scopeLabels,
     clientName: input.clientName,
     clientEmail: input.clientEmail,
+    clientCompany: input.clientCompany,
     notes: input.notes,
   };
 }

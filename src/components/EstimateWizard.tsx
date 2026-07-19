@@ -81,6 +81,7 @@ export function EstimateWizard({ onComplete, onCancel, embedded }: EstimateWizar
   const [timelineId, setTimelineId] = useState<"standard" | "rush">("standard");
   const [clientName, setClientName] = useState("");
   const [clientEmail, setClientEmail] = useState("");
+  const [clientCompany, setClientCompany] = useState("");
   const [notes, setNotes] = useState("");
   const [estimate, setEstimate] = useState<ProjectEstimate | null>(null);
   const [downloading, setDownloading] = useState(false);
@@ -138,6 +139,7 @@ export function EstimateWizard({ onComplete, onCancel, embedded }: EstimateWizar
       timelineId,
       clientName: clientName.trim(),
       clientEmail: clientEmail.trim(),
+      clientCompany: clientCompany.trim() || undefined,
       notes: notes.trim() || undefined,
     });
 
@@ -434,6 +436,12 @@ export function EstimateWizard({ onComplete, onCancel, embedded }: EstimateWizar
                   onChange={(e) => setClientEmail(e.target.value)}
                   className="w-full rounded-lg border border-border bg-background/80 px-3 py-2.5 text-sm outline-none focus:border-violet/50"
                 />
+                <input
+                  placeholder="Company name (optional)"
+                  value={clientCompany}
+                  onChange={(e) => setClientCompany(e.target.value)}
+                  className="w-full rounded-lg border border-border bg-background/80 px-3 py-2.5 text-sm outline-none focus:border-violet/50"
+                />
                 <textarea
                   placeholder="Brief project notes (optional)"
                   rows={3}
@@ -510,8 +518,9 @@ export function EstimateResultCard({
         <div className="flex items-center gap-2 rounded-lg border border-emerald-500/30 bg-emerald-500/10 px-3 py-2">
           <Check size={14} className="shrink-0 text-emerald-400" />
           <p className="text-[10px] font-medium text-emerald-300">
-            Estimate sent to our team  -  we&apos;ll respond within 24 hours
-            {estimate.clientEmail ? ` at ${estimate.clientEmail}` : ""}.
+            Estimate emailed with PDF attached
+            {estimate.clientEmail ? ` — confirmation sent to ${estimate.clientEmail}` : ""}.
+            We&apos;ll respond within 24 hours.
           </p>
         </div>
       )}

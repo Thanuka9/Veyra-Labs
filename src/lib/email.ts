@@ -32,10 +32,14 @@ export type ContactEmailPayload = {
   subject: string;
   message: string;
   html_message?: string;
+  /** Data-URI or base64 PDF for EmailJS Variable Attachment (param name: estimate_pdf) */
   estimate_pdf?: string;
+  /** Suggested filename for the EmailJS attachment Filename field: {{estimate_filename}} */
+  estimate_filename?: string;
   company?: string;
   project_type?: string;
   source?: string;
+  estimate_id?: string;
 };
 
 const SERVICE_ID = process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID ?? "";
@@ -93,22 +97,29 @@ function buildTemplateParams(
     to_email: toEmail,
     reply_to: replyTo,
 
-    // Content
+    // Subject — EmailJS Subject field must be {{subject}}
     subject: payload.subject,
     title: payload.subject,
+
+    // Body
     message: payload.message,
     html_message: payload.html_message ?? payload.message,
 
-    // Metadata (optional in templates)
+    // Metadata
     company: payload.company?.trim() || "—",
     project_type: payload.project_type?.trim() || "General inquiry",
     source: payload.source?.trim() || "veyralabs.com",
+    estimate_id: payload.estimate_id?.trim() || "—",
     time: nowStamp(),
   };
 
-  // Variable Attachment param — only include when we have a PDF (EmailJS ignores unused vars)
+  // Variable Attachment — dashboard: Attachments → Variable → param `estimate_pdf`
+  // Filename field: {{estimate_filename}} · Content type: PDF
   if (payload.estimate_pdf) {
     params.estimate_pdf = payload.estimate_pdf;
+    params.estimate_filename =
+      payload.estimate_filename?.trim() ||
+      `veyra-labs-estimate${payload.estimate_id ? `-${payload.estimate_id}` : ""}.pdf`;
   }
 
   return params;
@@ -135,20 +146,26 @@ async function sendWithTemplate(
 function buildConfirmationCopy(payload: ContactEmailPayload): ContactEmailPayload {
   const firstName = payload.name.trim().split(/\s+/)[0] || "there";
   const isEstimate = Boolean(payload.estimate_pdf) || /estimate/i.test(payload.subject);
+  const companyLine = payload.company?.trim() ? ` (${payload.company.trim()})` : "";
 
   const message = isEstimate
     ? [
         `Hi ${firstName},`,
         "",
-        "Thanks for requesting a project estimate from Veyra Labs.",
+        `Thanks for requesting a project estimate from Veyra Labs${companyLine}.`,
         "",
-        "We've received your selections and sent a copy to our team. This is a ballpark range only — not a binding quote. We'll follow up within 24 hours to refine scope, timeline, and a fixed price.",
+        "We've attached your ballpark estimate PDF to this email. This is an indicative range only — not a binding quote. Our team has also received a copy and will follow up within 24 hours to refine scope, timeline, and a fixed price.",
         "",
-        `If you have anything to add in the meantime, reply to this email or write to ${CONTACT_EMAIL}.`,
+        `Subject reference: ${payload.subject}`,
+        payload.estimate_id ? `Estimate ID: ${payload.estimate_id}` : null,
+        "",
+        `If you have anything to add, reply to this email or write to ${CONTACT_EMAIL}.`,
         "",
         "— Veyra Labs",
         "https://veyralabs.com",
-      ].join("\n")
+      ]
+        .filter(Boolean)
+        .join("\n")
     : [
         `Hi ${firstName},`,
         "",
@@ -164,11 +181,15 @@ function buildConfirmationCopy(payload: ContactEmailPayload): ContactEmailPayloa
 
   return {
     ...payload,
+    // Keep a clear subject that still references the estimate for inbox search
     subject: isEstimate
-      ? `We received your Veyra Labs estimate request`
+      ? payload.estimate_id
+        ? `Your Veyra Labs estimate ${payload.estimate_id}`
+        : `Your Veyra Labs estimate request`
       : `We received your message — Veyra Labs`,
     message,
-    html_message: undefined, // confirmation templates usually use plain {{message}}
+    html_message: undefined,
+    // Keep estimate_pdf + estimate_filename so confirmation also gets the PDF
   };
 }
 
@@ -337,6 +358,16 @@ function buildEstimateHtml(estimate: ProjectEstimate): string {
                       <td width="30%" style="color: ${textMuted}; font-weight: 500; padding: 4px 0;">Client Name:</td>
                       <td style="font-weight: bold; padding: 4px 0;">${estimate.clientName || "N/A"}</td>
                     </tr>
+                    ${
+                      estimate.clientCompany?.trim()
+                        ? `
+                    <tr>
+                      <td style="color: ${textMuted}; font-weight: 500; padding: 4px 0;">Company:</td>
+                      <td style="font-weight: bold; padding: 4px 0;">${estimate.clientCompany.trim()}</td>
+                    </tr>
+                    `
+                        : ""
+                    }
                     <tr>
                       <td style="color: ${textMuted}; font-weight: 500; padding: 4px 0;">Email:</td>
                       <td style="padding: 4px 0;"><a href="mailto:${estimate.clientEmail}" style="color: ${cyanColor}; text-decoration: none;">${estimate.clientEmail || "N/A"}</a></td>
@@ -396,12 +427,22 @@ function buildEstimateHtml(estimate: ProjectEstimate): string {
 export function buildEstimateEmail(estimate: ProjectEstimate, pdfBase64?: string): ContactEmailPayload {
   const clientName = estimate.clientName?.trim() || "Website visitor";
   const clientEmail = estimate.clientEmail?.trim() || "no-reply@veyralabs.com";
+  const clientCompany = estimate.clientCompany?.trim();
+  const range = formatRange(estimate.totalMin, estimate.totalMax);
+  const filename = `veyra-labs-estimate-${estimate.id}.pdf`;
+  const subject = `[Estimate ${estimate.id}] ${estimate.projectLabel} — ${range}`;
 
   const lines = [
-    "=== VEYRA LABS — CHAT ESTIMATE REQUEST ===",
+    "=== VEYRA LABS — PROJECT ESTIMATE ===",
     "",
+    `Subject: ${subject}`,
     `Estimate ID: ${estimate.id}`,
     `Date: ${new Date(estimate.createdAt).toLocaleString("en-US", { dateStyle: "medium", timeStyle: "short" })}`,
+    "",
+    "CLIENT",
+    `  Name: ${clientName}`,
+    `  Email: ${clientEmail}`,
+    clientCompany ? `  Company: ${clientCompany}` : null,
     "",
     `Services selected: ${estimate.projectLabel}`,
     `Delivery timeline: ${estimate.timeline}`,
@@ -418,12 +459,16 @@ export function buildEstimateEmail(estimate: ProjectEstimate, pdfBase64?: string
       return `  • ${item.label}: ${price}`;
     }),
     "",
-    `ESTIMATED TOTAL: ${formatRange(estimate.totalMin, estimate.totalMax)}`,
+    `ESTIMATED TOTAL: ${range}`,
     "",
     estimate.selectedScope.length
       ? `Scope add-ons: ${estimate.selectedScope.join(", ")}`
       : "Scope add-ons: (none selected)",
     estimate.notes?.trim() ? `\nClient notes:\n${estimate.notes.trim()}` : null,
+    "",
+    pdfBase64
+      ? `PDF attachment: ${filename}`
+      : "PDF attachment: (failed to generate — ask client to download from the site)",
     "",
     "---",
     ESTIMATE_DISCLAIMER,
@@ -434,12 +479,15 @@ export function buildEstimateEmail(estimate: ProjectEstimate, pdfBase64?: string
   return {
     name: clientName,
     email: clientEmail,
+    company: clientCompany,
     project_type: estimate.projectLabel,
     source: "Veyra chatbot estimate wizard — veyralabs.com",
-    subject: `[Estimate ${estimate.id}] ${estimate.projectLabel} — ${formatRange(estimate.totalMin, estimate.totalMax)}`,
+    estimate_id: estimate.id,
+    subject,
     message: lines.join("\n"),
     html_message: buildEstimateHtml(estimate),
     estimate_pdf: pdfBase64,
+    estimate_filename: filename,
   };
 }
 
