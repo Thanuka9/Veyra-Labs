@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import type { LucideIcon as LucideIconType } from "lucide-react";
 import {
@@ -133,6 +133,18 @@ export function EstimateWizard({
     const hasScope = getScopeGroupedByType(seededTypes).some((g) => g.options.length > 0);
     return hasScope ? "scope" : "timeline";
   });
+
+  const wizardTopRef = useRef<HTMLDivElement>(null);
+
+  // Keep each step starting at the top of the form (not scrolled to Continue)
+  useEffect(() => {
+    const el = wizardTopRef.current;
+    if (!el) return;
+    // Prefer scrolling the wizard into view near the top of the viewport
+    const rect = el.getBoundingClientRect();
+    const absoluteTop = window.scrollY + rect.top;
+    window.scrollTo({ top: Math.max(0, absoluteTop - 88), behavior: "smooth" });
+  }, [step]);
 
   const lockedPrimary = lockedPrimaryType;
   const lockedProject = lockedPrimary
@@ -304,6 +316,7 @@ export function EstimateWizard({
 
   return (
     <motion.div
+      ref={wizardTopRef}
       initial={false}
       animate={{ opacity: 1, y: 0 }}
       className={cn(
