@@ -32,6 +32,11 @@ export async function getWordmarkDataUrl(): Promise<string> {
   return fetchImageAsDataUrl(BRAND_PATHS.wordmarkMain);
 }
 
+/** White lockup for dark backgrounds (PDF header, dark UI). */
+export async function getLockupDarkDataUrl(): Promise<string> {
+  return fetchImageAsDataUrl(BRAND_PATHS.lockupDark);
+}
+
 export async function getAppIconDataUrl(): Promise<string> {
   return fetchImageAsDataUrl(BRAND_PATHS.appIcon);
 }
