@@ -1,12 +1,23 @@
 import { NextResponse } from "next/server";
 import { getEstimateById, markEstimateEmailSent } from "@/lib/estimate-store";
 import { isEstimateDbConfigured } from "@/lib/estimate-db";
+import {
+  checkRateLimit,
+  clientIpFromRequest,
+  rateLimitResponse,
+} from "@/lib/rate-limit";
 
 export const runtime = "nodejs";
 
 type Params = { params: Promise<{ id: string }> };
 
-export async function GET(_request: Request, { params }: Params) {
+export async function GET(request: Request, { params }: Params) {
+  const ip = clientIpFromRequest(request);
+  const limited = checkRateLimit(`estimates:get:${ip}`, { limit: 30, windowMs: 60_000 });
+  if (!limited.ok) {
+    return rateLimitResponse(limited.retryAfterSec);
+  }
+
   if (!isEstimateDbConfigured()) {
     return NextResponse.json({ error: "Estimate tracking is not configured." }, { status: 503 });
   }
@@ -22,7 +33,6 @@ export async function GET(_request: Request, { params }: Params) {
       return NextResponse.json({ error: "Estimate not found." }, { status: 404 });
     }
 
-    // Public-safe summary (no notes / full payload dump)
     return NextResponse.json({
       id: row.id,
       createdAt: row.created_at,
@@ -40,6 +50,12 @@ export async function GET(_request: Request, { params }: Params) {
 }
 
 export async function PATCH(request: Request, { params }: Params) {
+  const ip = clientIpFromRequest(request);
+  const limited = checkRateLimit(`estimates:patch:${ip}`, { limit: 20, windowMs: 60_000 });
+  if (!limited.ok) {
+    return rateLimitResponse(limited.retryAfterSec);
+  }
+
   if (!isEstimateDbConfigured()) {
     return NextResponse.json({ error: "Estimate tracking is not configured." }, { status: 503 });
   }

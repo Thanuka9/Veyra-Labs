@@ -33,12 +33,15 @@ import {
 } from "@/lib/chatbot";
 import { CONTACT_EMAIL } from "@/lib/content";
 import { buildVeyraInquiryEmail, sendContactEmail, sendEstimateEmail } from "@/lib/email";
+import { checkMathAnswer, newMathChallenge } from "@/lib/math-challenge";
 import { trackEvent } from "@/components/GoogleAnalytics";
 import { formatRange, type ProjectEstimate } from "@/lib/estimate";
 import { BrandLogo } from "./BrandLogo";
 import { ChatMarkdown } from "./ChatMarkdown";
 import { EstimateResultCard, EstimateWizard } from "./EstimateWizard";
 import { LucideIcon } from "./LucideIcon";
+import { MathChallengeField } from "./MathChallengeField";
+import { PrivacyConsentCheckbox } from "./PrivacyConsentCheckbox";
 import { cn } from "@/lib/cn";
 
 const RESPONSE_DELAY_MS = 850;
@@ -79,6 +82,10 @@ export function VeyraChat() {
   const [estimateEmailSent, setEstimateEmailSent] = useState<Record<string, boolean>>({});
   const [lead, setLead] = useState({ name: "", email: "", message: "" });
   const [leadSending, setLeadSending] = useState(false);
+  const [leadChallenge, setLeadChallenge] = useState(newMathChallenge);
+  const [leadHumanVer, setLeadHumanVer] = useState("");
+  const [leadConsent, setLeadConsent] = useState(false);
+  const [leadError, setLeadError] = useState<string | null>(null);
   const [showScrollDown, setShowScrollDown] = useState(false);
   const [quickActionsOpen, setQuickActionsOpen] = useState(true);
   const scrollRef = useRef<HTMLDivElement>(null);
@@ -209,7 +216,21 @@ export function VeyraChat() {
     e.preventDefault();
     if (!lead.name.trim() || !lead.email.trim() || leadSending) return;
 
+    if (!leadConsent) {
+      setLeadError("Please agree to be contacted about your project.");
+      return;
+    }
+    if (!checkMathAnswer(leadHumanVer, leadChallenge)) {
+      setLeadError(
+        `Please answer the verification question correctly (${leadChallenge.a} + ${leadChallenge.b} = ?).`
+      );
+      setLeadChallenge(newMathChallenge());
+      setLeadHumanVer("");
+      return;
+    }
+
     setLeadSending(true);
+    setLeadError(null);
     const summary = lead.message.trim() || "Interested in discussing a project with Veyra Labs.";
 
     try {
@@ -232,6 +253,9 @@ export function VeyraChat() {
       ]);
       setLeadMode(false);
       setLead({ name: "", email: "", message: "" });
+      setLeadConsent(false);
+      setLeadChallenge(newMathChallenge());
+      setLeadHumanVer("");
     } catch {
       setMessages((prev) => [
         ...prev,
@@ -240,6 +264,8 @@ export function VeyraChat() {
           `Couldn't send automatically. Email **${CONTACT_EMAIL}** and we'll respond within 24 hours.`
         ),
       ]);
+      setLeadChallenge(newMathChallenge());
+      setLeadHumanVer("");
     } finally {
       setLeadSending(false);
     }
@@ -401,9 +427,27 @@ export function VeyraChat() {
                           onChange={(e) => setLead((l) => ({ ...l, message: e.target.value }))}
                           className="veyra-chat-field resize-none"
                         />
+                        <MathChallengeField
+                          compact
+                          challenge={leadChallenge}
+                          value={leadHumanVer}
+                          onChange={setLeadHumanVer}
+                          inputClassName="veyra-chat-field"
+                        />
+                        <PrivacyConsentCheckbox
+                          compact
+                          id="chat-privacy-consent"
+                          checked={leadConsent}
+                          onChange={setLeadConsent}
+                        />
+                        {leadError && (
+                          <p className="rounded-lg border border-rose-500/30 bg-rose-500/10 px-2.5 py-1.5 text-[10px] text-rose-200">
+                            {leadError}
+                          </p>
+                        )}
                         <button
                           type="submit"
-                          disabled={leadSending}
+                          disabled={leadSending || !leadConsent || !leadHumanVer.trim()}
                           className="flex w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-violet to-cyan py-2.5 text-sm font-semibold text-white disabled:opacity-60"
                         >
                           <Mail size={14} />

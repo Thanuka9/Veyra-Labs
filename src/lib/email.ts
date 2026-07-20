@@ -127,7 +127,6 @@ async function sendVeyraEmails(
   ensureEmailJsInit();
 
   if (!CUSTOMER_TEMPLATE_ID) {
-    console.log("Internal EmailJS payload:", internalParams);
     const internalResult = await emailjs.send(
       SERVICE_ID,
       INTERNAL_TEMPLATE_ID,
@@ -142,9 +141,6 @@ async function sendVeyraEmails(
     return { customerResult: null, internalResult };
   }
 
-  console.log("Customer EmailJS payload:", customerParams);
-  console.log("Customer email params subject:", customerParams.subject);
-
   const customerResult = await emailjs.send(
     SERVICE_ID,
     CUSTOMER_TEMPLATE_ID,
@@ -158,9 +154,6 @@ async function sendVeyraEmails(
   }
 
   await wait(SEND_GAP_MS);
-
-  console.log("Internal EmailJS payload:", internalParams);
-  console.log("Internal email params subject:", internalParams.subject);
 
   const internalResult = await emailjs.send(
     SERVICE_ID,

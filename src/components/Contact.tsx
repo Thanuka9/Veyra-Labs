@@ -1,23 +1,17 @@
 "use client";
 
-import Link from "next/link";
 import { useCallback, useState } from "react";
 import { ArrowRight, CheckCircle2, Loader2, Mail, MapPin } from "lucide-react";
 import { CONTACT_EMAIL, CONTACT_LOCATION, contactProjectTypes } from "@/lib/content";
 import { buildVeyraInquiryEmail, sendContactEmail } from "@/lib/email";
+import { checkMathAnswer, newMathChallenge, type MathChallenge } from "@/lib/math-challenge";
 import { trackEvent } from "@/components/GoogleAnalytics";
 import { LucideIcon } from "./LucideIcon";
+import { MathChallengeField } from "./MathChallengeField";
+import { PrivacyConsentCheckbox } from "./PrivacyConsentCheckbox";
 import { Reveal } from "./Reveal";
 
 const projectTypes = contactProjectTypes;
-
-type MathChallenge = { a: number; b: number; answer: number };
-
-function newMathChallenge(): MathChallenge {
-  const a = 2 + Math.floor(Math.random() * 10); // 2–11
-  const b = 2 + Math.floor(Math.random() * 10); // 2–11
-  return { a, b, answer: a + b };
-}
 
 export function Contact({
   showHeading = true,
@@ -30,9 +24,12 @@ export function Contact({
   const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
   const [errorMsg, setErrorMsg] = useState("");
   const [challenge, setChallenge] = useState<MathChallenge>(newMathChallenge);
+  const [humanVer, setHumanVer] = useState("");
+  const [consent, setConsent] = useState(false);
 
   const refreshChallenge = useCallback(() => {
     setChallenge(newMathChallenge());
+    setHumanVer("");
   }, []);
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
@@ -43,9 +40,7 @@ export function Contact({
     const honeypot = (data.get("website") as string) || "";
     if (honeypot) return;
 
-    const humanVer = ((data.get("human_ver") as string) || "").trim();
-    const parsed = Number.parseInt(humanVer, 10);
-    if (!Number.isFinite(parsed) || parsed !== challenge.answer) {
+    if (!checkMathAnswer(humanVer, challenge)) {
       setErrorMsg(
         `Please answer the verification question correctly (${challenge.a} + ${challenge.b} = ?).`
       );
@@ -58,7 +53,6 @@ export function Contact({
     const email = (data.get("email") as string) || "";
     const company = (data.get("company") as string) || "";
     const message = (data.get("message") as string) || "";
-    const consent = data.get("consent") === "on";
 
     if (!consent) {
       setErrorMsg("Please agree to be contacted about your project.");
@@ -84,6 +78,7 @@ export function Contact({
       trackEvent("submit", "contact", type);
       form.reset();
       setType(projectTypes[0]);
+      setConsent(false);
       refreshChallenge();
     } catch {
       setStatus("error");
@@ -232,14 +227,10 @@ export function Contact({
                     />
                   </div>
 
-                  <Field
-                    label={`Verification — what is ${challenge.a} + ${challenge.b}?`}
-                    name="human_ver"
-                    type="number"
-                    inputMode="numeric"
-                    placeholder="Your answer"
-                    autoComplete="off"
-                    required
+                  <MathChallengeField
+                    challenge={challenge}
+                    value={humanVer}
+                    onChange={setHumanVer}
                   />
 
                   <input
@@ -251,14 +242,7 @@ export function Contact({
                     aria-hidden
                   />
 
-                  <label className="flex items-start gap-2.5 text-xs text-muted">
-                    <input type="checkbox" name="consent" required className="mt-0.5 accent-violet" />
-                    I agree to be contacted about my project. See our{" "}
-                    <Link href="/privacy" className="font-medium text-cyan hover:underline">
-                      Privacy Policy
-                    </Link>
-                    .
-                  </label>
+                  <PrivacyConsentCheckbox checked={consent} onChange={setConsent} />
 
                   {status === "error" && errorMsg && (
                     <p className="rounded-lg border border-red-500/30 bg-red-500/10 px-3 py-2 text-xs text-red-300">

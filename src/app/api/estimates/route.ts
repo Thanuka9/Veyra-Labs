@@ -7,6 +7,11 @@ import {
 import { createTrackedEstimate } from "@/lib/estimate-store";
 import type { EstimateSource } from "@/lib/estimate-client";
 import { isEstimateDbConfigured } from "@/lib/estimate-db";
+import {
+  checkRateLimit,
+  clientIpFromRequest,
+  rateLimitResponse,
+} from "@/lib/rate-limit";
 
 export const runtime = "nodejs";
 
@@ -33,6 +38,12 @@ function badRequest(message: string) {
 }
 
 export async function POST(request: Request) {
+  const ip = clientIpFromRequest(request);
+  const limited = checkRateLimit(`estimates:post:${ip}`, { limit: 6, windowMs: 60_000 });
+  if (!limited.ok) {
+    return rateLimitResponse(limited.retryAfterSec);
+  }
+
   if (!isEstimateDbConfigured()) {
     return NextResponse.json(
       {

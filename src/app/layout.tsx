@@ -62,14 +62,12 @@ export const metadata: Metadata = {
     siteName: "Veyra Labs",
     type: "website",
     locale: "en_US",
-    images: [{ url: "/brand/lockup-dark.png", width: 1200, height: 630, alt: "Veyra Labs" }],
   },
   twitter: {
     card: "summary_large_image",
     title: "Veyra Labs  -  Software & AI Engineering Studio",
     description:
       "Enterprise SaaS, AI systems, e-commerce & premium websites  -  battle-tested in production.",
-    images: ["/brand/lockup-dark.png"],
   },
 };
 
@@ -79,7 +77,7 @@ const organizationSchema = {
   name: "Veyra Labs",
   url: siteUrl,
   logo: `${siteUrl}/brand/app-icon.png`,
-  image: `${siteUrl}/brand/lockup-dark.png`,
+  image: `${siteUrl}/opengraph-image`,
   description:
     "Boutique software and AI engineering studio building SaaS platforms, AI systems, e-commerce and premium websites.",
   email: CONTACT_EMAIL,

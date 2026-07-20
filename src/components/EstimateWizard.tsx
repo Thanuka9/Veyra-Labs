@@ -45,6 +45,7 @@ import {
 } from "@/lib/estimate";
 import { downloadEstimatePdf, printEstimatePdf } from "@/lib/estimate-pdf";
 import { sendEstimateEmail, isEmailConfigured } from "@/lib/email";
+import { checkMathAnswer, newMathChallenge } from "@/lib/math-challenge";
 import {
   createTrackedEstimateClient,
   markEstimateEmailSentClient,
@@ -53,6 +54,8 @@ import {
 import { CONTACT_EMAIL } from "@/lib/content";
 import { BrandLogo } from "./BrandLogo";
 import { LucideIcon } from "./LucideIcon";
+import { MathChallengeField } from "./MathChallengeField";
+import { PrivacyConsentCheckbox } from "./PrivacyConsentCheckbox";
 import { cn } from "@/lib/cn";
 
 const PROJECT_ICONS: Record<string, LucideIconType> = {
@@ -119,6 +122,9 @@ export function EstimateWizard({
   const [clientEmail, setClientEmail] = useState("");
   const [clientCompany, setClientCompany] = useState("");
   const [notes, setNotes] = useState("");
+  const [challenge, setChallenge] = useState(newMathChallenge);
+  const [humanVer, setHumanVer] = useState("");
+  const [consent, setConsent] = useState(false);
   const [estimate, setEstimate] = useState<ProjectEstimate | null>(null);
   const [downloading, setDownloading] = useState(false);
   const [generating, setGenerating] = useState(false);
@@ -240,6 +246,18 @@ export function EstimateWizard({
     if (selectedTypes.length === 0 || generating) return;
     if (!clientName.trim() || !clientEmail.trim()) {
       setEmailError("Name and email are required so we can save and track your quote ID.");
+      return;
+    }
+    if (!consent) {
+      setEmailError("Please agree to be contacted about your project.");
+      return;
+    }
+    if (!checkMathAnswer(humanVer, challenge)) {
+      setEmailError(
+        `Please answer the verification question correctly (${challenge.a} + ${challenge.b} = ?).`
+      );
+      setChallenge(newMathChallenge());
+      setHumanVer("");
       return;
     }
 
@@ -697,6 +715,19 @@ export function EstimateWizard({
                   onChange={(e) => setNotes(e.target.value)}
                   className="w-full resize-none rounded-lg border border-border bg-background/80 px-3 py-2.5 text-sm outline-none focus:border-violet/50"
                 />
+                <MathChallengeField
+                  compact
+                  challenge={challenge}
+                  value={humanVer}
+                  onChange={setHumanVer}
+                  inputClassName="veyra-chat-field border border-border bg-background/80"
+                />
+                <PrivacyConsentCheckbox
+                  compact
+                  id="quote-privacy-consent"
+                  checked={consent}
+                  onChange={setConsent}
+                />
               </div>
               <DisclaimerBanner className="mt-3" />
               {emailError && (
@@ -707,7 +738,13 @@ export function EstimateWizard({
               <WizardNav
                 onBack={() => goBack("details")}
                 onNext={handleGenerate}
-                nextDisabled={!clientName.trim() || !clientEmail.trim() || generating}
+                nextDisabled={
+                  !clientName.trim() ||
+                  !clientEmail.trim() ||
+                  !consent ||
+                  !humanVer.trim() ||
+                  generating
+                }
                 nextLabel={generating ? "Sending…" : "Generate & send quote"}
                 nextLoading={generating}
               />
